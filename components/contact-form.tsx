@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link"
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
@@ -17,7 +18,7 @@ export function ContactForm({ einstellungen }: Props) {
   const telefon = einstellungen?.telefon ?? "07726 / 929394"
   const email = einstellungen?.email ?? "sqs@sq-sv.de"
   const adresse = einstellungen?.adresse ?? "Marktplatz 21, 78647 Trossingen"
-  const oeffnungszeiten = einstellungen?.oeffnungszeiten ?? "Mo–Fr 8:00–18:00 Uhr"
+  const oeffnungszeiten = einstellungen?.oeffnungszeiten ?? "Moâ€“Fr 8:00â€“18:00 Uhr"
   const telefonHref = "tel:+" + telefon.replace(/\D/g, "")
 
   const kontaktInfos = [
@@ -44,8 +45,8 @@ export function ContactForm({ einstellungen }: Props) {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-16">
           <span className="text-primary text-sm font-semibold tracking-wider uppercase">Kontakt</span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>Sprechen wir über Ihr Projekt</h2>
-          <p className="mt-4 text-muted-foreground">Kontaktieren Sie uns für eine kostenlose Erstberatung. Wir melden uns innerhalb von 24 Stunden.</p>
+          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>Sprechen wir Ã¼ber Ihr Projekt</h2>
+          <p className="mt-4 text-muted-foreground">Kontaktieren Sie uns fÃ¼r eine kostenlose Erstberatung. Wir melden uns innerhalb von 24 Stunden.</p>
         </div>
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           <div className="flex flex-col gap-6">
@@ -86,11 +87,11 @@ export function ContactForm({ einstellungen }: Props) {
                 <Input id="telefon" type="tel" placeholder="+49 123 456789" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label>Gewünschte Leistung</Label>
+                <Label>GewÃ¼nschte Leistung</Label>
                 <Select>
-                  <SelectTrigger><SelectValue placeholder="Bitte wählen" /></SelectTrigger>
+                  <SelectTrigger><SelectValue placeholder="Bitte wÃ¤hlen" /></SelectTrigger>
                   <SelectContent>
-                    {["Baubegleitende Qualitätssicherung", "Mängelmanagement", "Baucontrolling", "Schadensgutachten", "Sanierungskonzepte", "Baumediation", "Seminare", "Sonstiges"].map((l) => (
+                    {["Baubegleitende QualitÃ¤tssicherung", "MÃ¤ngelmanagement", "Baucontrolling", "Schadensgutachten", "Sanierungskonzepte", "Baumediation", "Seminare", "Sonstiges"].map((l) => (
                       <SelectItem key={l} value={l}>{l}</SelectItem>
                     ))}
                   </SelectContent>
@@ -100,8 +101,8 @@ export function ContactForm({ einstellungen }: Props) {
                 <Label htmlFor="nachricht">Nachricht</Label>
                 <Textarea id="nachricht" placeholder="Beschreiben Sie kurz Ihr Anliegen..." rows={4} />
               </div>
-              <Button size="lg" className="w-full" onClick={() => setSubmitted(true)}>Anfrage senden →</Button>
-              <p className="text-xs text-muted-foreground text-center">Mit dem Absenden stimmen Sie unserer <Link href="/datenschutz" className="text-primary hover:underline">Datenschutzerklärung</Link> zu.</p>
+              <Button size="lg" className="w-full" onClick={() => setSubmitted(true)}>Anfrage senden â†’</Button>
+              <p className="text-xs text-muted-foreground text-center">Mit dem Absenden stimmen Sie unserer <Link href="/datenschutz" className="text-primary hover:underline">DatenschutzerklÃ¤rung</Link> zu.</p>
             </div>
           </div>
         </div>

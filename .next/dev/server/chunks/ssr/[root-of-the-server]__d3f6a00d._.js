@@ -1136,6 +1136,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2d$data$2e$t
 ;
 ;
 function Services() {
+    const services = __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2d$data$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["servicesData"].slice(0, 6);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         id: "leistungen",
         className: "py-24 lg:py-32 bg-secondary/30",
@@ -1150,7 +1151,7 @@ function Services() {
                             children: "Unsere Expertise"
                         }, void 0, false, {
                             fileName: "[project]/components/services.tsx",
-                            lineNumber: 12,
+                            lineNumber: 14,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -1161,7 +1162,7 @@ function Services() {
                             children: "Leistungen im Überblick"
                         }, void 0, false, {
                             fileName: "[project]/components/services.tsx",
-                            lineNumber: 13,
+                            lineNumber: 15,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1169,18 +1170,18 @@ function Services() {
                             children: "Profitieren Sie von unserer langjährigen Erfahrung in der Qualitätssicherung im Bauwesen. Wir bieten Ihnen ein umfassendes Leistungsspektrum."
                         }, void 0, false, {
                             fileName: "[project]/components/services.tsx",
-                            lineNumber: 16,
+                            lineNumber: 18,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/services.tsx",
-                    lineNumber: 11,
+                    lineNumber: 13,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "grid sm:grid-cols-2 lg:grid-cols-3 gap-6",
-                    children: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$services$2d$data$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["servicesData"].map((service, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
+                    children: services.map((service, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
                             href: `/leistungen/${service.slug}`,
                             className: "block",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Card"], {
@@ -1194,12 +1195,12 @@ function Services() {
                                                     className: "h-6 w-6 text-primary"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/services.tsx",
-                                                    lineNumber: 27,
+                                                    lineNumber: 28,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/services.tsx",
-                                                lineNumber: 26,
+                                                lineNumber: 27,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["CardTitle"], {
@@ -1213,19 +1214,19 @@ function Services() {
                                                         className: "h-4 w-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/services.tsx",
-                                                        lineNumber: 31,
+                                                        lineNumber: 32,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/services.tsx",
-                                                lineNumber: 29,
+                                                lineNumber: 30,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/services.tsx",
-                                        lineNumber: 25,
+                                        lineNumber: 26,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1234,28 +1235,28 @@ function Services() {
                                             children: service.shortDescription
                                         }, void 0, false, {
                                             fileName: "[project]/components/services.tsx",
-                                            lineNumber: 35,
+                                            lineNumber: 36,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/services.tsx",
-                                        lineNumber: 34,
+                                        lineNumber: 35,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/services.tsx",
-                                lineNumber: 24,
+                                lineNumber: 25,
                                 columnNumber: 15
                             }, this)
                         }, index, false, {
                             fileName: "[project]/components/services.tsx",
-                            lineNumber: 23,
+                            lineNumber: 24,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/components/services.tsx",
-                    lineNumber: 21,
+                    lineNumber: 22,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1295,12 +1296,12 @@ function Services() {
             ]
         }, void 0, true, {
             fileName: "[project]/components/services.tsx",
-            lineNumber: 10,
+            lineNumber: 12,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/services.tsx",
-        lineNumber: 9,
+        lineNumber: 11,
         columnNumber: 5
     }, this);
 }

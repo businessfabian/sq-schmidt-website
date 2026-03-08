@@ -1,7 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, CheckCircle } from "lucide-react"
+import { ArrowRight, Phone, ShieldCheck, Award, MapPin } from "lucide-react"
 
 interface Props {
   einstellungen?: any
@@ -9,72 +8,134 @@ interface Props {
 
 export function Hero({ einstellungen }: Props) {
   const titel = einstellungen?.heroTitel ?? "Präzision und Qualität für Ihr Bauprojekt"
-  const beschreibung = einstellungen?.heroBeschreibung ?? "SQ Schmidt ist Ihr zuverlässiger Partner für professionelle Qualitätssicherung im Bauwesen. Öffentlich bestellter und vereidigter Sachverständiger — wir begleiten Ihr Projekt von der Planung bis zur Fertigstellung."
+  const beschreibung = einstellungen?.heroBeschreibung ?? "Öffentlich bestellter und vereidigter Sachverständiger der IHK Konstanz — gerichtsfeste Gutachten und professionelle Baubegleitung deutschlandweit."
   const adresse = einstellungen?.adresse ?? "Marktplatz 21, 78647 Trossingen"
   const telefon = einstellungen?.telefon ?? "07726 / 929394"
   const jahre = einstellungen?.jahreErfahrung ?? 25
   const projekte = einstellungen?.anzahlProjekte ?? 500
-
-  const highlights = ["TÜV-zertifiziert", "Öffentlich bestellter Sachverständiger", "Deutschlandweit tätig"]
-  const stats = [
-    { value: `${jahre}+`, label: "Jahre Erfahrung" },
-    { value: `${projekte}+`, label: "Projekte" },
-    { value: "100%", label: "TÜV-zertifiziert" },
-  ]
+  const telefonHref = "tel:+" + telefon.replace(/\D/g, "")
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8 py-24 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <div className="flex flex-col gap-8">
-            <div className="flex flex-wrap gap-3">
-              {highlights.map((h) => (
-                <span key={h} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">
-                  <CheckCircle className="h-3.5 w-3.5" />
-                  {h}
-                </span>
-              ))}
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground text-balance" style={{ fontFamily: "var(--font-display)" }}>
-              {titel.includes("Bauprojekt") ? (
-                <>{titel.replace(" für Ihr Bauprojekt", "")} für Ihr{" "}<span className="text-primary">Bauprojekt</span></>
-              ) : titel}
-            </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-xl">{beschreibung}</p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="gap-2" asChild>
-                <Link href="#kontakt">Kostenlose Erstberatung <ArrowRight className="h-4 w-4" /></Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link href="#leistungen">Unsere Leistungen</Link>
-              </Button>
-            </div>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <CheckCircle className="h-4 w-4 text-primary" />
-              {adresse} · {telefon}
+    <section className="relative min-h-screen flex items-end overflow-hidden bg-zinc-950">
+
+      {/* Fullscreen Hintergrundbild */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/hero-construction.jpg"
+          alt="Baustelle SQ Schmidt"
+          fill
+          className="object-cover object-center opacity-40"
+          priority
+        />
+        {/* Dramatischer Gradient von unten */}
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/60 to-zinc-950/20" />
+        {/* Linker Gradient für Text-Lesbarkeit */}
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 via-zinc-950/40 to-transparent" />
+      </div>
+
+      {/* Dezentes Raster-Pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+          backgroundSize: "60px 60px"
+        }}
+      />
+
+      {/* Akzent-Linie links */}
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
+
+      {/* Content */}
+      <div className="relative w-full mx-auto max-w-7xl px-6 lg:px-8 pb-20 pt-40">
+        <div className="max-w-3xl">
+
+          {/* Badge */}
+          <div className="flex items-center gap-3 mb-8">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-primary/40 bg-primary/10 backdrop-blur-sm">
+              <ShieldCheck className="h-4 w-4 text-primary" />
+              <span className="text-sm font-medium text-primary">Öffentlich bestellter Sachverständiger · IHK Konstanz</span>
             </div>
           </div>
-          <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden border border-border">
-              <Image src="/images/hero-construction.jpg" alt="Professionelle Baustellenüberwachung durch SQ Schmidt" width={600} height={400} className="w-full h-auto object-cover" priority />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <div className="bg-card/95 backdrop-blur-sm rounded-xl border border-border p-6">
-                  <div className="grid grid-cols-3 gap-6">
-                    {stats.map((stat, i) => (
-                      <div key={i} className="text-center">
-                        <div className="text-2xl lg:text-3xl font-bold text-primary" style={{ fontFamily: "var(--font-display)" }}>{stat.value}</div>
-                        <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+
+          {/* Haupttitel */}
+          <h1
+            className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tight mb-6"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            {titel.split(" für Ihr").length > 1 ? (
+              <>
+                {titel.split(" für Ihr")[0]}<br />
+                <span className="text-primary">für Ihr</span>
+                {" "}{titel.split(" für Ihr")[1]}
+              </>
+            ) : (
+              <>
+                {titel.split(" ").slice(0, 3).join(" ")}<br />
+                <span className="text-primary">{titel.split(" ").slice(3).join(" ")}</span>
+              </>
+            )}
+          </h1>
+
+          {/* Untertitel */}
+          <p className="text-lg text-zinc-400 leading-relaxed max-w-xl mb-10">
+            {beschreibung}
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-16">
+            <Link
+              href="/#kontakt"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold text-base hover:bg-primary/90 transition-all hover:gap-3"
+            >
+              Kostenlose Erstberatung
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+            <a
+              href={telefonHref}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 text-white rounded-lg font-semibold text-base hover:bg-white/20 transition-all backdrop-blur-sm border border-white/20"
+            >
+              <Phone className="h-5 w-5" />
+              {telefon}
+            </a>
+          </div>
+
+          {/* Stats */}
+          <div className="flex flex-wrap items-center gap-8 pt-8 border-t border-white/10">
+            <div>
+              <span className="block text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>{jahre}+</span>
+              <span className="text-sm text-zinc-500 mt-1 block">Jahre Erfahrung</span>
+            </div>
+            <div className="w-px h-10 bg-white/10" />
+            <div>
+              <span className="block text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>{projekte}+</span>
+              <span className="text-sm text-zinc-500 mt-1 block">Projekte</span>
+            </div>
+            <div className="w-px h-10 bg-white/10" />
+            <div>
+              <span className="block text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>100%</span>
+              <span className="text-sm text-zinc-500 mt-1 block">TÜV-zertifiziert</span>
+            </div>
+            <div className="hidden lg:flex items-center gap-2 ml-auto text-sm text-zinc-500">
+              <MapPin className="h-4 w-4" />
+              {adresse}
             </div>
           </div>
         </div>
       </div>
+
+      {/* Zertifikat-Badges unten rechts */}
+      <div className="absolute bottom-8 right-8 hidden lg:flex items-center gap-3">
+        {["TÜV", "IHK", "BVS"].map((badge) => (
+          <div
+            key={badge}
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg backdrop-blur-sm"
+          >
+            <Award className="h-3.5 w-3.5 text-primary" />
+            <span className="text-xs font-medium text-zinc-400">{badge}</span>
+          </div>
+        ))}
+      </div>
+
     </section>
   )
 }

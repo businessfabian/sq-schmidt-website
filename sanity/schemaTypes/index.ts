@@ -1,4 +1,4 @@
-﻿import einstellungen from "./einstellungen"
+import einstellungen from "./einstellungen"
 import leistung from "./leistung"
 import partner from "./partner"
 import zertifikat from "./zertifikat"

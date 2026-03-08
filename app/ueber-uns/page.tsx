@@ -1,83 +1,180 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { Award, Users, Building, MapPin, Phone, Mail } from "lucide-react"
+import { getEinstellungen } from "@/sanity/lib/queries"
+import { ShieldCheck, Award, Users, Building2, CheckCircle2, ArrowRight } from "lucide-react"
+import Link from "next/link"
+import Image from "next/image"
 
 export const metadata = {
-  title: "Über Uns — SQ Schmidt Qualitätssicherung",
-  description: "Erfahren Sie mehr über SQ Schmidt — öffentlich bestellter und vereidigter Sachverständiger der IHK Konstanz.",
+  title: "Über Uns | SQ Schmidt Qualitätssicherung",
+  description: "Seit 2001 Ihr Experte für Bauschäden, Gutachten und Qualitätssicherung im Bauwesen.",
 }
 
-export default function UeberUnsPage() {
+const qualifikationen = [
+  { icon: ShieldCheck, titel: "Öffentlich bestellt & vereidigt", beschreibung: "IHK Konstanz — Sachverständiger für Schäden an Gebäuden" },
+  { icon: Award, titel: "TÜV-zertifiziert", beschreibung: "Schäden an Gebäuden · Feuchte- und Schimmelpilzbelastungen (TÜV PersCert)" },
+  { icon: Award, titel: "IQ-ZERT zertifiziert", beschreibung: "EU-zertifizierter Sachverständiger nach DIN EN ISO/IEC 17024" },
+  { icon: Building2, titel: "Beratender Ingenieur", beschreibung: "Ingenieurkammer Baden-Württemberg · Nr. 2333" },
+  { icon: Users, titel: "VPB Regionalbüro", beschreibung: "Leiter Regionalbüro Villingen-Schwenningen, Bauherrenberater" },
+  { icon: Award, titel: "DEKRA Sachverständiger", beschreibung: "Zertifizierter Sachverständiger für die DEKRA GmbH" },
+]
+
+const leistungsBereiche = [
+  "Bauschadensbeurteilung und Schadensgutachten",
+  "Sanierungskonzepte und Ausschreibungen",
+  "Baubegleitende Qualitätssicherung",
+  "Projektleitung und Bauleitung",
+  "Sachverständigendienstleistungen für Feuchte- und Schimmelpilzbelastungen",
+  "Seminare, Fortbildungen und Coaching",
+  "Baumediation und Konfliktlösung",
+  "Blower-Door-Tests und Energieberatung",
+]
+
+export default async function UeberUnsPage() {
+  const einstellungen = await getEinstellungen()
+
   return (
     <>
-      <Header />
-      <main className="pt-32 pb-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <Header einstellungen={einstellungen} />
+      <main className="min-h-screen bg-background">
 
-          <div className="max-w-3xl mb-16">
-            <span className="text-primary text-sm font-semibold tracking-wider uppercase">Über SQ Schmidt</span>
-            <h1 className="mt-3 text-4xl md:text-5xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
-              Qualität ist kein Zufall
-            </h1>
-            <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-              SQ Schmidt steht für höchste Qualitätsstandards im deutschen Bauwesen. Als öffentlich bestellter und vereidigter Sachverständiger der IHK Konstanz bieten wir gerichtsfeste Gutachten und professionelle Baubegleitung.
-            </p>
-            <p className="mt-4 text-muted-foreground leading-relaxed">
-              Als inhabergeführtes Unternehmen verbinden wir fachliche Expertise mit persönlichem Engagement für Ihr Projekt. Unser Team aus erfahrenen Bauingenieuren, Architekten und Sachverständigen begleitet Sie von der ersten Beratung bis zur finalen Abnahme.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {[
-              { icon: Award, title: "TÜV & ISO zertifiziert", text: "Höchste Qualitätsstandards durch unabhängige Zertifizierungen." },
-              { icon: Users, title: "Inhabergeführt", text: "Persönliche Betreuung und direkter Ansprechpartner." },
-              { icon: Building, title: "Alle Projektgrößen", text: "Vom Einfamilienhaus bis zum Großprojekt." },
-              { icon: MapPin, title: "Bundesweit tätig", text: "Flächendeckende Präsenz in ganz Deutschland." },
-            ].map((item, i) => (
-              <div key={i} className="flex flex-col gap-3 p-6 rounded-xl bg-card border border-border">
-                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <item.icon className="h-5 w-5 text-primary" />
-                </div>
-                <h3 className="font-semibold text-foreground">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.text}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-12 mb-16">
-            <div>
-              <h2 className="text-2xl font-bold text-foreground mb-6" style={{ fontFamily: "var(--font-display)" }}>Qualifikationen</h2>
-              <div className="flex flex-wrap gap-3">
-                {["Öffentlich bestellter und vereidigter Sachverständiger", "IHK Konstanz", "TÜV Rheinland zertifiziert", "ISO 9001:2015", "DEKRA", "BVS Mitglied", "IQ-ZERT", "25+ Jahre Erfahrung"].map((q) => (
-                  <span key={q} className="px-4 py-2 bg-secondary rounded-lg text-sm text-foreground font-medium">{q}</span>
-                ))}
-              </div>
+        {/* Hero Section */}
+        <section className="relative bg-zinc-950 overflow-hidden">
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+              backgroundSize: "60px 60px"
+            }}
+          />
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
+            <div className="max-w-2xl">
+              <span className="text-sm font-medium text-primary uppercase tracking-wider">Seit 2001</span>
+              <h1 className="text-5xl font-bold text-white mt-4 mb-6 leading-tight" style={{ fontFamily: "var(--font-display)" }}>
+                Über uns
+              </h1>
+              <p className="text-zinc-400 text-lg leading-relaxed">
+                Über 20 Jahre Erfahrung in der Qualitätssicherung und im Sachverständigenwesen — Ihr unabhängiger Partner für komplexe Fragestellungen im Bauwesen.
+              </p>
             </div>
-            <div>
-              <h2 className="text-2xl font-bold text-foreground mb-6" style={{ fontFamily: "var(--font-display)" }}>Kontakt</h2>
-              <div className="flex flex-col gap-4">
-                {[
-                  { icon: Phone, label: "07726 / 929394", href: "tel:+4977269293940" },
-                  { icon: Mail, label: "sqs@sq-sv.de", href: "mailto:sqs@sq-sv.de" },
-                  { icon: MapPin, label: "Marktplatz 21, 78647 Trossingen", href: null },
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-4 p-4 bg-card border border-border rounded-xl">
-                    <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <item.icon className="h-4 w-4 text-primary" />
+          </div>
+        </section>
+
+        {/* Profil Section */}
+        <section className="py-24 bg-background">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+              {/* Foto Placeholder */}
+              <div className="relative">
+                <div className="aspect-[4/5] rounded-2xl bg-muted overflow-hidden relative">
+                  <Image
+                    src="/images/gerhard-schmidt.jpg"
+                    alt="Dipl.-Ing. Gerhard Schmidt"
+                    fill
+                    className="object-cover"
+                  />
+                  {/* Fallback wenn kein Bild */}
+                  <div className="absolute inset-0 flex items-end p-8 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent">
+                    <div>
+                      <p className="text-white font-bold text-xl" style={{ fontFamily: "var(--font-display)" }}>Dipl.-Ing. Gerhard Schmidt</p>
+                      <p className="text-zinc-400 text-sm">Inhaber & Sachverständiger</p>
                     </div>
-                    {item.href
-                      ? <a href={item.href} className="text-muted-foreground hover:text-primary transition-colors">{item.label}</a>
-                      : <span className="text-muted-foreground">{item.label}</span>
-                    }
                   </div>
-                ))}
+                </div>
+                {/* Akzent-Element */}
+                <div className="absolute -bottom-4 -right-4 h-32 w-32 rounded-2xl bg-primary/10 border border-primary/20 -z-10" />
+              </div>
+
+              {/* Text */}
+              <div className="space-y-8">
+                <div>
+                  <span className="text-sm font-medium text-primary uppercase tracking-wider">Unsere Historie</span>
+                  <h2 className="text-3xl font-bold text-foreground mt-3 mb-6" style={{ fontFamily: "var(--font-display)" }}>
+                    Dipl.-Ing. Gerhard Schmidt
+                  </h2>
+                  <div className="space-y-4 text-muted-foreground leading-relaxed">
+                    <p>
+                      Seit 2001 beschäftigt sich das Ingenieurbüro Schmidt Qualitätssicherung mit der Beseitigung von Bauschäden und Baumängeln. Wir bieten Dienstleistungen wie Bauschadensbeurteilung, Schadensgutachten, Sanierungskonzepte sowie baubegleitende Qualitätssicherung und Projektleitung an.
+                    </p>
+                    <p>
+                      Unser Ziel ist es, Rechtsstreitigkeiten durch präventive Maßnahmen zu vermeiden. Wir bieten auch Sachverständigendienstleistungen für Feuchte- und Schimmelpilzbelastungen, zertifiziert durch den TÜV.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Leistungsbereiche */}
+                <div>
+                  <h3 className="font-semibold text-foreground mb-4">Unsere Kompetenzbereiche</h3>
+                  <ul className="space-y-2">
+                    {leistungsBereiche.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground">
+                        <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <Link
+                  href="/vita"
+                  className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all"
+                >
+                  Vollständige Vita ansehen
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </div>
             </div>
           </div>
+        </section>
 
-        </div>
+        {/* Qualifikationen */}
+        <section className="py-24 bg-secondary/30">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="text-center mb-16">
+              <span className="text-sm font-medium text-primary uppercase tracking-wider">Nachgewiesene Kompetenz</span>
+              <h2 className="text-3xl font-bold text-foreground mt-3" style={{ fontFamily: "var(--font-display)" }}>
+                Qualifikationen & Zertifizierungen
+              </h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {qualifikationen.map((q, i) => (
+                <div key={i} className="p-6 rounded-2xl border border-border bg-card hover:border-primary/50 transition-colors group">
+                  <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                    <q.icon className="h-5 w-5 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-2" style={{ fontFamily: "var(--font-display)" }}>{q.titel}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{q.beschreibung}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="py-24 bg-zinc-950 relative overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
+            <h2 className="text-3xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>
+              Sprechen Sie uns an
+            </h2>
+            <p className="text-zinc-400 mb-8 max-w-xl mx-auto">
+              Kostenlose Erstberatung — wir freuen uns auf Ihre Kontaktaufnahme.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/kontakt" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all">
+                Kontakt aufnehmen <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link href="/vita" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 text-white rounded-lg font-semibold hover:bg-white/20 transition-all border border-white/20">
+                Vita ansehen
+              </Link>
+            </div>
+          </div>
+        </section>
+
       </main>
-      <Footer />
+      <Footer einstellungen={einstellungen} />
     </>
   )
 }

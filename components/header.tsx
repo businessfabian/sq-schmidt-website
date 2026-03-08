@@ -113,7 +113,7 @@ export function Header({ einstellungen }: Props) {
           {/* Desktop Buttons */}
           <div className="hidden lg:flex items-center gap-4">
             <Button variant="outline" size="sm" asChild><a href={telefonHref}>{telefon}</a></Button>
-            <Button size="sm" asChild><Link href="/#kontakt">Beratung anfragen</Link></Button>
+            
           </div>
 
           {/* Mobile Hamburger */}
@@ -164,7 +164,7 @@ export function Header({ einstellungen }: Props) {
 
               <div className="flex flex-col gap-2 pt-4 mt-2 border-t border-border">
                 <Button variant="outline" size="sm" className="w-full" asChild><a href={telefonHref}>{telefon}</a></Button>
-                <Button size="sm" className="w-full" asChild><Link href="/#kontakt">Beratung anfragen</Link></Button>
+                
               </div>
             </nav>
           </div>

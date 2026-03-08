@@ -24,9 +24,9 @@ export function Header({ einstellungen }: Props) {
   const unternehmenLinks = [
     { label: "Über Uns", href: "/ueber-uns" },
     { label: "Partner", href: "/partner" },
-    { label: "Aktuelles / Baurecht IBR", href: "/#aktuelles" },
+    { label: "Aktuelles / Baurecht IBR", href: "/aktuelles" },
     { label: "Zertifikate", href: "/zertifikate" },
-    { label: "Vita", href: "/#vita" },
+    { label: "Vita", href: "/vita" },
   ]
 
   return (

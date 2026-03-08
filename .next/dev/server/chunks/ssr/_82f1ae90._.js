@@ -471,11 +471,11 @@ function Header({ einstellungen }) {
     const unternehmenLinks = [
         {
             label: "Über Uns",
-            href: "/#ueber-uns"
+            href: "/ueber-uns"
         },
         {
             label: "Partner",
-            href: "/#partner"
+            href: "/partner"
         },
         {
             label: "Aktuelles / Baurecht IBR",
@@ -483,7 +483,7 @@ function Header({ einstellungen }) {
         },
         {
             label: "Zertifikate",
-            href: "/#zertifikate"
+            href: "/zertifikate"
         },
         {
             label: "Vita",

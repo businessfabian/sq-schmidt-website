@@ -1,4 +1,4 @@
-﻿import { client } from "./client"
+import { client } from "./client"
 
 export async function getEinstellungen() {
   return client.fetch(`*[_type == "einstellungen"][0]`)

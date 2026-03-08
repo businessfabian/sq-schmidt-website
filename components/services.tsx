@@ -5,6 +5,8 @@ import { ArrowRight } from "lucide-react"
 import { servicesData } from "@/lib/services-data"
 
 export function Services() {
+  const services = servicesData.slice(0, 6)
+
   return (
     <section id="leistungen" className="py-24 lg:py-32 bg-secondary/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -17,9 +19,8 @@ export function Services() {
             Profitieren Sie von unserer langjährigen Erfahrung in der Qualitätssicherung im Bauwesen. Wir bieten Ihnen ein umfassendes Leistungsspektrum.
           </p>
         </div>
-
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {servicesData.map((service, index) => (
+          {services.map((service, index) => (
             <Link key={index} href={`/leistungen/${service.slug}`} className="block">
               <Card className="bg-card border-border hover:border-primary/50 transition-colors group h-full">
                 <CardHeader>
@@ -40,7 +41,6 @@ export function Services() {
             </Link>
           ))}
         </div>
-
         <div className="mt-12 flex justify-center">
           <Button size="lg" variant="outline" asChild>
             <Link href="/leistungen" className="gap-2 flex items-center">

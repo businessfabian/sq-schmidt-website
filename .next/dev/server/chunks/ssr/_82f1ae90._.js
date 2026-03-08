@@ -94,43 +94,86 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$search$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__FileSearch$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/file-search.js [app-ssr] (ecmascript) <export default as FileSearch>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$wrench$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Wrench$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/wrench.js [app-ssr] (ecmascript) <export default as Wrench>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$graduation$2d$cap$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__GraduationCap$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/graduation-cap.js [app-ssr] (ecmascript) <export default as GraduationCap>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$hard$2d$hat$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HardHat$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/hard-hat.js [app-ssr] (ecmascript) <export default as HardHat>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$wind$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Wind$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/wind.js [app-ssr] (ecmascript) <export default as Wind>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ShieldCheck$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield-check.js [app-ssr] (ecmascript) <export default as ShieldCheck>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bug$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Bug$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/bug.js [app-ssr] (ecmascript) <export default as Bug>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$briefcase$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Briefcase$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/briefcase.js [app-ssr] (ecmascript) <export default as Briefcase>");
 ;
 const servicesData = [
     {
-        slug: "baumediation",
-        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$scale$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Scale$3e$__["Scale"],
-        title: "Baumediation",
-        shortDescription: "Professionelle Mediation bei Baustreitigkeiten für eine außergerichtliche Konfliktlösung.",
-        fullDescription: "Als neutrale Vermittler unterstützen wir Sie bei der Lösung von Konflikten im Bauwesen. Durch professionelle Mediation erreichen wir eine einvernehmliche Lösung zwischen allen Parteien – schneller und kostengünstiger als langwierige Gerichtsverfahren.",
-        image: "/images/services/baumediation.jpg",
+        slug: "baubegleitende-qualitaetssicherung",
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2d$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ShieldCheck$3e$__["ShieldCheck"],
+        title: "Baubegleitende Qualitätssicherung",
+        shortDescription: "Professionelle Qualitätssicherung während aller Bauphasen — von der Planung bis zur Abnahme.",
+        fullDescription: "Unsere baubegleitende Qualitätssicherung stellt sicher, dass alle Bauleistungen den vereinbarten Standards entsprechen. Wir überwachen kontinuierlich die Ausführungsqualität und greifen frühzeitig ein, bevor Mängel entstehen.",
+        image: "/images/services/baucontrolling.jpg",
         features: [
-            "Neutrale Vermittlung zwischen Bauherren und Unternehmen",
-            "Außergerichtliche Streitbeilegung",
-            "Dokumentation und Protokollierung",
-            "Erarbeitung von Kompromisslösungen",
-            "Zeitnahe Konfliktlösung",
-            "Kostenersparnis gegenüber Gerichtsverfahren"
+            "Kontinuierliche Baustellenüberwachung",
+            "Qualitätsprüfung aller Gewerke",
+            "Dokumentation und Berichterstattung",
+            "Frühzeitige Mängelerkennung",
+            "Abnahmebegleitung",
+            "Gerichtsfeste Dokumentation"
         ],
         process: [
             {
                 step: "1",
-                title: "Erstgespräch",
-                description: "Erfassung der Situation und aller Beteiligten"
+                title: "Planung",
+                description: "Festlegung der Qualitätsziele"
             },
             {
                 step: "2",
-                title: "Analyse",
-                description: "Untersuchung der Streitpunkte und Interessen"
+                title: "Überwachung",
+                description: "Kontinuierliche Kontrolle der Ausführung"
             },
             {
                 step: "3",
-                title: "Mediation",
-                description: "Moderierte Verhandlungen mit allen Parteien"
+                title: "Dokumentation",
+                description: "Lückenlose Protokollierung"
             },
             {
                 step: "4",
-                title: "Einigung",
-                description: "Dokumentation der vereinbarten Lösung"
+                title: "Abnahme",
+                description: "Begleitung der Schlussabnahme"
+            }
+        ]
+    },
+    {
+        slug: "projektleitung-bauleitung",
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$hard$2d$hat$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HardHat$3e$__["HardHat"],
+        title: "Projektleitung / Bauleitung",
+        shortDescription: "Professionelle Projektleitung und Bauleitung für reibungslose Abläufe auf Ihrer Baustelle.",
+        fullDescription: "Als erfahrene Bauleiter koordinieren wir alle am Bau beteiligten Gewerke und sorgen für einen reibungslosen Ablauf. Wir übernehmen die Verantwortung für Kosten, Termine und Qualität.",
+        image: "/images/services/baucontrolling.jpg",
+        features: [
+            "Koordination aller Gewerke",
+            "Termin- und Kostenkontrolle",
+            "Behördenkommunikation",
+            "Abnahme von Bauleistungen",
+            "Nachtragsmanagement",
+            "Bautagebuch"
+        ],
+        process: [
+            {
+                step: "1",
+                title: "Planung",
+                description: "Projektstruktur und Ablaufplanung"
+            },
+            {
+                step: "2",
+                title: "Koordination",
+                description: "Steuerung aller Beteiligten"
+            },
+            {
+                step: "3",
+                title: "Kontrolle",
+                description: "Überwachung von Kosten und Terminen"
+            },
+            {
+                step: "4",
+                title: "Abschluss",
+                description: "Abnahme und Übergabe"
             }
         ]
     },
@@ -175,7 +218,7 @@ const servicesData = [
     {
         slug: "baucontrolling",
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chart$2d$line$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__LineChart$3e$__["LineChart"],
-        title: "Baucontrolling",
+        title: "Baucontrolling / Bauabnahmen",
         shortDescription: "Kontinuierliche Überwachung von Kosten, Terminen und Qualität Ihres Bauprojekts.",
         fullDescription: "Mit unserem Baucontrolling behalten Sie alle wichtigen Projektkennzahlen im Blick. Wir überwachen kontinuierlich Kosten, Termine und Qualität und warnen frühzeitig vor Abweichungen.",
         image: "/images/services/baucontrolling.jpg",
@@ -207,6 +250,44 @@ const servicesData = [
                 step: "4",
                 title: "Steuerung",
                 description: "Empfehlungen bei Abweichungen"
+            }
+        ]
+    },
+    {
+        slug: "beweissicherungsverfahren",
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$briefcase$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Briefcase$3e$__["Briefcase"],
+        title: "Beweissicherungsverfahren",
+        shortDescription: "Professionelle Betreuung von Beweissicherungsverfahren für rechtssichere Dokumentation.",
+        fullDescription: "Wir begleiten selbstständige Beweisverfahren und erstellen gerichtsverwertbare Dokumentationen. Unsere Gutachten halten den aktuellen Zustand von Bauwerken rechtskonform fest.",
+        image: "/images/services/schadensgutachten.jpg",
+        features: [
+            "Zustandsdokumentation",
+            "Fotografische Beweissicherung",
+            "Gerichtsfeste Gutachten",
+            "Koordination mit Rechtsanwälten",
+            "Fristgerechte Bearbeitung",
+            "Neutrale Begutachtung"
+        ],
+        process: [
+            {
+                step: "1",
+                title: "Beauftragung",
+                description: "Klärung des Verfahrensumfangs"
+            },
+            {
+                step: "2",
+                title: "Begehung",
+                description: "Vor-Ort-Aufnahme und Dokumentation"
+            },
+            {
+                step: "3",
+                title: "Gutachten",
+                description: "Erstellung des Beweissicherungsgutachtens"
+            },
+            {
+                step: "4",
+                title: "Übergabe",
+                description: "Vorlage beim Gericht oder der Gegenseite"
             }
         ]
     },
@@ -287,10 +368,162 @@ const servicesData = [
         ]
     },
     {
+        slug: "blower-door-test",
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$wind$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Wind$3e$__["Wind"],
+        title: "Blower-Door-Tests",
+        shortDescription: "Messung der Luftdichtheit von Gebäuden nach DIN EN 13829.",
+        fullDescription: "Mit dem Blower-Door-Test messen wir die Luftdichtheit von Gebäuden und decken Schwachstellen in der Gebäudehülle auf. Der Test ist Voraussetzung für KfW-Förderungen und Energieeffizienznachweise.",
+        image: "/images/services/baucontrolling.jpg",
+        features: [
+            "Messung nach DIN EN 13829",
+            "Leckageortung",
+            "Protokoll für KfW-Förderung",
+            "Vor- und Nachmessung",
+            "Beratung zur Verbesserung",
+            "Zertifizierter Blower-Door-Test"
+        ],
+        process: [
+            {
+                step: "1",
+                title: "Vorbereitung",
+                description: "Gebäudevorbereitung und Einbau der Messanlage"
+            },
+            {
+                step: "2",
+                title: "Messung",
+                description: "Über- und Unterdruckmessung"
+            },
+            {
+                step: "3",
+                title: "Ortung",
+                description: "Lokalisierung von Leckagen"
+            },
+            {
+                step: "4",
+                title: "Protokoll",
+                description: "Erstellung des Messprotokolls"
+            }
+        ]
+    },
+    {
+        slug: "sigeko",
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$hard$2d$hat$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__HardHat$3e$__["HardHat"],
+        title: "SiGeKo",
+        shortDescription: "Sicherheits- und Gesundheitskoordination auf Baustellen gemäß BaustellV.",
+        fullDescription: "Als zertifizierter SiGeKo übernehmen wir die Koordination der Sicherheits- und Gesundheitsschutzmaßnahmen auf Ihrer Baustelle gemäß Baustellenverordnung (BaustellV).",
+        image: "/images/services/baucontrolling.jpg",
+        features: [
+            "Erstellung des Sicherheits- und Gesundheitsschutzplans",
+            "Koordination während der Planungsphase",
+            "Baustellenbegehungen",
+            "Unterweisung der Beteiligten",
+            "Pflege der Unterlage für spätere Arbeiten",
+            "Behördliche Vorankündigung"
+        ],
+        process: [
+            {
+                step: "1",
+                title: "Beauftragung",
+                description: "Festlegung des Koordinationsumfangs"
+            },
+            {
+                step: "2",
+                title: "Planung",
+                description: "Erstellung des SiGe-Plans"
+            },
+            {
+                step: "3",
+                title: "Koordination",
+                description: "Begleitung der Bauausführung"
+            },
+            {
+                step: "4",
+                title: "Abschluss",
+                description: "Übergabe der Unterlage"
+            }
+        ]
+    },
+    {
+        slug: "schimmelpilz",
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bug$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Bug$3e$__["Bug"],
+        title: "Schimmelpilzbelastungen",
+        shortDescription: "Erkennung, Bewertung und Sanierungsbegleitung bei Schimmelpilzbefall.",
+        fullDescription: "Schimmelpilzbefall ist ein ernstes Problem, das gesundheitliche und bauliche Schäden verursacht. Wir erkennen, bewerten und begleiten die fachgerechte Sanierung von Schimmelpilzschäden.",
+        image: "/images/services/schadensgutachten.jpg",
+        features: [
+            "Visuelle Inspektion",
+            "Probenahme und Laboranalyse",
+            "Ursachenermittlung",
+            "Sanierungskonzept",
+            "Begleitung der Sanierung",
+            "Erfolgskontrolle nach Sanierung"
+        ],
+        process: [
+            {
+                step: "1",
+                title: "Inspektion",
+                description: "Vor-Ort-Untersuchung und Probenahme"
+            },
+            {
+                step: "2",
+                title: "Analyse",
+                description: "Laboruntersuchung und Ursachenfindung"
+            },
+            {
+                step: "3",
+                title: "Konzept",
+                description: "Erstellung des Sanierungskonzepts"
+            },
+            {
+                step: "4",
+                title: "Kontrolle",
+                description: "Erfolgskontrolle nach der Sanierung"
+            }
+        ]
+    },
+    {
+        slug: "baumediation",
+        icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$scale$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Scale$3e$__["Scale"],
+        title: "Baumediation",
+        shortDescription: "Professionelle Mediation bei Baustreitigkeiten für eine außergerichtliche Konfliktlösung.",
+        fullDescription: "Als neutrale Vermittler unterstützen wir Sie bei der Lösung von Konflikten im Bauwesen. Durch professionelle Mediation erreichen wir eine einvernehmliche Lösung zwischen allen Parteien.",
+        image: "/images/services/baumediation.jpg",
+        features: [
+            "Neutrale Vermittlung",
+            "Außergerichtliche Streitbeilegung",
+            "Dokumentation und Protokollierung",
+            "Erarbeitung von Kompromisslösungen",
+            "Zeitnahe Konfliktlösung",
+            "Kostenersparnis gegenüber Gerichtsverfahren"
+        ],
+        process: [
+            {
+                step: "1",
+                title: "Erstgespräch",
+                description: "Erfassung der Situation und aller Beteiligten"
+            },
+            {
+                step: "2",
+                title: "Analyse",
+                description: "Untersuchung der Streitpunkte und Interessen"
+            },
+            {
+                step: "3",
+                title: "Mediation",
+                description: "Moderierte Verhandlungen mit allen Parteien"
+            },
+            {
+                step: "4",
+                title: "Einigung",
+                description: "Dokumentation der vereinbarten Lösung"
+            }
+        ]
+    },
+    {
         slug: "seminare",
         icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$graduation$2d$cap$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__GraduationCap$3e$__["GraduationCap"],
-        title: "Seminare",
-        shortDescription: "Fortbildungen und Schulungen rund um Bauqualität und Schadensprävention.",
+        title: "Seminare / Beratung / Coaching",
+        shortDescription: "Fortbildungen, Schulungen und Coaching rund um Bauqualität und Schadensprävention.",
         fullDescription: "Wir bieten praxisnahe Seminare und Fortbildungen für Bauherren, Handwerker und Planer. Profitieren Sie von unserer langjährigen Erfahrung und erweitern Sie Ihr Fachwissen.",
         image: "/images/services/seminare.jpg",
         features: [
@@ -430,10 +663,10 @@ const certificatesData = [
     }
 ];
 function getServiceBySlug(slug) {
-    return servicesData.find((service)=>service.slug === slug);
+    return servicesData.find((s)=>s.slug === slug);
 }
 function getAllServiceSlugs() {
-    return servicesData.map((service)=>service.slug);
+    return servicesData.map((s)=>s.slug);
 }
 }),
 "[project]/components/header.tsx [app-ssr] (ecmascript)", ((__turbopack_context__) => {

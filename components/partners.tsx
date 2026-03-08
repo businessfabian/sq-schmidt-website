@@ -1,23 +1,22 @@
-"use client"
-
+import Link from "next/link"
 import { partnersData } from "@/lib/services-data"
+import { Building2, ArrowRight } from "lucide-react"
 
 interface Props {
   partner?: any[]
 }
 
 export function Partners({ partner }: Props) {
-  const list = (partner && partner.length > 0)
+  const allList = (partner && partner.length > 0)
     ? partner.map((p: any) => ({ name: p.name, beschreibung: p.beschreibung }))
     : partnersData.map((p) => ({ name: p.name, beschreibung: p.description }))
 
-  // Doppeln für nahtlose Endlosschleife
-  const doubled = [...list, ...list]
+  const list = allList.slice(0, 6)
 
   return (
-    <section id="partner" className="py-24 bg-background overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8 mb-14">
-        <div className="text-center">
+    <section id="partner" className="py-24 bg-background">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="text-center mb-14">
           <span className="text-primary text-sm font-semibold tracking-wider uppercase">Netzwerk</span>
           <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
             Unsere Kooperationspartner
@@ -26,37 +25,26 @@ export function Partners({ partner }: Props) {
             Wir arbeiten mit führenden Experten und Institutionen der Baubranche zusammen.
           </p>
         </div>
-      </div>
 
-      {/* Marquee Row 1 — links */}
-      <div className="relative">
-        <div className="flex gap-4 animate-marquee whitespace-nowrap">
-          {doubled.map((p, i) => (
-            <div key={i} className="inline-flex flex-col items-start flex-shrink-0 px-6 py-4 bg-card border border-border rounded-xl min-w-[200px] max-w-[240px]">
-              <span className="text-sm font-semibold text-foreground truncate w-full">{p.name}</span>
-              <span className="text-xs text-muted-foreground mt-1 line-clamp-1">{p.beschreibung}</span>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
+          {list.map((p: any, i: number) => (
+            <div key={i} className="flex items-center gap-4 p-5 bg-card border border-border rounded-xl hover:border-primary/50 transition-colors group">
+              <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+                <Building2 className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-foreground truncate">{p.name}</p>
+                <p className="text-xs text-muted-foreground truncate">{p.beschreibung}</p>
+              </div>
             </div>
           ))}
         </div>
-      </div>
 
-      {/* Marquee Row 2 — rechts (umgekehrt) */}
-      <div className="relative mt-4">
-        <div className="flex gap-4 animate-marquee-reverse whitespace-nowrap">
-          {[...doubled].reverse().map((p, i) => (
-            <div key={i} className="inline-flex flex-col items-start flex-shrink-0 px-6 py-4 bg-card border border-border rounded-xl min-w-[200px] max-w-[240px]">
-              <span className="text-sm font-semibold text-foreground truncate w-full">{p.name}</span>
-              <span className="text-xs text-muted-foreground mt-1 line-clamp-1">{p.beschreibung}</span>
-            </div>
-          ))}
+        <div className="mt-10 flex justify-center">
+          <Link href="/partner" className="inline-flex items-center gap-2 text-sm text-primary hover:underline">
+            Alle Partner ansehen <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
-      </div>
-
-      <div className="mt-12 text-center">
-        <p className="text-sm text-muted-foreground">
-          Interessiert an einer Partnerschaft?{" "}
-          <a href="#kontakt" className="text-primary hover:underline">Kontaktieren Sie uns</a>
-        </p>
       </div>
     </section>
   )

@@ -22,10 +22,10 @@ export function Header({ einstellungen }: Props) {
   const telefonHref = "tel:+" + telefon.replace(/\D/g, "")
 
   const unternehmenLinks = [
-    { label: "Über Uns", href: "/#ueber-uns" },
-    { label: "Partner", href: "/#partner" },
+    { label: "Über Uns", href: "/ueber-uns" },
+    { label: "Partner", href: "/partner" },
     { label: "Aktuelles / Baurecht IBR", href: "/#aktuelles" },
-    { label: "Zertifikate", href: "/#zertifikate" },
+    { label: "Zertifikate", href: "/zertifikate" },
     { label: "Vita", href: "/#vita" },
   ]
 

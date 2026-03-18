@@ -87,13 +87,13 @@ export function ZertifikateGrid({ zertifikate = [] }: Props) {
       {selected && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
           onClick={() => setSelected(null)}>
-          <div className="relative bg-card border border-border rounded-2xl overflow-hidden max-w-2xl w-full shadow-2xl"
+          <div className="relative bg-card border border-border rounded-2xl overflow-hidden max-w-4xl w-full shadow-2xl"
             onClick={e => e.stopPropagation()}>
             <button onClick={() => setSelected(null)}
               className="absolute top-4 right-4 z-10 h-9 w-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-black/70 transition-colors">
               <X className="h-4 w-4 text-white" />
             </button>
-            <div className="relative aspect-[4/3] w-full bg-zinc-950 flex items-center justify-center">
+            <div className="relative aspect-[4/3] w-full min-h-[500px] bg-zinc-950 flex items-center justify-center">
               {bildUrl(selected) ? (
                 <Image src={bildUrl(selected)!} alt={selected.name} fill className="object-contain p-8" />
               ) : (

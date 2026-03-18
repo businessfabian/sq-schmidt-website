@@ -1,3 +1,5 @@
+export const revalidate = 0
+
 import { Header } from "@/components/header-wrapper"
 import { Hero } from "@/components/hero"
 import { Services } from "@/components/services"

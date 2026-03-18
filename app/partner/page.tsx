@@ -1,4 +1,4 @@
-import { Header } from "@/components/header"
+import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { partnersData } from "@/lib/services-data"
 import { Building2, ExternalLink } from "lucide-react"

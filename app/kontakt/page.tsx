@@ -1,4 +1,4 @@
-import { Header } from "@/components/header"
+import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { ContactForm } from "@/components/contact-form"
 import { getEinstellungen } from "@/sanity/lib/queries"

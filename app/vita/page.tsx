@@ -1,4 +1,4 @@
-import { Header } from "@/components/header"
+import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { getEinstellungen } from "@/sanity/lib/queries"
 import { GraduationCap, Briefcase, Award, Building2, Users, BookOpen, ArrowRight } from "lucide-react"

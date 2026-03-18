@@ -1,4 +1,4 @@
-import { Header } from "@/components/header"
+import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { getEinstellungen } from "@/sanity/lib/queries"
 import { ShieldCheck, Award, Users, Building2, CheckCircle2, ArrowRight } from "lucide-react"

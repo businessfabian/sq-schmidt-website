@@ -6,8 +6,7 @@ export async function getEinstellungen() {
 
 export async function getLeistungen() {
   return client.fetch(`*[_type == "leistung"] | order(reihenfolge asc) {
-    _id, titel, slug, kurzBeschreibung, beschreibung,
-    "bild": bild.asset->url
+    _id, titel, slug, kurzBeschreibung, beschreibung, icon, aktiv, reihenfolge
   }`)
 }
 
@@ -23,4 +22,14 @@ export async function getZertifikate() {
     _id, name, beschreibung,
     "bild": bild.asset->url
   }`)
+}
+
+export async function getSeminare() {
+  return client.fetch(`*[_type == "seminartermin" && aktiv == true] | order(datum asc) {
+    _id, titel, slug, kategorie, datum, uhrzeit, ort, beschreibung, preis, anmeldeLink
+  }`)
+}
+
+export async function getSeminarBySlug(slug: string) {
+  return client.fetch(`*[_type == "seminartermin" && slug.current == $slug][0]`, { slug })
 }

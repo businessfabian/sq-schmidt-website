@@ -186,6 +186,9 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   }
 
   const showSave = isFormSection || isEditingItem || activeSection === "navigation"
+  // Partner/Zertifikate Speichern nur im Edit-Modus zeigen
+  const showSaveButton = activeSection === "partner" ? (editPartner !== null || newPartner) :
+    activeSection === "zertifikate" ? (editZertifikat !== null || newZertifikat) : showSave
 
   return (
     <div className="min-h-screen bg-zinc-950 flex">
@@ -227,7 +230,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
             <h1 className="text-white font-semibold">{navItems.find(n => n.id === activeSection)?.label}</h1>
             <p className="text-zinc-500 text-sm">Aenderungen werden sofort nach dem Speichern sichtbar</p>
           </div>
-          {showSave && (
+          {showSaveButton && (
             <button onClick={getSaveAction()} disabled={saving}
               className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-50">
               {saving ? <><Loader2 className="h-4 w-4 animate-spin" /> Speichern...</>

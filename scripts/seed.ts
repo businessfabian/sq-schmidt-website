@@ -50,10 +50,14 @@ const partner = [
 
 // ── Zertifikate ───────────────────────────────────────────────────────────
 const zertifikate = [
-  { name: "TUeV Rheinland", beschreibung: "Zertifizierter Sachverstaendiger fuer Schaeden an Gebaeuden", reihenfolge: 1 },
-  { name: "IHK Konstanz", beschreibung: "Oeffentlich bestellter und vereidigter Sachverstaendiger", reihenfolge: 2 },
-  { name: "IQ-ZERT", beschreibung: "EU-zertifizierter Sachverstaendiger nach DIN EN ISO/IEC 17024", reihenfolge: 3 },
-  { name: "BVS", beschreibung: "Bundesverband oeffentlich bestellter Sachverstaendiger", reihenfolge: 4 },
+  { name: "Beratender Ingenieur", beschreibung: "Ingenieurkammer Baden-Wuerttemberg Nr. 2333 — seit 22. Juli 2020", reihenfolge: 1 },
+  { name: "IQ-ZERT Sachverstaendiger", beschreibung: "Bau-Sachverstaendiger fuer Schaeden an Gebaeuden nach DIN EN ISO/IEC 17024 — Zertifikat Nr. S 465", reihenfolge: 2 },
+  { name: "TUeV Rheinland", beschreibung: "Sachverstaendiger fuer Erkennung, Bewertung und Sanierung von Schimmelpilzbelastungen (TUeV PersCert) — Nr. 62172", reihenfolge: 3 },
+  { name: "SiGeKo", beschreibung: "Sicherheits- und Gesundheitsschutzkoordinator nach Baustellenverordnung — Ingenieurakademie BW, April 2001", reihenfolge: 4 },
+  { name: "Sachverstaendigen Akademie Aachen", beschreibung: "Zertifizierung gemaess DIN EN ISO/IEC 17024 im Bereich Schaeden an Gebaeuden — Dezember 2009", reihenfolge: 5 },
+  { name: "Vorsitzender Meisterpruefungsausschuss", beschreibung: "Handwerkskammer Konstanz — Maurer- und Betonbauer-Handwerk, berufen durch Regierungspraesidium Freiburg 2025-2029", reihenfolge: 6 },
+  { name: "Dipl.-Ing. (FH) Baubetrieb", beschreibung: "Fachhochschule Karlsruhe — Bauingenieurwesen, Studiengang Baubetrieb, Januar 1992", reihenfolge: 7 },
+  { name: "Maurer Gesellenpruefung", beschreibung: "Handwerkskammer Konstanz — Baugewerks-Innung Schwarzwald-Baar, Gesamtnote gut, September 1984", reihenfolge: 8 },
 ]
 
 // ── Einstellungen ─────────────────────────────────────────────────────────

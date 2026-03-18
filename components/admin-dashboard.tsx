@@ -112,6 +112,8 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
       const res = await fetch("/api/admin/save", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) })
       if (!res.ok) throw new Error()
       setSaved(true); setTimeout(() => setSaved(false), 3000)
+      // Website Cache leeren
+      fetch("/api/revalidate", { method: "POST", headers: { "x-webhook-secret": "meyso2024secret" } }).catch(() => {})
     } catch { setError("Fehler beim Speichern.") } finally { setSaving(false) }
   }
 

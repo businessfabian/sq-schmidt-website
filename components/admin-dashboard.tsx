@@ -123,7 +123,6 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
       if (editItem) {
         await fetch(`/api/admin/${type}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ _id: editItem._id, ...itemForm }) })
       } else {
-      await load(type); setEdit(null); setNew(false)
       fetch("/api/revalidate", { method: "POST", headers: { "x-webhook-secret": "meyso2024secret" } }).catch(() => {})
       await load(type); setEdit(null); setNew(false)
     } catch { setError("Fehler.") } finally { setSaving(false) }

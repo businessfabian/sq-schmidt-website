@@ -606,6 +606,40 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
             </div>
           )}
 
+          {activeSection === "extras" && (
+            <div className="space-y-8">
+              <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-2xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <BarChart2 className="h-4 w-4 text-primary" />
+                  </div>
+                  <div><h3 className="text-white font-semibold text-sm">Google Analytics</h3><p className="text-zinc-500 text-xs">Website-Besucher tracken</p></div>
+                  <div className={`ml-auto px-2.5 py-1 rounded-full text-xs font-medium ${form.googleAnalyticsId ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>{form.googleAnalyticsId ? "Aktiv" : "Inaktiv"}</div>
+                </div>
+                <Field label="Google Analytics ID" value={form.googleAnalyticsId ?? ""} onChange={v => { setForm((p: any) => ({...p, googleAnalyticsId: v})); setSaved(false) }} placeholder="G-XXXXXXXXXX" hint="Finden Sie unter analytics.google.com" />
+              </div>
+              <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-2xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center"><Sparkles className="h-4 w-4 text-primary" /></div>
+                  <div><h3 className="text-white font-semibold text-sm">Cookie Banner</h3><p className="text-zinc-500 text-xs">DSGVO Cookie Hinweis</p></div>
+                  <button onClick={() => { setForm((p: any) => ({...p, cookieBannerAktiv: !p.cookieBannerAktiv})); setSaved(false) }} className={`ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${form.cookieBannerAktiv ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>{form.cookieBannerAktiv ? "Aktiv" : "Inaktiv"}</button>
+                </div>
+                <TextareaField label="Banner Text" value={form.cookieBannerText ?? ""} onChange={(v: string) => { setForm((p: any) => ({...p, cookieBannerText: v})); setSaved(false) }} rows={2} hint="Leer lassen fuer Standard-Text" />
+              </div>
+              <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-2xl opacity-60">
+                <h3 className="text-white font-semibold text-sm mb-4">Demnachst verfuegbar</h3>
+                <div className="space-y-3">
+                  {[{label:"KI-Texte generieren",desc:"Leistungstexte mit KI verbessern"},{label:"Chat-Widget",desc:"KI-Assistent auf der Website"},{label:"Monatlicher Bericht",desc:"Automatischer Performance-Bericht"},{label:"Google Bewertungen",desc:"Bewertungen im Dashboard"},{label:"Termin-Buchung",desc:"Online-Kalender fuer Kunden"}].map((f,i) => (
+                    <div key={i} className="flex items-center gap-3 p-3 bg-zinc-800 rounded-xl">
+                      <Sparkles className="h-4 w-4 text-zinc-500 flex-shrink-0" />
+                      <div><p className="text-zinc-300 text-sm font-medium">{f.label}</p><p className="text-zinc-500 text-xs">{f.desc}</p></div>
+                      <span className="ml-auto text-xs px-2 py-0.5 bg-zinc-700 text-zinc-400 rounded-full">Bald</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
           {activeSection === "seo" && (
             <div className="space-y-6">
               <Field label="SEO Titel" value={form.seoTitel} onChange={v => setForm(p => ({...p, seoTitel: v}))} hint="Browser-Tab und Google (max. 60 Zeichen)" />

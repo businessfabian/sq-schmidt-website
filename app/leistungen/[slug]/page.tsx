@@ -1,237 +1,143 @@
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, ArrowRight, Check, Phone } from "lucide-react"
-import { getServiceBySlug, servicesData } from "@/lib/services-data"
 import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
+import { getEinstellungen, getLeistungen } from "@/sanity/lib/queries"
+import { getServiceBySlug, servicesData } from "@/lib/services-data"
+import { notFound } from "next/navigation"
+import { CheckCircle2, ArrowRight, ArrowLeft } from "lucide-react"
+import Link from "next/link"
+import * as Icons from "lucide-react"
 
-export function generateStaticParams() {
-  return servicesData.map((service) => ({
-    slug: service.slug,
-  }))
+export async function generateStaticParams() {
+  const leistungen = await getLeistungen()
+  const sanityslugs = leistungen.map((l: any) => ({ slug: l.slug?.current ?? l.slug }))
+  const staticSlugs = servicesData.map(s => ({ slug: s.slug }))
+  return [...sanityslugs, ...staticSlugs]
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export default async function LeistungDetailPage({ params }: { params: { slug: string } }) {
   const { slug } = await params
-  const service = getServiceBySlug(slug)
+  const [einstellungen, leistungen] = await Promise.all([getEinstellungen(), getLeistungen()])
 
-  if (!service) {
-    return { title: "Leistung nicht gefunden" }
+  // Sanity zuerst, dann statischer Fallback
+  const sanityLeistung = leistungen.find((l: any) => (l.slug?.current ?? l.slug) === slug)
+  const staticLeistung = getServiceBySlug(slug)
+
+  if (!sanityLeistung && !staticLeistung) notFound()
+
+  function getIcon(iconName: string) {
+    const Icon = (Icons as any)[iconName]
+    return Icon ?? Icons.ShieldCheck
   }
 
-  return {
-    title: `${service.title} | SQ Schmidt Qualitätssicherung`,
-    description: service.fullDescription,
+  if (sanityLeistung) {
+    const Icon = getIcon(sanityLeistung.icon)
+    return (
+      <>
+        <Header einstellungen={einstellungen} />
+        <main className="min-h-screen bg-background">
+          <section className="relative bg-zinc-950 overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
+            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+            <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
+              <Link href="/leistungen" className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-300 mb-8 transition-colors">
+                <ArrowLeft className="h-4 w-4" /> Alle Leistungen
+              </Link>
+              <div className="flex items-start gap-6">
+                <div className="h-16 w-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                  <Icon className="h-8 w-8 text-primary" />
+                </div>
+                <div>
+                  <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>
+                    {sanityLeistung.titel}
+                  </h1>
+                  <p className="text-zinc-400 text-lg max-w-2xl">{sanityLeistung.kurzBeschreibung}</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="py-16">
+            <div className="mx-auto max-w-4xl px-6 lg:px-8">
+              <div className="grid lg:grid-cols-3 gap-10">
+                <div className="lg:col-span-2">
+                  <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap text-lg">
+                    {sanityLeistung.beschreibung || sanityLeistung.kurzBeschreibung}
+                  </p>
+                </div>
+                <div className="space-y-4">
+                  <div className="p-6 bg-card border border-border rounded-2xl">
+                    <h3 className="font-semibold text-foreground mb-4">Jetzt anfragen</h3>
+                    <p className="text-sm text-muted-foreground mb-4">Kostenlose Erstberatung — wir melden uns innerhalb von 24 Stunden.</p>
+                    <Link href="/kontakt" className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all">
+                      Anfrage senden <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+        <Footer einstellungen={einstellungen} />
+      </>
+    )
   }
-}
 
-export default async function ServicePage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  const service = getServiceBySlug(slug)
-
-  if (!service) {
-    notFound()
-  }
-
-  const currentIndex = servicesData.findIndex((s) => s.slug === slug)
-  const prevService = currentIndex > 0 ? servicesData[currentIndex - 1] : null
-  const nextService = currentIndex < servicesData.length - 1 ? servicesData[currentIndex + 1] : null
-
-  const ServiceIcon = service.icon
-
+  // Statischer Fallback
+  const service = staticLeistung!
+  const Icon = service.icon
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-
-      <main className="pt-20">
-        {/* Hero Section */}
-        <section className="py-20 lg:py-28 bg-secondary/30 border-b border-border">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <Link
-              href="/#leistungen"
-              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Zurück zur Übersicht
+    <>
+      <Header einstellungen={einstellungen} />
+      <main className="min-h-screen bg-background">
+        <section className="relative bg-zinc-950 overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
+            <Link href="/leistungen" className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-300 mb-8 transition-colors">
+              <ArrowLeft className="h-4 w-4" /> Alle Leistungen
             </Link>
-
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">
-              <div className="flex-1">
-                <div className="h-16 w-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
-                  <ServiceIcon className="h-8 w-8 text-primary" />
-                </div>
-                <h1
-                  className="text-4xl sm:text-5xl font-bold tracking-tight text-foreground mb-6"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  {service.title}
-                </h1>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                  {service.fullDescription}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                  <Button size="lg" asChild>
-                    <Link href="/#kontakt">Beratung anfragen</Link>
-                  </Button>
-                  <Button variant="outline" size="lg" asChild>
-                    <a href="tel:+4989123456">
-                      <Phone className="h-4 w-4 mr-2" />
-                      +49 (0) 89 123 456
-                    </a>
-                  </Button>
-                </div>
+            <div className="flex items-start gap-6">
+              <div className="h-16 w-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                <Icon className="h-8 w-8 text-primary" />
               </div>
-              
-              <div className="w-full lg:w-96 flex-shrink-0">
-                <div className="relative rounded-2xl overflow-hidden border border-border">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    width={400}
-                    height={300}
-                    className="w-full h-auto object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-                </div>
+              <div>
+                <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>{service.title}</h1>
+                <p className="text-zinc-400 text-lg max-w-2xl">{service.shortDescription}</p>
               </div>
             </div>
           </div>
         </section>
-
-        {/* Features Section */}
-        <section className="py-20 lg:py-28">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="flex flex-col items-center text-center gap-4 mb-16">
-              <span className="text-sm font-medium text-primary uppercase tracking-wider">
-                Leistungsumfang
-              </span>
-              <h2
-                className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Was wir für Sie tun
-              </h2>
-            </div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {service.features.map((feature, index) => (
-                <Card key={index} className="bg-card border-border">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start gap-4">
-                      <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <Check className="h-4 w-4 text-primary" />
-                      </div>
-                      <p className="text-foreground">{feature}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Process Section */}
-        <section className="py-20 lg:py-28 bg-secondary/30">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="flex flex-col items-center text-center gap-4 mb-16">
-              <span className="text-sm font-medium text-primary uppercase tracking-wider">
-                Unser Vorgehen
-              </span>
-              <h2
-                className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                So arbeiten wir
-              </h2>
-            </div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {service.process.map((step, index) => (
-                <Card key={index} className="bg-card border-border relative overflow-hidden">
-                  <CardHeader>
-                    <div className="text-6xl font-bold text-primary/10 absolute top-4 right-4">
-                      {step.step}
-                    </div>
-                    <CardTitle
-                      className="text-xl text-foreground relative z-10"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {step.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{step.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-20 lg:py-28 border-t border-border">
-          <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
-            <h2
-              className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-6"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              Bereit für Ihr Projekt?
-            </h2>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Kontaktieren Sie uns für eine unverbindliche Beratung. Wir sind für Sie da und
-              unterstützen Sie bei allen Fragen rund um die Qualitätssicherung.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" asChild>
-                <Link href="/#kontakt">Kontakt aufnehmen</Link>
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <a href="tel:+4989123456">
-                  <Phone className="h-4 w-4 mr-2" />
-                  Jetzt anrufen
-                </a>
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Navigation Section */}
-        <section className="py-8 border-t border-border bg-secondary/30">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="flex justify-between items-center">
-              {prevService ? (
-                <Link
-                  href={`/leistungen/${prevService.slug}`}
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                  <span className="hidden sm:inline">{prevService.title}</span>
-                  <span className="sm:hidden">Zurück</span>
-                </Link>
-              ) : (
-                <div />
-              )}
-              {nextService ? (
-                <Link
-                  href={`/leistungen/${nextService.slug}`}
-                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <span className="hidden sm:inline">{nextService.title}</span>
-                  <span className="sm:hidden">Weiter</span>
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              ) : (
-                <div />
-              )}
+        <section className="py-16">
+          <div className="mx-auto max-w-4xl px-6 lg:px-8">
+            <div className="grid lg:grid-cols-3 gap-10">
+              <div className="lg:col-span-2 space-y-8">
+                <p className="text-muted-foreground leading-relaxed text-lg">{service.fullDescription}</p>
+                {service.features && (
+                  <div>
+                    <h2 className="text-xl font-semibold text-foreground mb-4">Leistungsumfang</h2>
+                    <ul className="space-y-2">
+                      {service.features.map((f: string, i: number) => (
+                        <li key={i} className="flex items-center gap-3 text-muted-foreground">
+                          <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />{f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+              <div className="space-y-4">
+                <div className="p-6 bg-card border border-border rounded-2xl">
+                  <h3 className="font-semibold text-foreground mb-4">Jetzt anfragen</h3>
+                  <p className="text-sm text-muted-foreground mb-4">Kostenlose Erstberatung — wir melden uns innerhalb von 24 Stunden.</p>
+                  <Link href="/kontakt" className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all">
+                    Anfrage senden <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </section>
       </main>
-
-      <Footer />
-    </div>
+      <Footer einstellungen={einstellungen} />
+    </>
   )
 }

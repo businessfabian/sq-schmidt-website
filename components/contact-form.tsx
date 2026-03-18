@@ -1,13 +1,12 @@
 "use client"
 import Link from "next/link"
-
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { CheckCircle, Phone, Mail, MapPin, Clock } from "lucide-react"
+import { CheckCircle, Phone, Mail, MapPin, Clock, Loader2, ArrowRight } from "lucide-react"
 
 interface Props {
   einstellungen?: any
@@ -15,10 +14,14 @@ interface Props {
 
 export function ContactForm({ einstellungen }: Props) {
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [leistung, setLeistung] = useState("")
+
   const telefon = einstellungen?.telefon ?? "07726 / 929394"
   const email = einstellungen?.email ?? "sqs@sq-sv.de"
   const adresse = einstellungen?.adresse ?? "Marktplatz 21, 78647 Trossingen"
-  const oeffnungszeiten = einstellungen?.oeffnungszeiten ?? "Moâ€“Fr 8:00â€“18:00 Uhr"
+  const oeffnungszeiten = einstellungen?.oeffnungszeiten ?? "Mo-Fr 8:00-18:00 Uhr"
   const telefonHref = "tel:+" + telefon.replace(/\D/g, "")
 
   const kontaktInfos = [
@@ -28,13 +31,63 @@ export function ContactForm({ einstellungen }: Props) {
     { icon: Clock, label: "Erreichbarkeit", value: oeffnungszeiten, href: null },
   ]
 
+  const leistungen = [
+    "Baubegleitende Qualitaetssicherung",
+    "Projektleitung / Bauleitung",
+    "Maengelmanagement",
+    "Baucontrolling / Bauabnahmen",
+    "Beweissicherungsverfahren",
+    "Schadensgutachten",
+    "Sanierungskonzepte",
+    "Blower-Door-Test",
+    "SiGeKo",
+    "Schimmelpilzbelastungen",
+    "Baumediation",
+    "Seminare / Beratung",
+    "Sonstiges",
+  ]
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setLoading(true)
+    setError("")
+    const form = e.currentTarget
+    const data = {
+      vorname: (form.querySelector("#vorname") as HTMLInputElement).value,
+      nachname: (form.querySelector("#nachname") as HTMLInputElement).value,
+      email: (form.querySelector("#email") as HTMLInputElement).value,
+      telefon: (form.querySelector("#telefon") as HTMLInputElement).value,
+      leistung,
+      nachricht: (form.querySelector("#nachricht") as HTMLTextAreaElement).value,
+    }
+    try {
+      const res = await fetch("/api/kontakt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+      if (!res.ok) throw new Error()
+      setSubmitted(true)
+    } catch {
+      setError("Beim Senden ist ein Fehler aufgetreten. Bitte rufen Sie uns direkt an.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
   if (submitted) {
     return (
       <section id="kontakt" className="py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-6 lg:px-8 text-center">
-          <CheckCircle className="h-16 w-16 text-primary mx-auto mb-6" />
-          <h2 className="text-3xl font-bold text-foreground mb-4">Vielen Dank!</h2>
-          <p className="text-muted-foreground">Ihre Anfrage wurde gesendet. Wir melden uns innerhalb von 24 Stunden.</p>
+          <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 mx-auto mb-6">
+            <CheckCircle className="h-10 w-10 text-primary" />
+          </div>
+          <h2 className="text-3xl font-bold text-foreground mb-4" style={{ fontFamily: "var(--font-display)" }}>
+            Vielen Dank!
+          </h2>
+          <p className="text-muted-foreground max-w-md mx-auto">
+            Ihre Anfrage wurde erfolgreich gesendet. Wir melden uns innerhalb von 24 Stunden.
+          </p>
         </div>
       </section>
     )
@@ -45,8 +98,12 @@ export function ContactForm({ einstellungen }: Props) {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-16">
           <span className="text-primary text-sm font-semibold tracking-wider uppercase">Kontakt</span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>Sprechen wir Ã¼ber Ihr Projekt</h2>
-          <p className="mt-4 text-muted-foreground">Kontaktieren Sie uns fÃ¼r eine kostenlose Erstberatung. Wir melden uns innerhalb von 24 Stunden.</p>
+          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
+            Sprechen wir ueber Ihr Projekt
+          </h2>
+          <p className="mt-4 text-muted-foreground">
+            Kontaktieren Sie uns fuer eine kostenlose Erstberatung. Wir melden uns innerhalb von 24 Stunden.
+          </p>
         </div>
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           <div className="flex flex-col gap-6">
@@ -66,45 +123,57 @@ export function ContactForm({ einstellungen }: Props) {
               </div>
             ))}
           </div>
-          <div className="bg-card border border-border rounded-2xl p-8">
+          <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-8">
             <div className="flex flex-col gap-5">
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="vorname">Vorname</Label>
-                  <Input id="vorname" placeholder="Max" />
+                  <Label htmlFor="vorname">Vorname *</Label>
+                  <Input id="vorname" placeholder="Max" required />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Label htmlFor="nachname">Nachname</Label>
-                  <Input id="nachname" placeholder="Mustermann" />
+                  <Label htmlFor="nachname">Nachname *</Label>
+                  <Input id="nachname" placeholder="Mustermann" required />
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="email">E-Mail</Label>
-                <Input id="email" type="email" placeholder="max@beispiel.de" />
+                <Label htmlFor="email">E-Mail *</Label>
+                <Input id="email" type="email" placeholder="max@beispiel.de" required />
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="telefon">Telefon (optional)</Label>
                 <Input id="telefon" type="tel" placeholder="+49 123 456789" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label>GewÃ¼nschte Leistung</Label>
-                <Select>
-                  <SelectTrigger><SelectValue placeholder="Bitte wÃ¤hlen" /></SelectTrigger>
+                <Label>Gewuenschte Leistung</Label>
+                <Select onValueChange={setLeistung}>
+                  <SelectTrigger><SelectValue placeholder="Bitte waehlen" /></SelectTrigger>
                   <SelectContent>
-                    {["Baubegleitende QualitÃ¤tssicherung", "MÃ¤ngelmanagement", "Baucontrolling", "Schadensgutachten", "Sanierungskonzepte", "Baumediation", "Seminare", "Sonstiges"].map((l) => (
+                    {leistungen.map((l) => (
                       <SelectItem key={l} value={l}>{l}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="nachricht">Nachricht</Label>
-                <Textarea id="nachricht" placeholder="Beschreiben Sie kurz Ihr Anliegen..." rows={4} />
+                <Label htmlFor="nachricht">Nachricht *</Label>
+                <Textarea id="nachricht" placeholder="Beschreiben Sie kurz Ihr Anliegen..." rows={4} required />
               </div>
-              <Button size="lg" className="w-full" onClick={() => setSubmitted(true)}>Anfrage senden â†’</Button>
-              <p className="text-xs text-muted-foreground text-center">Mit dem Absenden stimmen Sie unserer <Link href="/datenschutz" className="text-primary hover:underline">DatenschutzerklÃ¤rung</Link> zu.</p>
+              {error && (
+                <p className="text-sm text-destructive bg-destructive/10 px-4 py-3 rounded-lg">{error}</p>
+              )}
+              <Button size="lg" className="w-full gap-2" type="submit" disabled={loading}>
+                {loading ? (
+                  <><Loader2 className="h-4 w-4 animate-spin" /> Wird gesendet...</>
+                ) : (
+                  <>Anfrage senden <ArrowRight className="h-4 w-4" /></>
+                )}
+              </Button>
+              <p className="text-xs text-muted-foreground text-center">
+                Mit dem Absenden stimmen Sie unserer{" "}
+                <Link href="/datenschutz" className="text-primary hover:underline">Datenschutzerklaerung</Link> zu.
+              </p>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </section>

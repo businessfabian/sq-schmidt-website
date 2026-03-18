@@ -10,6 +10,19 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 
+const KNOWN_PAGES = [
+  { label: "Startseite", value: "/" },
+  { label: "Leistungen Uebersicht", value: "/leistungen" },
+  { label: "Ueber Uns", value: "/ueber-uns" },
+  { label: "Partner", value: "/partner" },
+  { label: "Aktuelles / Baurecht IBR", value: "/aktuelles" },
+  { label: "Zertifikate", value: "/zertifikate" },
+  { label: "Vita", value: "/vita" },
+  { label: "Seminartermine", value: "/seminare" },
+  { label: "Kontakt", value: "/kontakt" },
+  { label: "Impressum", value: "/impressum" },
+  { label: "Datenschutz", value: "/datenschutz" },
+]
 type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "navigation" | "seo"
 
 interface Leistung {
@@ -545,7 +558,21 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                       {navForm.typ === "leistungen" ? "Zeigt automatisch alle aktiven Leistungen" : navForm.typ === "seminare" ? "Zeigt automatisch Seminar-Kategorien" : ""}
                     </p>
                   </div>
-                  {navForm.typ === "link" && <Field label="Link" icon={<LinkIcon className="h-4 w-4" />} value={navForm.href ?? ""} onChange={v => setNavForm(p => ({ ...p, href: v }))} placeholder="/kontakt oder https://..." />}
+                  {navForm.typ === "link" && (
+                    <div>
+                      <label className="block text-sm font-medium text-zinc-300 mb-2">Zielseite</label>
+                      <select value={navForm.href ?? ""} onChange={e => setNavForm(p => ({ ...p, href: e.target.value }))}
+                        className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary mb-2">
+                        <option value="">Bitte waehlen...</option>
+                        {KNOWN_PAGES.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
+                        <option value="extern">Externer Link (URL eingeben)</option>
+                      </select>
+                      {navForm.href === "extern" && (
+                        <input type="url" placeholder="https://..." onChange={e => setNavForm(p => ({ ...p, href: e.target.value }))}
+                          className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary" />
+                      )}
+                    </div>
+                  )}
                   {navForm.typ === "dropdown" && (
                     <div>
                       <label className="block text-sm font-medium text-zinc-300 mb-2">Unterpunkte</label>

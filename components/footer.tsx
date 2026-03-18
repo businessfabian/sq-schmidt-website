@@ -35,17 +35,17 @@ export function Footer({ einstellungen }: Props) {
             <h4 className="text-sm font-semibold text-foreground mb-4">Leistungen</h4>
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
               {["Baubegleitende Qualitätssicherung", "Mängelmanagement", "Baucontrolling", "Schadensgutachten", "Sanierungskonzepte", "Baumediation"].map((l) => (
-                <li key={l}><a href="#leistungen" className="hover:text-primary transition-colors">{l}</a></li>
+                <li key={l}><a href="/leistungen" className="hover:text-primary transition-colors">{l}</a></li>
               ))}
             </ul>
           </div>
           <div>
             <h4 className="text-sm font-semibold text-foreground mb-4">Unternehmen</h4>
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <li><a href="#ueber-uns" className="hover:text-primary transition-colors">Über Uns</a></li>
-              <li><a href="#partner" className="hover:text-primary transition-colors">Partner</a></li>
-              <li><a href="#zertifikate" className="hover:text-primary transition-colors">Zertifikate</a></li>
-              <li><a href="#kontakt" className="hover:text-primary transition-colors">Kontakt</a></li>
+              <li><a href="/ueber-uns" className="hover:text-primary transition-colors">Über Uns</a></li>
+              <li><a href="/partner" className="hover:text-primary transition-colors">Partner</a></li>
+              <li><a href="/zertifikate" className="hover:text-primary transition-colors">Zertifikate</a></li>
+              <li><a href="/kontakt" className="hover:text-primary transition-colors">Kontakt</a></li>
             </ul>
             <h4 className="text-sm font-semibold text-foreground mb-4 mt-6">Rechtliches</h4>
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground">

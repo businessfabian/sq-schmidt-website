@@ -121,11 +121,13 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     setSaving(true)
     try {
       if (editItem) {
-        await fetch(`/api/admin/${type}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ _id: editItem._id, ...itemForm }) })
+        await fetch(/api/admin/+type, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ _id: editItem._id, ...itemForm }) })
       } else {
-      fetch("/api/revalidate", { method: "POST", headers: { "x-webhook-secret": "meyso2024secret" } }).catch(() => {})
+        await fetch(/api/admin/+type, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(itemForm) })
+      }
       await load(type); setEdit(null); setNew(false)
-    } catch { setError("Fehler.") } finally { setSaving(false) }
+      fetch('/api/revalidate', { method: 'POST', headers: { 'x-webhook-secret': 'meyso2024secret' } }).catch(() => {})
+    } catch { setError('Fehler.') } finally { setSaving(false) }
   }
 
   async function deleteItem(type: string, id: string) {

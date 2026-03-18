@@ -1,4 +1,5 @@
 "use client"
+import { AdminImageUpload } from "./admin-image-upload"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import {
@@ -447,6 +448,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                   <Field label="Name *" value={partnerForm.name} onChange={v => setPartnerForm(p => ({...p, name: v}))} placeholder="z.B. TUeV Rheinland" />
                   <Field label="Beschreibung" value={partnerForm.beschreibung} onChange={v => setPartnerForm(p => ({...p, beschreibung: v}))} placeholder="Technische Pruefung" />
                   <Field label="Webseite" value={partnerForm.webseite} onChange={v => setPartnerForm(p => ({...p, webseite: v}))} placeholder="https://..." type="url" />
+                  {editPartner && <AdminImageUpload documentId={editPartner._id} type="partner" onUploaded={(url) => console.log("Bild hochgeladen:", url)} />}
                   <NumberField label="Reihenfolge" value={partnerForm.reihenfolge} onChange={v => setPartnerForm(p => ({...p, reihenfolge: v}))} />
                 </div>
               )}
@@ -493,6 +495,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                   </div>
                   <Field label="Name *" value={zertifikatForm.name} onChange={v => setZertifikatForm(p => ({...p, name: v}))} placeholder="z.B. TUeV Zertifizierung" />
                   <Field label="Beschreibung" value={zertifikatForm.beschreibung} onChange={v => setZertifikatForm(p => ({...p, beschreibung: v}))} placeholder="Zertifizierter Sachverstaendiger" />
+                  {editZertifikat && <AdminImageUpload documentId={editZertifikat._id} type="zertifikat" onUploaded={(url) => console.log("Bild hochgeladen:", url)} />}
                   <NumberField label="Reihenfolge" value={zertifikatForm.reihenfolge} onChange={v => setZertifikatForm(p => ({...p, reihenfolge: v}))} />
                 </div>
               )}

@@ -28,7 +28,7 @@ export default function LeistungenPage() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {servicesData.map((service) => (
-              <Link key={service.slug} href={`/leistungen/${service.slug}`} className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 transition-all">
+              <Link key={service.slug} href={`/leistungen/${service.slug?.current ?? service.slug}`} className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 transition-all">
                 <div className="relative h-48 w-full overflow-hidden">
                   <Image src={service.image} alt={service.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />

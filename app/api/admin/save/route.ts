@@ -8,7 +8,6 @@ export async function POST(req: Request) {
   if (!auth || auth.value !== "true") {
     return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   }
-
   const client = createClient({
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
@@ -16,9 +15,7 @@ export async function POST(req: Request) {
     apiVersion: "2024-01-01",
     useCdn: false,
   })
-
   const data = await req.json()
-
   try {
     const existing = await client.fetch(`*[_type == "einstellungen"][0]._id`)
     if (existing) {

@@ -102,7 +102,7 @@ async function seed() {
     await client.create({
       _type: "leistung",
       ...l,
-      slug: { _type: "slug", current: l.titel.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "") },
+      slug: { _type: "slug", current: l.titel.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-") },
       aktiv: true,
     })
   }

@@ -34,7 +34,7 @@ export async function POST(req: Request) {
   const result = await client.create({
     _type: "leistung",
     titel: data.titel,
-    slug: { _type: "slug", current: data.titel.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "") },
+    slug: { _type: "slug", current: data.titel.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-") },
     kurzBeschreibung: data.kurzBeschreibung,
     beschreibung: data.beschreibung,
     icon: data.icon ?? "ShieldCheck",
@@ -51,7 +51,7 @@ export async function PATCH(req: Request) {
   const { _id, ...data } = await req.json()
   const result = await client.patch(_id).set({
     ...data,
-    slug: { _type: "slug", current: data.titel.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "") },
+    slug: { _type: "slug", current: data.titel.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-") },
   }).commit()
   return NextResponse.json(result)
 }

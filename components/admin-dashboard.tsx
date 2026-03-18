@@ -600,6 +600,99 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
             </div>
           )}
 
+
+          {/* PARTNER */}
+          {activeSection === "partner" && (
+            <div className="space-y-4">
+              {!editPartner && !newPartner ? (
+                <>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-zinc-400 text-sm">{partner.length} Partner</p>
+                    <button onClick={() => { setNewPartner(true); setPartnerForm({ name: "", beschreibung: "", webseite: "", aktiv: true, reihenfolge: partner.length + 1 }) }}
+                      className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90">
+                      <Plus className="h-4 w-4" /> Neuer Partner
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    {partner.map((p) => (
+                      <div key={p._id} className="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
+                        <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <Users className="h-5 w-5 text-primary" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white font-medium text-sm">{p.name}</p>
+                          <p className="text-zinc-500 text-xs">{p.beschreibung}</p>
+                        </div>
+                        <div className="flex gap-2">
+                          <button onClick={() => { setEditPartner(p); setPartnerForm({ name: p.name, beschreibung: p.beschreibung, webseite: p.webseite, aktiv: p.aktiv, reihenfolge: p.reihenfolge }) }}
+                            className="p-2 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-700"><Pencil className="h-4 w-4" /></button>
+                          <button onClick={async () => { await fetch("/api/admin/partner", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ _id: p._id }) }); const r = await fetch("/api/admin/partner"); setPartner(await r.json()) }}
+                            className="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10"><Trash2 className="h-4 w-4" /></button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="space-y-5">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-white font-semibold">{editPartner ? "Partner bearbeiten" : "Neuer Partner"}</h2>
+                    <button onClick={() => { setEditPartner(null); setNewPartner(false) }} className="p-2 rounded-lg text-zinc-500 hover:text-white"><X className="h-4 w-4" /></button>
+                  </div>
+                  <Field label="Name *" value={partnerForm.name} onChange={(v: string) => setPartnerForm(p => ({ ...p, name: v }))} placeholder="z.B. TUeV Rheinland" />
+                  <Field label="Beschreibung" value={partnerForm.beschreibung} onChange={(v: string) => setPartnerForm(p => ({ ...p, beschreibung: v }))} placeholder="Technische Pruefung" />
+                  <Field label="Webseite" value={partnerForm.webseite} onChange={(v: string) => setPartnerForm(p => ({ ...p, webseite: v }))} placeholder="https://..." type="url" />
+                  <NumberField label="Reihenfolge" value={partnerForm.reihenfolge} onChange={(v: number) => setPartnerForm(p => ({ ...p, reihenfolge: v }))} />
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ZERTIFIKATE */}
+          {activeSection === "zertifikate" && (
+            <div className="space-y-4">
+              {!editZertifikat && !newZertifikat ? (
+                <>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-zinc-400 text-sm">{zertifikate.length} Zertifikate</p>
+                    <button onClick={() => { setNewZertifikat(true); setZertifikatForm({ name: "", beschreibung: "", aktiv: true, reihenfolge: zertifikate.length + 1 }) }}
+                      className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90">
+                      <Plus className="h-4 w-4" /> Neues Zertifikat
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    {zertifikate.map((z) => (
+                      <div key={z._id} className="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
+                        <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <Award className="h-5 w-5 text-primary" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white font-medium text-sm">{z.name}</p>
+                          <p className="text-zinc-500 text-xs">{z.beschreibung}</p>
+                        </div>
+                        <div className="flex gap-2">
+                          <button onClick={() => { setEditZertifikat(z); setZertifikatForm({ name: z.name, beschreibung: z.beschreibung, aktiv: z.aktiv, reihenfolge: z.reihenfolge }) }}
+                            className="p-2 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-700"><Pencil className="h-4 w-4" /></button>
+                          <button onClick={async () => { await fetch("/api/admin/zertifikate", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ _id: z._id }) }); const r = await fetch("/api/admin/zertifikate"); setZertifikate(await r.json()) }}
+                            className="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10"><Trash2 className="h-4 w-4" /></button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="space-y-5">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-white font-semibold">{editZertifikat ? "Zertifikat bearbeiten" : "Neues Zertifikat"}</h2>
+                    <button onClick={() => { setEditZertifikat(null); setNewZertifikat(false) }} className="p-2 rounded-lg text-zinc-500 hover:text-white"><X className="h-4 w-4" /></button>
+                  </div>
+                  <Field label="Name *" value={zertifikatForm.name} onChange={(v: string) => setZertifikatForm(p => ({ ...p, name: v }))} placeholder="z.B. TUeV Zertifizierung" />
+                  <Field label="Beschreibung" value={zertifikatForm.beschreibung} onChange={(v: string) => setZertifikatForm(p => ({ ...p, beschreibung: v }))} placeholder="Zertifizierter Sachverstaendiger" />
+                  <NumberField label="Reihenfolge" value={zertifikatForm.reihenfolge} onChange={(v: number) => setZertifikatForm(p => ({ ...p, reihenfolge: v }))} />
+                </div>
+              )}
+            </div>
+          )}
           {/* SEO */}
           {activeSection === "seo" && (
             <div className="space-y-6">

@@ -56,7 +56,7 @@ export default async function SeminarePage({ searchParams }: { searchParams: Pro
                 <p>Aktuell keine Seminartermine an diesem Ort.</p>
               </div>
             ) : (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {gefiltert.map((s: any) => (
                   <Link key={s._id} href={`/seminare/${s.slug?.current}`}
                     className="group p-6 bg-card border border-border rounded-2xl hover:border-primary/50 transition-all">

@@ -49,7 +49,7 @@ export default async function UeberUnsPage() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
             <div className="max-w-2xl">
               <span className="text-sm font-medium text-primary uppercase tracking-wider">Seit 2001</span>
-              <h1 className="text-5xl font-bold text-white mt-4 mb-6 leading-tight" style={{ fontFamily: "var(--font-display)" }}>Ueber uns</h1>
+              <h1 className="text-3xl sm:text-5xl font-bold text-white mt-4 mb-6 leading-tight" style={{ fontFamily: "var(--font-display)" }}>Ueber uns</h1>
               <p className="text-zinc-400 text-lg leading-relaxed">Ueber 20 Jahre Erfahrung in der Qualitaetssicherung und im Sachverstaendigenwesen — Ihr unabhaengiger Partner fuer komplexe Fragestellungen im Bauwesen.</p>
             </div>
           </div>

@@ -27,7 +27,7 @@ export default async function Home() {
     <main className="min-h-screen bg-background text-foreground">
       <Header einstellungen={einstellungen} />
       <Hero einstellungen={einstellungen} />
-      <Services />
+      <Services leistungen={leistungen} />
       <About einstellungen={einstellungen} />
       <Partners partner={partner} />
       <Certificates zertifikate={zertifikate} />

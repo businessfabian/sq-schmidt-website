@@ -50,6 +50,12 @@ export default defineType({
     defineField({ name: "verantwortlicherInhalte", title: "Verantwortlicher fuer Inhalte", type: "string", group: "impressum",
       description: "Falls abweichend vom Inhaber" }),
 
+    // Extras
+    defineField({ name: 'googleAnalyticsId', title: 'Google Analytics ID', type: 'string', group: 'extras',
+      description: 'z.B. G-XXXXXXXXXX' }),
+    defineField({ name: 'cookieBannerAktiv', title: 'Cookie Banner anzeigen', type: 'boolean', group: 'extras', initialValue: false }),
+    defineField({ name: 'cookieBannerText', title: 'Cookie Banner Text', type: 'text', rows: 2, group: 'extras' }),
+
     // SEO
     defineField({ name: "seoTitel", title: "SEO Titel", type: "string", group: "seo" }),
     defineField({ name: "seoBeschreibung", title: "SEO Beschreibung", type: "text", rows: 2, group: "seo" }),

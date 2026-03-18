@@ -8,11 +8,11 @@ import {
   LayoutDashboard, Settings, Eye, Briefcase, Calendar,
   Plus, Pencil, Trash2, X, ToggleLeft, ToggleRight,
   Navigation, GripVertical, Link as LinkIcon, ChevronDown, ChevronUp,
-  Users, Award
+  Users, Award, Sparkles, BarChart2
 } from "lucide-react"
 import Link from "next/link"
 
-type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "navigation" | "seo"
+type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "navigation" | "seo" | "extras"
 
 interface Leistung { _id: string; titel: string; kurzBeschreibung: string; beschreibung: string; icon: string; reihenfolge: number; aktiv: boolean }
 interface Seminar { _id: string; titel: string; kategorie: string; datum: string; uhrzeit: string; ort: string; beschreibung: string; preis: string; anmeldeLink: string; aktiv: boolean }
@@ -55,6 +55,9 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     seoBeschreibung: einstellungen?.seoBeschreibung ?? "",
     jahreErfahrung: einstellungen?.jahreErfahrung ?? 25,
     anzahlProjekte: einstellungen?.anzahlProjekte ?? 500,
+    googleAnalyticsId: einstellungen?.googleAnalyticsId ?? "",
+    cookieBannerAktiv: einstellungen?.cookieBannerAktiv ?? false,
+    cookieBannerText: einstellungen?.cookieBannerText ?? "",
   })
 
   const [leistungen, setLeistungen] = useState<Leistung[]>([])
@@ -170,9 +173,10 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     { id: "zertifikate" as Section, label: "Zertifikate", icon: Award },
     { id: "navigation" as Section, label: "Navigation", icon: Navigation },
     { id: "seo" as Section, label: "SEO & Meta", icon: Globe },
+    { id: "extras" as Section, label: "Extras & KI", icon: Sparkles },
   ]
 
-  const isFormSection = ["kontakt", "hero", "ueber", "seo"].includes(activeSection)
+  const isFormSection = ["kontakt", "hero", "ueber", "seo", "extras"].includes(activeSection)
   const isEditingItem = editLeistung || newLeistung || editSeminar || newSeminar || editPartner || newPartner || editZertifikat || newZertifikat || editNav || newNav
 
   function getSaveAction() {

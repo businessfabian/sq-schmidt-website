@@ -286,7 +286,7 @@ export default async function VitaPage() {
               <h2 className="text-xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
                 Jetzt Beratungsgespräch vereinbaren
               </h2>
-              <p className="text-muted-foreground text-sm">Kostenlose Erstberatung — unverbindlich und direkt.</p>
+              <p className="text-muted-foreground text-sm">Jetzt anfragen — unverbindlich und direkt.</p>
             </div>
             <Link href="/kontakt" className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:bg-primary/90 transition-all flex-shrink-0">
               Kontakt aufnehmen <ArrowRight className="h-4 w-4" />

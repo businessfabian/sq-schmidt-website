@@ -9,22 +9,17 @@ export const metadata = {
   description: "Aktuelle Seminartermine und Fortbildungen im Bauwesen.",
 }
 
-const kategorieLabels: Record<string, string> = {
-  alle: "Alle", bau: "Bau", recht: "Recht", technik: "Technik", sonstiges: "Sonstiges"
-}
-
-export default async function SeminarePage({ searchParams }: { searchParams: { kategorie?: string } }) {
+export default async function SeminarePage({ searchParams }: { searchParams: Promise<{ ort?: string }> }) {
   const [einstellungen, seminare] = await Promise.all([getEinstellungen(), getSeminare()])
   const params = await searchParams
-  const aktiveKategorie = params?.kategorie ?? null
-  const gefiltert = aktiveKategorie ? seminare.filter((s: any) => s.kategorie === aktiveKategorie) : seminare
-  const kategorien = Array.from(new Set(seminare.map((s: any) => s.kategorie).filter(Boolean))) as string[]
+  const aktiveOrt = params?.ort ?? null
+  const gefiltert = aktiveOrt ? seminare.filter((s: any) => s.ort === aktiveOrt) : seminare
+  const orte = Array.from(new Set(seminare.map((s: any) => s.ort).filter(Boolean))) as string[]
 
   return (
     <>
       <Header einstellungen={einstellungen} />
       <main className="min-h-screen bg-background">
-        {/* Hero */}
         <section className="relative bg-zinc-950 overflow-hidden">
           <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
@@ -37,16 +32,18 @@ export default async function SeminarePage({ searchParams }: { searchParams: { k
 
         <section className="py-16 bg-background">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            {/* Kategorie Filter */}
+
+            {/* Ort Filter */}
             <div className="flex flex-wrap gap-3 mb-10">
               <Link href="/seminare"
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${!aktiveKategorie ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground hover:text-foreground"}`}>
-                Alle
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${!aktiveOrt ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground hover:text-foreground"}`}>
+                Alle Orte
               </Link>
-              {kategorien.map((kat) => (
-                <Link key={kat} href={`/seminare?kategorie=${kat}`}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${aktiveKategorie === kat ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground hover:text-foreground"}`}>
-                  {kategorieLabels[kat] ?? kat}
+              {orte.map((ort) => (
+                <Link key={ort} href={`/seminare?ort=${encodeURIComponent(ort)}`}
+                  className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${aktiveOrt === ort ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground hover:text-foreground"}`}>
+                  <MapPin className="h-3.5 w-3.5" />
+                  {ort}
                 </Link>
               ))}
             </div>
@@ -54,7 +51,7 @@ export default async function SeminarePage({ searchParams }: { searchParams: { k
             {gefiltert.length === 0 ? (
               <div className="text-center py-24 text-muted-foreground">
                 <Calendar className="h-12 w-12 mx-auto mb-4 opacity-30" />
-                <p>Aktuell keine Seminartermine in dieser Kategorie.</p>
+                <p>Aktuell keine Seminartermine an diesem Ort.</p>
               </div>
             ) : (
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -64,7 +61,7 @@ export default async function SeminarePage({ searchParams }: { searchParams: { k
                     <div className="flex items-center gap-2 mb-4">
                       {s.kategorie && (
                         <span className="flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-primary/10 text-primary">
-                          <Tag className="h-3 w-3" />{kategorieLabels[s.kategorie] ?? s.kategorie}
+                          <Tag className="h-3 w-3" />{s.kategorie}
                         </span>
                       )}
                     </div>

@@ -52,10 +52,10 @@ export function HeaderClient({ einstellungen, leistungen = [], seminare = [], na
     return Icon ?? ShieldCheck
   }
 
-  const seminarKategorien = [
+  const seminarOrte = [
     { label: "Alle Seminare", href: "/seminare" },
-    ...Array.from(new Set(seminare.map((s: any) => s.kategorie).filter(Boolean)))
-      .map((kat: any) => ({ label: kat.charAt(0).toUpperCase() + kat.slice(1), href: `/seminare?kategorie=${kat}` }))
+    ...Array.from(new Set(seminare.map((s: any) => s.ort).filter(Boolean)))
+      .map((ort: any) => ({ label: ort, href: `/seminare?ort=${encodeURIComponent(ort)}` }))
   ]
 
   function renderDropdown(punkt: NavPunkt) {
@@ -92,7 +92,7 @@ export function HeaderClient({ einstellungen, leistungen = [], seminare = [], na
     if (punkt.typ === "seminare") {
       return (
         <div className="bg-card border border-border rounded-xl shadow-2xl p-3 min-w-[240px]">
-          {seminarKategorien.map((item) => (
+          {seminarOrte.map((item) => (
             <Link key={item.href} href={item.href}
               className="block px-4 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary rounded-lg transition-colors"
               onClick={() => setOpenDropdown(null)}>
@@ -209,7 +209,7 @@ export function HeaderClient({ einstellungen, leistungen = [], seminare = [], na
                               </Link>
                             )
                           })}
-                          {punkt.typ === "seminare" && seminarKategorien.map((l) => (
+                          {punkt.typ === "seminare" && seminarOrte.map((l) => (
                             <Link key={l.href} href={l.href} className="py-2 text-sm text-muted-foreground hover:text-foreground block"
                               onClick={() => setMobileMenuOpen(false)}>{l.label}</Link>
                           ))}

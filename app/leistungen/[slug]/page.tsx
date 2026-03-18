@@ -67,7 +67,7 @@ export default async function LeistungDetailPage({ params }: { params: { slug: s
                 <div className="space-y-4">
                   <div className="p-6 bg-card border border-border rounded-2xl">
                     <h3 className="font-semibold text-foreground mb-4">Jetzt anfragen</h3>
-                    <p className="text-sm text-muted-foreground mb-4">Kostenlose Erstberatung — wir melden uns innerhalb von 24 Stunden.</p>
+                    <p className="text-sm text-muted-foreground mb-4">Jetzt anfragen — wir melden uns innerhalb von 24 Stunden.</p>
                     <Link href="/kontakt" className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all">
                       Anfrage senden <ArrowRight className="h-4 w-4" />
                     </Link>
@@ -127,7 +127,7 @@ export default async function LeistungDetailPage({ params }: { params: { slug: s
               <div className="space-y-4">
                 <div className="p-6 bg-card border border-border rounded-2xl">
                   <h3 className="font-semibold text-foreground mb-4">Jetzt anfragen</h3>
-                  <p className="text-sm text-muted-foreground mb-4">Kostenlose Erstberatung — wir melden uns innerhalb von 24 Stunden.</p>
+                  <p className="text-sm text-muted-foreground mb-4">Jetzt anfragen — wir melden uns innerhalb von 24 Stunden.</p>
                   <Link href="/kontakt" className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all">
                     Anfrage senden <ArrowRight className="h-4 w-4" />
                   </Link>

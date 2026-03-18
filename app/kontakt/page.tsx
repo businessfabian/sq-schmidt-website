@@ -5,7 +5,7 @@ import { getEinstellungen } from "@/sanity/lib/queries"
 
 export const metadata = {
   title: "Kontakt | SQ Schmidt Qualitaetssicherung",
-  description: "Kontaktieren Sie uns fuer eine kostenlose Erstberatung.",
+  description: "Kontaktieren Sie uns fuer eine unverbindliche Anfrage.",
 }
 
 export default async function KontaktPage() {

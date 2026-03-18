@@ -51,7 +51,7 @@ export default function LeistungenPage() {
             <h2 className="text-2xl font-bold text-foreground mb-3" style={{ fontFamily: "var(--font-display)" }}>Nicht das Richtige dabei?</h2>
             <p className="text-muted-foreground mb-6">Kontaktieren Sie uns direkt — wir finden gemeinsam die passende Lösung für Ihr Projekt.</p>
             <Link href="/#kontakt" className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors">
-              Kostenlose Beratung anfragen <ArrowRight className="h-4 w-4" />
+              Anfrage senden <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

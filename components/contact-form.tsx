@@ -103,7 +103,7 @@ export function ContactForm({ einstellungen }: Props) {
             Sprechen wir ueber Ihr Projekt
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Kontaktieren Sie uns fuer eine kostenlose Erstberatung. Wir melden uns innerhalb von 24 Stunden.
+            Kontaktieren Sie uns fuer eine unverbindliche Anfrage. Wir melden uns innerhalb von 24 Stunden.
           </p>
         </div>
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">

@@ -6,23 +6,23 @@ import { Partners } from "@/components/partners"
 import { Certificates } from "@/components/certificates"
 import { ContactForm } from "@/components/contact-form"
 import { Footer } from "@/components/footer"
-import { getEinstellungen, getPartner, getZertifikate } from "@/sanity/lib/queries"
+import { getEinstellungen, getPartner, getZertifikate, getLeistungen } from "@/sanity/lib/queries"
 
 export async function generateMetadata() {
   const s = await getEinstellungen()
   return {
-    title: s?.seoTitel ?? "SQ Schmidt — Qualitätssicherung im Bauwesen",
-    description: s?.seoBeschreibung ?? "Öffentlich bestellter und vereidigter Sachverständiger.",
+    title: s?.seoTitel ?? "SQ Schmidt - Qualitaetssicherung im Bauwesen",
+    description: s?.seoBeschreibung ?? "Oeffentlich bestellter und vereidigter Sachverstaendiger.",
   }
 }
 
 export default async function Home() {
-  const [einstellungen, partner, zertifikate] = await Promise.all([
+  const [einstellungen, partner, zertifikate, leistungen] = await Promise.all([
     getEinstellungen(),
     getPartner(),
     getZertifikate(),
+    getLeistungen(),
   ])
-
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Header einstellungen={einstellungen} />

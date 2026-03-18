@@ -246,7 +246,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
           )}
         </div>
 
-        <div className="p-8 max-w-2xl">
+        <div className="p-6 lg:p-8 max-w-5xl">
           {error && <div className="mb-6 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">{error}</div>}
 
           {activeSection === "kontakt" && (

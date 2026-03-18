@@ -126,7 +126,7 @@ export function ContactForm({ einstellungen }: Props) {
           </div>
           <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-8">
             <div className="flex flex-col gap-5">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="vorname">Vorname *</Label>
                   <Input id="vorname" placeholder="Max" required />

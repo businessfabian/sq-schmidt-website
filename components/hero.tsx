@@ -59,7 +59,7 @@ export function Hero({ einstellungen }: Props) {
 
           {/* Haupttitel */}
           <h1
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tight mb-6"
+            className="text-3xl sm:text-5xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tight mb-6"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {titel.split(" für Ihr").length > 1 ? (
@@ -82,7 +82,7 @@ export function Hero({ einstellungen }: Props) {
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-16">
+          <div className="flex flex-col sm:flex-row gap-3 mb-10 sm:mb-16">
             <Link
               href="/#kontakt"
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-semibold text-base hover:bg-primary/90 transition-all hover:gap-3"
@@ -100,7 +100,7 @@ export function Hero({ einstellungen }: Props) {
           </div>
 
           {/* Stats */}
-          <div className="flex flex-wrap items-center gap-8 pt-8 border-t border-white/10">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-8 pt-6 sm:pt-8 border-t border-white/10">
             <div>
               <span className="block text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>{jahre}+</span>
               <span className="text-sm text-zinc-500 mt-1 block">Jahre Erfahrung</span>

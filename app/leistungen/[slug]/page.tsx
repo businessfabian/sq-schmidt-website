@@ -47,7 +47,7 @@ export default async function LeistungDetailPage({ params }: { params: { slug: s
                   <Icon className="h-8 w-8 text-primary" />
                 </div>
                 <div>
-                  <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>
+                  <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>
                     {sanityLeistung.titel}
                   </h1>
                   <p className="text-zinc-400 text-lg max-w-2xl">{sanityLeistung.kurzBeschreibung}</p>
@@ -100,7 +100,7 @@ export default async function LeistungDetailPage({ params }: { params: { slug: s
                 <Icon className="h-8 w-8 text-primary" />
               </div>
               <div>
-                <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>{service.title}</h1>
+                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>{service.title}</h1>
                 <p className="text-zinc-400 text-lg max-w-2xl">{service.shortDescription}</p>
               </div>
             </div>

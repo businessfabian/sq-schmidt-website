@@ -183,7 +183,7 @@ export function HeaderClient({ einstellungen, leistungen = [], seminare = [], na
         </div>
 
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-border">
+          <div className="lg:hidden py-4 border-t border-border max-h-[70vh] overflow-y-auto">
             <nav className="flex flex-col gap-2">
               {navPunkte.map((punkt) => (
                 <div key={punkt.label}>

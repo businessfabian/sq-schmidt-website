@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowLeft, ArrowRight, Check, Phone } from "lucide-react"
 import { getServiceBySlug, servicesData } from "@/lib/services-data"
-import { Header } from "@/components/header"
+import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 
 export function generateStaticParams() {

@@ -1,4 +1,4 @@
-import { Header } from "@/components/header"
+import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { ZertifikateGrid } from "@/components/zertifikate-grid"
 import { getEinstellungen } from "@/sanity/lib/queries"

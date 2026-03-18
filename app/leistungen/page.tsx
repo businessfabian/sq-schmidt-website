@@ -2,7 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight } from "lucide-react"
 import { servicesData } from "@/lib/services-data"
-import { Header } from "@/components/header"
+import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 
 export const metadata = {

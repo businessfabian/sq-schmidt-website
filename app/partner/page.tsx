@@ -1,3 +1,5 @@
+export const revalidate = 0
+
 import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { partnersData } from "@/lib/services-data"

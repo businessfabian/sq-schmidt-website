@@ -1,20 +1,20 @@
 import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { ZertifikateGrid } from "@/components/zertifikate-grid"
-import { getEinstellungen } from "@/sanity/lib/queries"
+import { getEinstellungen, getZertifikate } from "@/sanity/lib/queries"
 
 export const metadata = {
-  title: "Zertifikate - SQ Schmidt Qualitätssicherung",
+  title: "Zertifikate | SQ Schmidt Qualitaetssicherung",
   description: "Zertifikate und Akkreditierungen von SQ Schmidt.",
 }
 
 export default async function ZertifikatePage() {
-  const einstellungen = await getEinstellungen()
+  const [einstellungen, zertifikate] = await Promise.all([getEinstellungen(), getZertifikate()])
   return (
     <>
       <Header einstellungen={einstellungen} />
       <main className="pt-32 pb-24">
-        <ZertifikateGrid />
+        <ZertifikateGrid zertifikate={zertifikate} />
       </main>
       <Footer einstellungen={einstellungen} />
     </>

@@ -1,5 +1,7 @@
+"use client"
 import Image from "next/image"
 import { certificatesData } from "@/lib/services-data"
+import { Reveal } from "./animations"
 
 interface Props {
   zertifikate?: any[]
@@ -13,14 +15,17 @@ export function Certificates({ zertifikate }: Props) {
   return (
     <section id="zertifikate" className="py-24 bg-secondary/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <span className="text-primary text-sm font-semibold tracking-wider uppercase">Qualifikationen</span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground text-balance" style={{ fontFamily: "var(--font-display)" }}>Zertifikate & Akkreditierungen</h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto leading-relaxed">Unsere Qualifikationen und Zertifizierungen sind Ihr Garant für professionelle und verlässliche Arbeit nach höchsten Standards.</p>
-        </div>
+        <Reveal>
+          <div className="text-center mb-16">
+            <span className="text-primary text-sm font-semibold tracking-wider uppercase">Qualifikationen</span>
+            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground text-balance" style={{ fontFamily: "var(--font-display)" }}>Zertifikate & Akkreditierungen</h2>
+            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto leading-relaxed">Unsere Qualifikationen und Zertifizierungen sind Ihr Garant fuer professionelle und verlaessliche Arbeit nach hoechsten Standards.</p>
+          </div>
+        </Reveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {list.map((cert: any, i: number) => (
-            <div key={i} className="relative bg-card border border-border rounded-xl hover:border-primary/50 transition-all group overflow-hidden">
+            <Reveal key={i} delay={i * 100}>
+            <div className="relative bg-card border border-border rounded-xl hover:border-primary/50 hover:-translate-y-1 hover:shadow-xl transition-all group overflow-hidden h-full">
               {cert.image && (
                 <div className="relative h-40 w-full">
                   <Image src={cert.image} alt={cert.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition-transform" />
@@ -32,6 +37,7 @@ export function Certificates({ zertifikate }: Props) {
                 <p className="text-sm text-muted-foreground leading-relaxed">{cert.description ?? cert.beschreibung}</p>
               </div>
             </div>
+            </Reveal>
           ))}
         </div>
       </div>

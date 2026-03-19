@@ -46,6 +46,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang="de">
       <body className="font-sans antialiased">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-lg focus:text-sm focus:font-medium">Zum Inhalt springen</a>
         <GoogleAnalytics gaId={einstellungen?.googleAnalyticsId} />
         {children}
         {(einstellungen?.cookieBannerAktiv !== false) && (

@@ -13,8 +13,32 @@ export const metadata = {
 }
 
 export default function LeistungenPage() {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sq-schmidt-website.vercel.app"
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Leistungen — SQ Schmidt Qualitaetssicherung",
+    itemListElement: servicesData.map((s, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Service",
+        name: s.title,
+        description: s.shortDescription,
+        provider: {
+          "@type": "LocalBusiness",
+          name: "SQ Schmidt Qualitaetssicherung",
+          url: siteUrl,
+        },
+        areaServed: { "@type": "Country", name: "DE" },
+        url: `${siteUrl}/leistungen/${s.slug}`,
+      },
+    })),
+  }
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Header />
       <main className="pt-32 pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">

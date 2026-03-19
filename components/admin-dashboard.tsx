@@ -261,16 +261,19 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
             </div>
           )}
 
-          {activeSection === "hero" && (
-            <div className="space-y-6">
+            <div className="grid lg:grid-cols-2 gap-8">
+              <div className="space-y-6">
               <TextareaField label="Hero Titel" value={form.heroTitel} onChange={v => setForm(p => ({...p, heroTitel: v}))} rows={2} hint="Grosser Titel auf der Startseite" />
               <TextareaField label="Hero Beschreibung" value={form.heroBeschreibung} onChange={v => setForm(p => ({...p, heroBeschreibung: v}))} rows={3} hint="Untertitel unter dem Hero-Titel" />
               <div className="grid grid-cols-2 gap-4">
                 <NumberField label="Jahre Erfahrung" value={form.jahreErfahrung} onChange={v => setForm(p => ({...p, jahreErfahrung: v}))} />
                 <NumberField label="Anzahl Projekte" value={form.anzahlProjekte} onChange={v => setForm(p => ({...p, anzahlProjekte: v}))} />
               </div>
-            </div>
-          )}
+              <div>
+                <label className="block text-sm font-medium text-zinc-300 mb-2">Hero Hintergrundbild</label>
+                <p className="text-xs text-zinc-500 mb-3">Dunkles Baubild empfohlen</p>
+                <HeroImageUpload />
+              </div>
 
           {activeSection === "ueber" && (
             <div className="space-y-6">

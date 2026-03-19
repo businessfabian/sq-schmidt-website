@@ -32,7 +32,7 @@ export function Footer({ einstellungen }: Props) {
             </div>
           </div>
           <div>
-            <p className="text-sm font-semibold text-foreground mb-4" role="heading" aria-level={2}>Leistungen</h4>
+            <p className="text-sm font-semibold text-foreground mb-4" role="heading" aria-level={2}>Leistungen</p>
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
               {["Baubegleitende Qualitätssicherung", "Mängelmanagement", "Baucontrolling", "Schadensgutachten", "Sanierungskonzepte", "Baumediation"].map((l) => (
                 <li key={l}><a href="/leistungen" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">{l}</a></li>
@@ -40,14 +40,14 @@ export function Footer({ einstellungen }: Props) {
             </ul>
           </div>
           <div>
-            <p className="text-sm font-semibold text-foreground mb-4" role="heading" aria-level={2}>Unternehmen</h4>
+            <p className="text-sm font-semibold text-foreground mb-4" role="heading" aria-level={2}>Unternehmen</p>
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
               <li><a href="/ueber-uns" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Über Uns</a></li>
               <li><a href="/partner" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Partner</a></li>
               <li><a href="/zertifikate" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Zertifikate</a></li>
               <li><a href="/kontakt" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Kontakt</a></li>
             </ul>
-            <h4 className="text-sm font-semibold text-foreground mb-4 mt-6">Rechtliches</h4>
+            <p className="text-sm font-semibold text-foreground mb-4 mt-6" role="heading" aria-level={2}>Rechtliches</p>
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
               <li><Link href="/impressum" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Impressum</Link></li>
               <li><Link href="/datenschutz" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Datenschutz</Link></li>

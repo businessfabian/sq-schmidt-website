@@ -1,5 +1,4 @@
 import Image from "next/image"
-// deploy-test
 import Link from "next/link"
 import { ArrowRight, Phone, ShieldCheck, Award, MapPin } from "lucide-react"
 

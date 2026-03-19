@@ -1,4 +1,5 @@
 "use client"
+import { HeroImageUpload } from "./hero-image-upload"
 import { AdminImageUpload } from "./admin-image-upload"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"

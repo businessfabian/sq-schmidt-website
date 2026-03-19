@@ -55,7 +55,7 @@ export default defineType({
     // Extras
     defineField({ name: 'googleAnalyticsId', title: 'Google Analytics ID', type: 'string', group: 'extras',
       description: 'z.B. G-XXXXXXXXXX' }),
-    defineField({ name: 'cookieBannerAktiv', title: 'Cookie Banner anzeigen', type: 'boolean', group: 'extras', initialValue: false }),
+    defineField({ name: 'cookieBannerAktiv', title: 'Cookie Banner anzeigen', type: 'boolean', group: 'extras', initialValue: true }),
     defineField({ name: 'cookieBannerText', title: 'Cookie Banner Text', type: 'text', rows: 2, group: 'extras' }),
 
     // SEO

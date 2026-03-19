@@ -25,7 +25,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <body className="font-sans antialiased">
         <GoogleAnalytics gaId={einstellungen?.googleAnalyticsId} />
         {children}
-        {einstellungen?.cookieBannerAktiv && (
+        {(einstellungen?.cookieBannerAktiv !== false) && (
           <CookieBanner text={einstellungen?.cookieBannerText} />
         )}
         <Analytics />

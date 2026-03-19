@@ -116,7 +116,7 @@ export function ContactForm({ einstellungen }: Props) {
                 <div>
                   <p className="text-sm font-medium text-foreground">{label}</p>
                   {href ? (
-                    <a href={href} className="text-muted-foreground hover:text-primary transition-colors">{value}</a>
+                    <a href={href} className="text-muted-foreground hover:text-primary transition-colors underline decoration-muted-foreground/30 underline-offset-2 hover:decoration-primary">{value}</a>
                   ) : (
                     <p className="text-muted-foreground">{value}</p>
                   )}

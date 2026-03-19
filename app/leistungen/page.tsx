@@ -32,7 +32,7 @@ export default function LeistungenPage() {
             {servicesData.map((service) => (
               <Link key={service.slug} href={`/leistungen/${service.slug?.current ?? service.slug}`} className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 transition-all">
                 <div className="relative h-48 w-full overflow-hidden">
-                  <Image src={service.image} alt={service.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                  <Image src={service.image} alt={service.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-300" />
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
                   <div className="absolute bottom-4 left-4 h-10 w-10 rounded-lg bg-primary/90 flex items-center justify-center">
                     <service.icon className="h-5 w-5 text-primary-foreground" />

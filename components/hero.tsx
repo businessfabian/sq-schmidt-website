@@ -104,19 +104,19 @@ export function Hero({ einstellungen }: Props) {
           <div className="flex flex-wrap items-center gap-4 sm:gap-8 pt-6 sm:pt-8 border-t border-white/10">
             <div>
               <span className="block text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>{jahre}+</span>
-              <span className="text-sm text-zinc-500 mt-1 block">Jahre Erfahrung</span>
+              <span className="text-sm text-zinc-400 mt-1 block">Jahre Erfahrung</span>
             </div>
             <div className="w-px h-10 bg-white/10" />
             <div>
               <span className="block text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>{projekte}+</span>
-              <span className="text-sm text-zinc-500 mt-1 block">Projekte</span>
+              <span className="text-sm text-zinc-400 mt-1 block">Projekte</span>
             </div>
             <div className="w-px h-10 bg-white/10" />
             <div>
               <span className="block text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>100%</span>
-              <span className="text-sm text-zinc-500 mt-1 block">TÜV-zertifiziert</span>
+              <span className="text-sm text-zinc-400 mt-1 block">TÜV-zertifiziert</span>
             </div>
-            <div className="hidden lg:flex items-center gap-2 ml-auto text-sm text-zinc-500">
+            <div className="hidden lg:flex items-center gap-2 ml-auto text-sm text-zinc-400">
               <MapPin className="h-4 w-4" />
               {adresse}
             </div>

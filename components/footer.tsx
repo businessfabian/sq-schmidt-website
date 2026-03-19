@@ -26,32 +26,32 @@ export function Footer({ einstellungen }: Props) {
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed mb-4">Ihr zuverlässiger Partner für professionelle Qualitätssicherung im Bauwesen. Inhabergeführt und TÜV-zertifiziert.</p>
             <div className="flex flex-col gap-1 text-sm text-muted-foreground">
-              <a href={telefonHref} className="hover:text-primary transition-colors">{telefon}</a>
-              <a href={`mailto:${email}`} className="hover:text-primary transition-colors">{email}</a>
+              <a href={telefonHref} className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">{telefon}</a>
+              <a href={`mailto:${email}`} className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">{email}</a>
               <span>{adresse}</span>
             </div>
           </div>
           <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">Leistungen</h4>
+            <p className="text-sm font-semibold text-foreground mb-4" role="heading" aria-level={2}>Leistungen</h4>
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
               {["Baubegleitende Qualitätssicherung", "Mängelmanagement", "Baucontrolling", "Schadensgutachten", "Sanierungskonzepte", "Baumediation"].map((l) => (
-                <li key={l}><a href="/leistungen" className="hover:text-primary transition-colors">{l}</a></li>
+                <li key={l}><a href="/leistungen" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">{l}</a></li>
               ))}
             </ul>
           </div>
           <div>
-            <h4 className="text-sm font-semibold text-foreground mb-4">Unternehmen</h4>
+            <p className="text-sm font-semibold text-foreground mb-4" role="heading" aria-level={2}>Unternehmen</h4>
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <li><a href="/ueber-uns" className="hover:text-primary transition-colors">Über Uns</a></li>
-              <li><a href="/partner" className="hover:text-primary transition-colors">Partner</a></li>
-              <li><a href="/zertifikate" className="hover:text-primary transition-colors">Zertifikate</a></li>
-              <li><a href="/kontakt" className="hover:text-primary transition-colors">Kontakt</a></li>
+              <li><a href="/ueber-uns" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Über Uns</a></li>
+              <li><a href="/partner" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Partner</a></li>
+              <li><a href="/zertifikate" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Zertifikate</a></li>
+              <li><a href="/kontakt" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Kontakt</a></li>
             </ul>
             <h4 className="text-sm font-semibold text-foreground mb-4 mt-6">Rechtliches</h4>
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
-              <li><Link href="/impressum" className="hover:text-primary transition-colors">Impressum</Link></li>
-              <li><Link href="/datenschutz" className="hover:text-primary transition-colors">Datenschutz</Link></li>
-              <li><a href="/sitemap.xml" className="hover:text-primary transition-colors">Sitemap</a></li>
+              <li><Link href="/impressum" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Impressum</Link></li>
+              <li><Link href="/datenschutz" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Datenschutz</Link></li>
+              <li><a href="/sitemap.xml" className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">Sitemap</a></li>
             </ul>
           </div>
         </div>

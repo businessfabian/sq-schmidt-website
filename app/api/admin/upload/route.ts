@@ -20,7 +20,7 @@ export async function POST(req: Request) {
 
   const formData = await req.formData()
   const file = formData.get("file") as File
-  const type = formData.get("type") as string // "partner" | "zertifikat"
+  const type = formData.get("type") as string // "partner" | "zertifikat" | "hero"
   const id = formData.get("id") as string
 
   if (!file) return NextResponse.json({ error: "Keine Datei" }, { status: 400 })
@@ -32,10 +32,12 @@ export async function POST(req: Request) {
   })
 
   // Bild direkt dem Dokument zuweisen
-  await client.patch(id).set({
-    logo: type === "partner" ? { _type: "image", asset: { _type: "reference", _ref: asset._id } } : undefined,
-    bild: type === "zertifikat" ? { _type: "image", asset: { _type: "reference", _ref: asset._id } } : undefined,
-  }).commit()
+  const imageRef = { _type: "image", asset: { _type: "reference", _ref: asset._id } }
+  const fieldMap: Record<string, string> = { partner: "logo", zertifikat: "bild", hero: "heroBild" }
+  const field = fieldMap[type]
+  if (field) {
+    await client.patch(id).set({ [field]: imageRef }).commit()
+  }
 
   return NextResponse.json({ url: asset.url, assetId: asset._id })
 }

@@ -25,6 +25,8 @@ export default defineType({
     // Hero
     defineField({ name: "heroTitel", title: "Hero Titel", type: "string", group: "hero" }),
     defineField({ name: "heroBeschreibung", title: "Hero Beschreibung", type: "text", rows: 3, group: "hero" }),
+    defineField({ name: "heroBild", title: "Hero Hintergrundbild", type: "image", group: "hero",
+      description: "Dunkles Baubild empfohlen — wird als Fullscreen-Hintergrund angezeigt" }),
 
     // Ueber uns
     defineField({ name: "uebermichTitel", title: "Ueber uns Titel", type: "string", group: "ueber" }),

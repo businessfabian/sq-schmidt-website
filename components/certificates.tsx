@@ -23,7 +23,7 @@ export function Certificates({ zertifikate }: Props) {
             <div key={i} className="relative bg-card border border-border rounded-xl hover:border-primary/50 transition-all group overflow-hidden">
               {cert.image && (
                 <div className="relative h-40 w-full">
-                  <Image src={cert.image} alt={cert.name} fill className="object-cover group-hover:scale-105 transition-transform" />
+                  <Image src={cert.image} alt={cert.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition-transform" />
                   <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent" />
                 </div>
               )}

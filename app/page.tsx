@@ -27,8 +27,30 @@ export default async function Home() {
     config.sections.leistungen ? getLeistungen() : Promise.resolve([]),
   ])
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sq-schmidt-website.vercel.app"
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: einstellungen?.firmenname ?? "SQ Schmidt Qualitaetssicherung",
+    description: einstellungen?.seoBeschreibung ?? "Oeffentlich bestellter und vereidigter Sachverstaendiger der IHK Konstanz",
+    url: siteUrl,
+    telephone: einstellungen?.telefon ?? "",
+    email: einstellungen?.email ?? "",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Marktplatz 21",
+      addressLocality: "Trossingen",
+      postalCode: "78647",
+      addressCountry: "DE",
+    },
+    priceRange: "$$",
+    openingHours: einstellungen?.oeffnungszeiten ?? "Mo-Fr 08:00-18:00",
+    sameAs: [],
+  }
+
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Header einstellungen={einstellungen} />
       {config.sections.hero && <Hero einstellungen={einstellungen} />}
       {config.sections.leistungen && <Services leistungen={leistungen} />}

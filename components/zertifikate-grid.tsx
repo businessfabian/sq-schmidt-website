@@ -46,7 +46,7 @@ export function ZertifikateGrid({ zertifikate = [] }: Props) {
             className="bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all group text-left cursor-pointer relative">
             <div className="relative h-48 w-full bg-muted flex items-center justify-center">
               {bildUrl(cert) ? (
-                <Image src={bildUrl(cert)!} alt={cert.name} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                <Image src={bildUrl(cert)!} alt={cert.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-300" />
               ) : (
                 <Award className="h-16 w-16 text-muted-foreground/30" />
               )}
@@ -95,7 +95,7 @@ export function ZertifikateGrid({ zertifikate = [] }: Props) {
             </button>
             <div className="relative aspect-[4/3] w-full min-h-[500px] bg-zinc-950 flex items-center justify-center">
               {bildUrl(selected) ? (
-                <Image src={bildUrl(selected)!} alt={selected.name} fill className="object-contain p-8" />
+                <Image src={bildUrl(selected)!} alt={selected.name} fill sizes="80vw" className="object-contain p-8" />
               ) : (
                 <Award className="h-24 w-24 text-zinc-700" />
               )}

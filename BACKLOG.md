@@ -2,6 +2,8 @@
 
 ## Agent Tasks (Claude kann diese ausführen)
 
+- [ ] Automatische Sitemap-Submission an Google wenn neuer Content gepusht wird
+- [ ] Breadcrumb Schema für besseres SEO
 - [ ] Kontaktformular Conversion Event in Google Analytics tracken
 - [ ] Admin Dashboard: Anfragen-Ansicht mit Filter und Suche erweitern
 - [ ] Blog-Bereich aufbauen (Sanity Schema + Seiten wie bei Meyso)

@@ -8,7 +8,7 @@ import {
   Save, LogOut, CheckCircle, Loader2, ChevronRight,
   LayoutDashboard, Settings, Eye, Briefcase, Calendar,
   Plus, Pencil, Trash2, X, ToggleLeft, ToggleRight,
-  Navigation, GripVertical, Link as LinkIcon, ChevronDown, ChevronUp,
+  Navigation, GripVertical, Link as LinkIcon, ChevronDown,
   Users, Award, Sparkles, BarChart2
 } from "lucide-react"
 import Link from "next/link"
@@ -87,7 +87,6 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   const [newNav, setNewNav] = useState(false)
   const [navForm, setNavForm] = useState<NavPunkt>({ label: "", typ: "link", href: "", aktiv: true, reihenfolge: 99, unterpunkte: [] })
 
-  const [calMonth, setCalMonth] = useState(new Date())
 
   useEffect(() => {
     if (activeSection === "leistungen") load("leistungen")
@@ -161,11 +160,6 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     router.push("/admin")
   }
 
-  function getDaysInMonth(date: Date) { return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate() }
-  function getFirstDayOfMonth(date: Date) { return (new Date(date.getFullYear(), date.getMonth(), 1).getDay() + 6) % 7 }
-  function getSeminareForDay(day: number) {
-    return seminare.filter(s => { if (!s.datum) return false; const d = new Date(s.datum); return d.getFullYear() === calMonth.getFullYear() && d.getMonth() === calMonth.getMonth() && d.getDate() === day })
-  }
 
   const navItems = [
     { id: "kontakt" as Section, label: "Kontaktdaten", icon: Phone },
@@ -337,37 +331,6 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
             <div className="space-y-6">
               {!editSeminar && !newSeminar ? (
                 <>
-                  <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <h2 className="text-white font-semibold">{calMonth.toLocaleDateString("de-DE", { month: "long", year: "numeric" })}</h2>
-                      <div className="flex gap-2">
-                        <button onClick={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() - 1))} className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-700">
-                          <ChevronDown className="h-4 w-4 rotate-90" />
-                        </button>
-                        <button onClick={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() + 1))} className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-700">
-                          <ChevronUp className="h-4 w-4 rotate-90" />
-                        </button>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-7 gap-1 mb-2">
-                      {["Mo","Di","Mi","Do","Fr","Sa","So"].map(d => <div key={d} className="text-center text-xs text-zinc-500 py-1">{d}</div>)}
-                    </div>
-                    <div className="grid grid-cols-7 gap-1">
-                      {Array.from({ length: getFirstDayOfMonth(calMonth) }).map((_, i) => <div key={`e${i}`} />)}
-                      {Array.from({ length: getDaysInMonth(calMonth) }).map((_, i) => {
-                        const day = i + 1
-                        const ds = getSeminareForDay(day)
-                        const today = new Date()
-                        const isToday = today.getDate() === day && today.getMonth() === calMonth.getMonth() && today.getFullYear() === calMonth.getFullYear()
-                        return (
-                          <div key={day} className={`aspect-square rounded-lg flex flex-col items-center justify-center text-sm ${isToday ? "bg-primary/20 text-primary font-bold" : "text-zinc-400 hover:bg-zinc-800"}`}>
-                            {day}
-                            {ds.length > 0 && <div className="flex gap-0.5 mt-0.5">{ds.slice(0,3).map((_,si) => <div key={si} className="h-1 w-1 rounded-full bg-primary" />)}</div>}
-                          </div>
-                        )
-                      })}
-                    </div>
-                  </div>
                   <div className="flex items-center justify-between">
                     <p className="text-zinc-400 text-sm">{seminare.length} Termine</p>
                     <button onClick={() => { setNewSeminar(true); setSeminarForm({ titel: "", kategorie: "bau", datum: "", uhrzeit: "", ort: "", beschreibung: "", preis: "", anmeldeLink: "", aktiv: true }) }}

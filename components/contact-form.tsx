@@ -147,7 +147,7 @@ export function ContactForm({ einstellungen }: Props) {
               <div className="flex flex-col gap-2">
                 <Label>Gewuenschte Leistung</Label>
                 <Select onValueChange={setLeistung}>
-                  <SelectTrigger><SelectValue placeholder="Bitte waehlen" /></SelectTrigger>
+                  <SelectTrigger aria-label="Gewuenschte Leistung auswaehlen"><SelectValue placeholder="Bitte waehlen" /></SelectTrigger>
                   <SelectContent>
                     {leistungen.map((l) => (
                       <SelectItem key={l} value={l}>{l}</SelectItem>

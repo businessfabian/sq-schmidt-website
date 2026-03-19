@@ -51,6 +51,7 @@ export function Footer({ einstellungen }: Props) {
             <ul className="flex flex-col gap-2 text-sm text-muted-foreground">
               <li><Link href="/impressum" className="hover:text-primary transition-colors">Impressum</Link></li>
               <li><Link href="/datenschutz" className="hover:text-primary transition-colors">Datenschutz</Link></li>
+              <li><a href="/sitemap.xml" className="hover:text-primary transition-colors">Sitemap</a></li>
             </ul>
           </div>
         </div>

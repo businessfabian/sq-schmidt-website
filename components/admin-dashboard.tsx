@@ -113,7 +113,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
       if (!res.ok) throw new Error()
       setSaved(true); setTimeout(() => setSaved(false), 3000)
       // Website Cache leeren
-      fetch("/api/revalidate", { method: "POST", headers: { "x-webhook-secret": "meyso2024secret" } }).catch(() => {})
+      fetch("/api/admin/revalidate", { method: "POST" }).catch(() => {})
     } catch { setError("Fehler beim Speichern.") } finally { setSaving(false) }
   }
 
@@ -126,7 +126,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
         await fetch(`/api/admin/${type}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(itemForm) })
       }
       await load(type); setEdit(null); setNew(false)
-      fetch("/api/revalidate", { method: "POST", headers: { "x-webhook-secret": "meyso2024secret" } }).catch(() => {})
+      fetch("/api/admin/revalidate", { method: "POST" }).catch(() => {})
     } catch { setError('Fehler.') } finally { setSaving(false) }
   }
 

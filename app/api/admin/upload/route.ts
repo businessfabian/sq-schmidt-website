@@ -25,9 +25,18 @@ export async function POST(req: Request) {
 
   if (!file) return NextResponse.json({ error: "Keine Datei" }, { status: 400 })
 
+  const MAX_SIZE = 5 * 1024 * 1024 // 5MB
+  const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/svg+xml"]
+  const ALLOWED_UPLOAD_TYPES = ["partner", "zertifikat", "hero"]
+
+  if (file.size > MAX_SIZE) return NextResponse.json({ error: "Datei zu gross (max. 5MB)" }, { status: 400 })
+  if (!ALLOWED_TYPES.includes(file.type)) return NextResponse.json({ error: "Nur JPG, PNG, WebP oder SVG erlaubt" }, { status: 400 })
+  if (!ALLOWED_UPLOAD_TYPES.includes(type)) return NextResponse.json({ error: "Ungueltiger Upload-Typ" }, { status: 400 })
+
   const buffer = Buffer.from(await file.arrayBuffer())
+  const sanitizedFilename = file.name.replace(/[^a-z0-9._-]/gi, "_")
   const asset = await client.assets.upload("image", buffer, {
-    filename: file.name,
+    filename: sanitizedFilename,
     contentType: file.type,
   })
 

@@ -14,7 +14,9 @@ export async function GET(req: Request) {
   const strategy = searchParams.get("strategy") || "mobile"
 
   try {
-    const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(siteUrl)}&strategy=${strategy}&category=performance&category=seo&category=accessibility&category=best-practices`
+    const apiKey = process.env.GOOGLE_PAGESPEED_KEY || ""
+    const keyParam = apiKey ? `&key=${apiKey}` : ""
+    const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(siteUrl)}&strategy=${strategy}&category=performance&category=seo&category=accessibility&category=best-practices${keyParam}`
     const res = await fetch(apiUrl, { next: { revalidate: 0 } })
     const data = await res.json()
 

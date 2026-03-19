@@ -21,7 +21,7 @@ export function Hero({ einstellungen }: Props) {
       {/* Fullscreen Hintergrundbild */}
       <div className="absolute inset-0">
         <Image
-          src="/images/hero-construction.jpg"
+          src={einstellungen?.heroBildUrl || "/images/hero-construction.jpg"}
           alt="Baustelle SQ Schmidt"
           fill
           className="object-cover object-center opacity-40"

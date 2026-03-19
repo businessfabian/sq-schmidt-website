@@ -1,7 +1,10 @@
 import { client } from "./client"
 
 export async function getEinstellungen() {
-  return client.fetch(`*[_type == "einstellungen"][0]`)
+  return client.fetch(`*[_type == "einstellungen"][0]{
+    ...,
+    "heroBildUrl": heroBild.asset->url
+  }`)
 }
 export async function getLeistungen() {
   return client.fetch(`*[_type == "leistung"] | order(reihenfolge asc) {

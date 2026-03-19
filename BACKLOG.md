@@ -1,25 +1,22 @@
 # SQ Schmidt Website — Backlog
 
-## 🔴 Hoch
+## Agent Tasks (Claude kann diese ausführen)
 
-- [ ] Hero Bild Upload testen und Darstellung auf Mobile prüfen
-- [ ] Kontaktformular Conversion tracken (Analytics Event)
-- [ ] Admin Dashboard: Anfragen-Ansicht erweitern (Filter, Suche)
-
-## 🟡 Mittel
-
-- [ ] Blog-Bereich aufbauen (aktuell noch kein Blog)
-- [ ] Bewertungen von Google automatisch importieren
+- [ ] Kontaktformular Conversion Event in Google Analytics tracken
+- [ ] Admin Dashboard: Anfragen-Ansicht mit Filter und Suche erweitern
+- [ ] Blog-Bereich aufbauen (Sanity Schema + Seiten wie bei Meyso)
 - [ ] Preise-Seite aus Sanity (dynamisch wie bei Meyso)
-- [ ] Portfolio Bilder Upload im Admin
-- [ ] Sitemap testen und bei Google Search Console einreichen
-
-## 🟢 Niedrig / Ideen
-
 - [ ] Scroll-Animationen weiter ausbauen
-- [ ] FAQ-Bereich auf der Website
-- [ ] Live-Chat Widget
-- [ ] Mehrsprachigkeit (DE/EN)
+- [ ] FAQ-Bereich auf der Website einbauen
+- [ ] Live-Chat Widget einbinden (Tawk.to Script in Layout)
+- [ ] Anfragen CSV-Export im Admin
+
+## Manuell (kein Agent)
+
+- Bewertungen von Google importieren — braucht Google Business API Key
+- Sitemap bei Google Search Console einreichen — manuell im Browser
+- Mehrsprachigkeit (DE/EN) — braucht Übersetzungen
+- Hero Bild Upload testen — manuell prüfen
 
 ## ✅ Erledigt
 

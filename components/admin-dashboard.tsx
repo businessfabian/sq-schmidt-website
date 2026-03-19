@@ -9,11 +9,12 @@ import {
   LayoutDashboard, Settings, Eye, Briefcase, Calendar,
   Plus, Pencil, Trash2, X, ToggleLeft, ToggleRight,
   Navigation, GripVertical, Link as LinkIcon, ChevronDown,
-  Users, Award, Sparkles, BarChart2
+  Users, Award, Sparkles, BarChart2, Activity, ChevronUp,
+  Gauge, Smartphone, Monitor, AlertTriangle, TrendingUp, Zap
 } from "lucide-react"
 import Link from "next/link"
 
-type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "navigation" | "seo" | "extras"
+type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "navigation" | "seo" | "extras" | "analyse"
 
 interface Leistung { _id: string; titel: string; kurzBeschreibung: string; beschreibung: string; icon: string; reihenfolge: number; aktiv: boolean }
 interface Seminar { _id: string; titel: string; kategorie: string; datum: string; uhrzeit: string; ort: string; beschreibung: string; preis: string; anmeldeLink: string; aktiv: boolean }
@@ -172,6 +173,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     { id: "navigation" as Section, label: "Navigation", icon: Navigation },
     { id: "seo" as Section, label: "SEO & Meta", icon: Globe },
     { id: "extras" as Section, label: "Extras & KI", icon: Sparkles },
+    { id: "analyse" as Section, label: "Website Analyse", icon: Activity },
   ]
 
   const isFormSection = ["kontakt", "hero", "ueber", "seo", "extras"].includes(activeSection)
@@ -624,6 +626,8 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
               </div>
             </div>
           )}
+
+          {activeSection === "analyse" && <AnalyseSection />}
         </div>
       </main>
     </div>
@@ -661,6 +665,190 @@ function NumberField({ label, value, onChange }: any) {
       <label className="block text-sm font-medium text-zinc-300 mb-2">{label}</label>
       <input type="number" value={value} onChange={e => onChange(Number(e.target.value))}
         className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+    </div>
+  )
+}
+
+function ScoreRing({ score, label, size = 80 }: { score: number; label: string; size?: number }) {
+  const r = (size - 8) / 2
+  const circ = 2 * Math.PI * r
+  const offset = circ - (score / 100) * circ
+  const color = score >= 90 ? "#22c55e" : score >= 50 ? "#f59e0b" : "#ef4444"
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <svg width={size} height={size} className="-rotate-90">
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="#27272a" strokeWidth="6" />
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth="6"
+          strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
+          className="transition-all duration-1000" />
+      </svg>
+      <div className="absolute flex items-center justify-center" style={{ width: size, height: size }}>
+        <span className="text-lg font-bold text-white">{score}</span>
+      </div>
+      <p className="text-xs text-zinc-400 text-center">{label}</p>
+    </div>
+  )
+}
+
+function VitalCard({ label, value, score, icon: Icon }: { label: string; value: string; score: number; icon: any }) {
+  const color = score >= 0.9 ? "text-emerald-400" : score >= 0.5 ? "text-amber-400" : "text-red-400"
+  const bg = score >= 0.9 ? "bg-emerald-500/10" : score >= 0.5 ? "bg-amber-500/10" : "bg-red-500/10"
+  return (
+    <div className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
+      <div className="flex items-center gap-3 mb-2">
+        <div className={`h-8 w-8 rounded-lg ${bg} flex items-center justify-center`}>
+          <Icon className={`h-4 w-4 ${color}`} />
+        </div>
+        <p className="text-sm text-zinc-400">{label}</p>
+      </div>
+      <p className={`text-xl font-bold ${color}`}>{value || "—"}</p>
+    </div>
+  )
+}
+
+function AnalyseSection() {
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState<any>(null)
+  const [strategy, setStrategy] = useState<"mobile" | "desktop">("mobile")
+
+  async function runAnalyse() {
+    setLoading(true)
+    setData(null)
+    try {
+      const res = await fetch(`/api/admin/analyse?strategy=${strategy}`)
+      const result = await res.json()
+      setData(result)
+    } catch { setData({ error: "Analyse fehlgeschlagen" }) }
+    setLoading(false)
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="text-white font-semibold">Website Performance & SEO</h3>
+          <p className="text-zinc-500 text-sm">Live-Analyse via Google PageSpeed Insights</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex bg-zinc-900 border border-zinc-700 rounded-xl overflow-hidden">
+            <button onClick={() => setStrategy("mobile")}
+              className={`px-4 py-2 text-sm flex items-center gap-1.5 ${strategy === "mobile" ? "bg-primary text-primary-foreground" : "text-zinc-400 hover:text-white"}`}>
+              <Smartphone className="h-3.5 w-3.5" /> Mobile
+            </button>
+            <button onClick={() => setStrategy("desktop")}
+              className={`px-4 py-2 text-sm flex items-center gap-1.5 ${strategy === "desktop" ? "bg-primary text-primary-foreground" : "text-zinc-400 hover:text-white"}`}>
+              <Monitor className="h-3.5 w-3.5" /> Desktop
+            </button>
+          </div>
+          <button onClick={runAnalyse} disabled={loading}
+            className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 disabled:opacity-50">
+            {loading ? <><Loader2 className="h-4 w-4 animate-spin" /> Analysiert...</> : <><Activity className="h-4 w-4" /> Analyse starten</>}
+          </button>
+        </div>
+      </div>
+
+      {loading && (
+        <div className="flex flex-col items-center justify-center py-20 gap-4">
+          <Loader2 className="h-10 w-10 animate-spin text-primary" />
+          <p className="text-zinc-400 text-sm">Google analysiert die Website... (ca. 15-30 Sekunden)</p>
+        </div>
+      )}
+
+      {data && !data.error && (
+        <>
+          {/* Score Cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { score: data.scores.performance, label: "Performance", icon: Zap },
+              { score: data.scores.seo, label: "SEO", icon: TrendingUp },
+              { score: data.scores.accessibility, label: "Barrierefreiheit", icon: Eye },
+              { score: data.scores.bestPractices, label: "Best Practices", icon: CheckCircle },
+            ].map(({ score, label, icon: Icon }) => {
+              const color = score >= 90 ? "text-emerald-400 border-emerald-500/30" : score >= 50 ? "text-amber-400 border-amber-500/30" : "text-red-400 border-red-500/30"
+              const bg = score >= 90 ? "bg-emerald-500/10" : score >= 50 ? "bg-amber-500/10" : "bg-red-500/10"
+              return (
+                <div key={label} className={`p-5 bg-zinc-900 border border-zinc-800 rounded-2xl flex flex-col items-center gap-3 ${color}`}>
+                  <div className={`relative h-20 w-20 flex items-center justify-center`}>
+                    <svg width={80} height={80} className="-rotate-90">
+                      <circle cx={40} cy={40} r={34} fill="none" stroke="#27272a" strokeWidth="6" />
+                      <circle cx={40} cy={40} r={34} fill="none" stroke="currentColor" strokeWidth="6"
+                        strokeDasharray={2 * Math.PI * 34} strokeDashoffset={2 * Math.PI * 34 * (1 - score / 100)}
+                        strokeLinecap="round" className="transition-all duration-1000" />
+                    </svg>
+                    <span className="absolute text-2xl font-bold">{score}</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Icon className="h-3.5 w-3.5" />
+                    <span className="text-xs font-medium">{label}</span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Core Web Vitals */}
+          <div>
+            <h4 className="text-white font-medium text-sm mb-3 flex items-center gap-2">
+              <Gauge className="h-4 w-4 text-primary" /> Core Web Vitals
+            </h4>
+            <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+              <VitalCard label="First Paint" value={data.vitals.fcp?.value} score={data.vitals.fcp?.score ?? 0} icon={Zap} />
+              <VitalCard label="Largest Paint" value={data.vitals.lcp?.value} score={data.vitals.lcp?.score ?? 0} icon={LayoutDashboard} />
+              <VitalCard label="Layout Shift" value={data.vitals.cls?.value} score={data.vitals.cls?.score ?? 0} icon={AlertTriangle} />
+              <VitalCard label="Blocking Time" value={data.vitals.tbt?.value} score={data.vitals.tbt?.score ?? 0} icon={Clock} />
+              <VitalCard label="Speed Index" value={data.vitals.si?.value} score={data.vitals.si?.score ?? 0} icon={TrendingUp} />
+            </div>
+          </div>
+
+          {/* Suggestions */}
+          {data.suggestions?.length > 0 && (
+            <div>
+              <h4 className="text-white font-medium text-sm mb-3 flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-amber-400" /> Verbesserungsvorschlaege ({data.suggestions.length})
+              </h4>
+              <div className="space-y-2">
+                {data.suggestions.map((s: any, i: number) => {
+                  const color = s.score >= 0.5 ? "border-amber-500/20 bg-amber-500/5" : "border-red-500/20 bg-red-500/5"
+                  const dot = s.score >= 0.5 ? "bg-amber-400" : "bg-red-400"
+                  return (
+                    <div key={i} className={`p-4 border rounded-xl ${color}`}>
+                      <div className="flex items-start gap-3">
+                        <div className={`h-2 w-2 rounded-full mt-1.5 flex-shrink-0 ${dot}`} />
+                        <div>
+                          <p className="text-sm text-white font-medium">{s.title}</p>
+                          <p className="text-xs text-zinc-500 mt-1">{s.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+          <p className="text-xs text-zinc-600 text-center">
+            Analyse: {strategy === "mobile" ? "Mobile" : "Desktop"} — {new Date(data.timestamp).toLocaleString("de-DE")}
+          </p>
+        </>
+      )}
+
+      {data?.error && (
+        <div className="p-6 bg-red-500/10 border border-red-500/20 rounded-xl text-center">
+          <p className="text-red-400">{data.error}</p>
+        </div>
+      )}
+
+      {!data && !loading && (
+        <div className="p-12 bg-zinc-900 border border-zinc-800 rounded-2xl text-center">
+          <Activity className="h-12 w-12 text-zinc-700 mx-auto mb-4" />
+          <h3 className="text-white font-medium mb-2">Noch keine Analyse</h3>
+          <p className="text-zinc-500 text-sm mb-6">Starten Sie eine Analyse um Performance, SEO und Barrierefreiheit Ihrer Website zu pruefen.</p>
+          <button onClick={runAnalyse}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90">
+            <Activity className="h-4 w-4" /> Jetzt analysieren
+          </button>
+        </div>
+      )}
     </div>
   )
 }

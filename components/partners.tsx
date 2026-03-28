@@ -1,4 +1,3 @@
-"use client"
 import Link from "next/link"
 import { partnersData } from "@/lib/services-data"
 import { Building2, ArrowRight } from "lucide-react"
@@ -25,7 +24,7 @@ export function Partners({ partner }: Props) {
               Unsere Kooperationspartner
             </h2>
             <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-              Wir arbeiten mit fuehrenden Experten und Institutionen der Baubranche zusammen.
+              Wir arbeiten mit führenden Experten und Institutionen der Baubranche zusammen.
             </p>
           </div>
         </Reveal>

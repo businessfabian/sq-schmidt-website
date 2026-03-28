@@ -1,4 +1,4 @@
-export const revalidate = 0
+export const revalidate = 60
 
 import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"

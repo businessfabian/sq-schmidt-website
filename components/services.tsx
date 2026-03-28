@@ -1,4 +1,3 @@
-"use client"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -29,10 +28,10 @@ export function Services({ leistungen }: Props) {
           <div className="flex flex-col items-center text-center gap-4 mb-16">
             <span className="text-sm font-medium text-primary uppercase tracking-wider">Unsere Expertise</span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground" style={{ fontFamily: "var(--font-display)" }}>
-              Leistungen im Ueberblick
+              Leistungen im Überblick
             </h2>
             <p className="text-muted-foreground max-w-2xl">
-              Profitieren Sie von unserer langjahrigen Erfahrung in der Qualitaetssicherung im Bauwesen.
+              Profitieren Sie von unserer langjährigen Erfahrung in der Qualitätssicherung im Bauwesen.
             </p>
           </div>
         </Reveal>

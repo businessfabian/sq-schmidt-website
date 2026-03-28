@@ -3,10 +3,10 @@ import { Footer } from "@/components/footer"
 import { ZertifikateGrid } from "@/components/zertifikate-grid"
 import { getEinstellungen, getZertifikate } from "@/sanity/lib/queries"
 
-export const revalidate = 0
+export const revalidate = 60
 
 export const metadata = {
-  title: "Zertifikate | SQ Schmidt Qualitaetssicherung",
+  title: "Zertifikate | SQ Schmidt Qualitätssicherung",
   description: "Zertifikate und Akkreditierungen von SQ Schmidt.",
 }
 

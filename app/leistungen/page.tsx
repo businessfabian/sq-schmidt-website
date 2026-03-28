@@ -1,4 +1,4 @@
-export const revalidate = 0
+export const revalidate = 60
 
 import Link from "next/link"
 import Image from "next/image"
@@ -17,7 +17,7 @@ export default function LeistungenPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Leistungen — SQ Schmidt Qualitaetssicherung",
+    name: "Leistungen — SQ Schmidt Qualitätssicherung",
     itemListElement: servicesData.map((s, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -27,7 +27,7 @@ export default function LeistungenPage() {
         description: s.shortDescription,
         provider: {
           "@type": "LocalBusiness",
-          name: "SQ Schmidt Qualitaetssicherung",
+          name: "SQ Schmidt Qualitätssicherung",
           url: siteUrl,
         },
         areaServed: { "@type": "Country", name: "DE" },

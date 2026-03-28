@@ -1,4 +1,4 @@
-export const revalidate = 0
+export const revalidate = 60
 
 import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
@@ -7,7 +7,7 @@ import { Calendar, MapPin, Clock, ArrowRight, Tag } from "lucide-react"
 import Link from "next/link"
 
 export const metadata = {
-  title: "Seminartermine | SQ Schmidt Qualitaetssicherung",
+  title: "Seminartermine | SQ Schmidt Qualitätssicherung",
   description: "Aktuelle Seminartermine und Fortbildungen im Bauwesen.",
 }
 
@@ -28,7 +28,7 @@ export default async function SeminarePage({ searchParams }: { searchParams: Pro
           <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
             <span className="text-sm font-medium text-primary uppercase tracking-wider">Fortbildung</span>
             <h1 className="text-5xl font-bold text-white mt-4 mb-4" style={{ fontFamily: "var(--font-display)" }}>Seminartermine</h1>
-            <p className="text-zinc-400 text-lg max-w-xl">Praxisnahe Seminare und Fortbildungen rund um Bauqualitaet, Baurecht und Schadenspraevention.</p>
+            <p className="text-zinc-400 text-lg max-w-xl">Praxisnahe Seminare und Fortbildungen rund um Bauqualität, Baurecht und Schadensprävention.</p>
           </div>
         </section>
 

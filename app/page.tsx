@@ -1,4 +1,4 @@
-export const revalidate = 0
+export const revalidate = 60
 
 import { Header } from "@/components/header-wrapper"
 import { Hero } from "@/components/hero"
@@ -31,8 +31,8 @@ export default async function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: einstellungen?.firmenname ?? "SQ Schmidt Qualitaetssicherung",
-    description: einstellungen?.seoBeschreibung ?? "Oeffentlich bestellter und vereidigter Sachverstaendiger der IHK Konstanz",
+    name: einstellungen?.firmenname ?? "SQ Schmidt Qualitätssicherung",
+    description: einstellungen?.seoBeschreibung ?? "Öffentlich bestellter und vereidigter Sachverständiger der IHK Konstanz",
     url: siteUrl,
     telephone: einstellungen?.telefon ?? "",
     email: einstellungen?.email ?? "",
@@ -43,6 +43,8 @@ export default async function Home() {
       postalCode: "78647",
       addressCountry: "DE",
     },
+    foundingDate: "2001",
+    areaServed: "DE",
     priceRange: "$$",
     openingHours: einstellungen?.oeffnungszeiten ?? "Mo-Fr 08:00-18:00",
     sameAs: [],

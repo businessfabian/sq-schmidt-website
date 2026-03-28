@@ -1,4 +1,3 @@
-"use client"
 import Image from "next/image"
 import { certificatesData } from "@/lib/services-data"
 import { Reveal } from "./animations"
@@ -19,7 +18,7 @@ export function Certificates({ zertifikate }: Props) {
           <div className="text-center mb-16">
             <span className="text-primary text-sm font-semibold tracking-wider uppercase">Qualifikationen</span>
             <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground text-balance" style={{ fontFamily: "var(--font-display)" }}>Zertifikate & Akkreditierungen</h2>
-            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto leading-relaxed">Unsere Qualifikationen und Zertifizierungen sind Ihr Garant fuer professionelle und verlaessliche Arbeit nach hoechsten Standards.</p>
+            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto leading-relaxed">Unsere Qualifikationen und Zertifizierungen sind Ihr Garant für professionelle und verlässliche Arbeit nach höchsten Standards.</p>
           </div>
         </Reveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

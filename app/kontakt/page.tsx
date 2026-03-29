@@ -4,6 +4,7 @@ import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { ContactForm } from "@/components/contact-form"
 import { getEinstellungen } from "@/sanity/lib/queries"
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
   title: "Kontakt | SQ Schmidt Qualitätssicherung",
@@ -14,6 +15,7 @@ export default async function KontaktPage() {
   const einstellungen = await getEinstellungen()
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Kontakt" }]} />
       <Header einstellungen={einstellungen} />
       <main className="pt-20">
         <ContactForm einstellungen={einstellungen} />

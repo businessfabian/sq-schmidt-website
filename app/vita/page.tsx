@@ -6,6 +6,7 @@ import { getEinstellungen } from "@/sanity/lib/queries"
 import { GraduationCap, Briefcase, Award, Building2, Users, BookOpen, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
   title: "Vita | SQ Schmidt Qualitätssicherung",
@@ -179,6 +180,7 @@ export default async function VitaPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Vita" }]} />
       <Header einstellungen={einstellungen} />
       <main className="min-h-screen bg-background">
 

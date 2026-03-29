@@ -8,8 +8,8 @@ import type { NextRequest } from "next/server"
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Login-Route durchlassen
-  if (pathname === "/api/admin/login") {
+  // Login-Seite und Login-API durchlassen
+  if (pathname === "/admin" || pathname === "/api/admin/login") {
     return NextResponse.next()
   }
 

@@ -5,6 +5,7 @@ import { Footer } from "@/components/footer"
 import { getSeminare, getEinstellungen } from "@/sanity/lib/queries"
 import { Calendar, MapPin, Clock, ArrowRight, Tag } from "lucide-react"
 import Link from "next/link"
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
   title: "Seminartermine | SQ Schmidt Qualitätssicherung",
@@ -20,6 +21,7 @@ export default async function SeminarePage({ searchParams }: { searchParams: Pro
 
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Seminare" }]} />
       <Header einstellungen={einstellungen} />
       <main className="min-h-screen bg-background">
         <section className="relative bg-zinc-950 overflow-hidden">

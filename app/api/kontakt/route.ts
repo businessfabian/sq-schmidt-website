@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server"
-import { Resend } from "resend"
-
-const resend = new Resend(process.env.RESEND_API_KEY)
+import { sendMail } from "@/lib/mail"
 
 function escapeHtml(str: string): string {
   return str
@@ -30,7 +28,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Pflichtfelder fehlen" }, { status: 400 })
     }
     if (!isValidEmail(email)) {
-      return NextResponse.json({ error: "Ungueltige E-Mail-Adresse" }, { status: 400 })
+      return NextResponse.json({ error: "Ungültige E-Mail-Adresse" }, { status: 400 })
     }
 
     const safeVorname = escapeHtml(vorname)
@@ -40,9 +38,8 @@ export async function POST(req: Request) {
     const safeLeistung = escapeHtml(leistung)
     const safeNachricht = escapeHtml(nachricht)
 
-    await resend.emails.send({
-      from: "SQ Schmidt Kontaktformular <noreply@meyso.de>",
-      to: ["sqs@sq-sv.de"],
+    await sendMail({
+      to: "sqs@sq-sv.de",
       replyTo: email,
       subject: `Neue Anfrage von ${vorname} ${nachname}${leistung ? ` - ${leistung}` : ""}`,
       html: `
@@ -58,9 +55,10 @@ export async function POST(req: Request) {
           <h3 style="color: #1a1a1a;">Nachricht</h3>
           <p style="color: #333; line-height: 1.6; white-space: pre-wrap;">${safeNachricht}</p>
           <hr style="border: none; border-top: 1px solid #eee; margin: 16px 0;" />
-          <p style="color: #999; font-size: 12px;">Gesendet ueber sq-schmidt-website.vercel.app</p>
+          <p style="color: #999; font-size: 12px;">Gesendet über sq-schmidt-website.vercel.app</p>
         </div>
       `,
+      category: "transactional",
     })
     return NextResponse.json({ success: true })
   } catch (error) {

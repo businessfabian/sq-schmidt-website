@@ -33,9 +33,9 @@ export function ContactForm({ einstellungen }: Props) {
   ]
 
   const leistungen = [
-    "Baubegleitende Qualitaetssicherung",
+    "Baubegleitende Qualitätssicherung",
     "Projektleitung / Bauleitung",
-    "Maengelmanagement",
+    "Mängelmanagement",
     "Baucontrolling / Bauabnahmen",
     "Beweissicherungsverfahren",
     "Schadensgutachten",
@@ -69,6 +69,13 @@ export function ContactForm({ einstellungen }: Props) {
       })
       if (!res.ok) throw new Error()
       setSubmitted(true)
+      // GA4 Conversion Event
+      if (typeof window !== "undefined" && (window as any).gtag) {
+        ;(window as any).gtag("event", "generate_lead", {
+          event_category: "kontakt",
+          event_label: data.leistung || "Allgemein",
+        })
+      }
     } catch {
       setError("Beim Senden ist ein Fehler aufgetreten. Bitte rufen Sie uns direkt an.")
     } finally {
@@ -100,10 +107,10 @@ export function ContactForm({ einstellungen }: Props) {
         <div className="text-center mb-16">
           <span className="text-primary text-sm font-semibold tracking-wider uppercase">Kontakt</span>
           <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
-            Sprechen wir ueber Ihr Projekt
+            Sprechen wir über Ihr Projekt
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Kontaktieren Sie uns fuer eine unverbindliche Anfrage. Wir melden uns innerhalb von 24 Stunden.
+            Kontaktieren Sie uns für eine unverbindliche Anfrage. Wir melden uns innerhalb von 24 Stunden.
           </p>
         </div>
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
@@ -145,9 +152,9 @@ export function ContactForm({ einstellungen }: Props) {
                 <Input id="telefon" type="tel" placeholder="+49 123 456789" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label>Gewuenschte Leistung</Label>
+                <Label>Gewünschte Leistung</Label>
                 <Select onValueChange={setLeistung}>
-                  <SelectTrigger aria-label="Gewuenschte Leistung auswaehlen"><SelectValue placeholder="Bitte waehlen" /></SelectTrigger>
+                  <SelectTrigger aria-label="Gewünschte Leistung auswählen"><SelectValue placeholder="Bitte wählen" /></SelectTrigger>
                   <SelectContent>
                     {leistungen.map((l) => (
                       <SelectItem key={l} value={l}>{l}</SelectItem>
@@ -171,7 +178,7 @@ export function ContactForm({ einstellungen }: Props) {
               </Button>
               <p className="text-xs text-muted-foreground text-center">
                 Mit dem Absenden stimmen Sie unserer{" "}
-                <Link href="/datenschutz" className="text-primary hover:underline">Datenschutzerklaerung</Link> zu.
+                <Link href="/datenschutz" className="text-primary hover:underline">Datenschutzerklärung</Link> zu.
               </p>
             </div>
           </form>

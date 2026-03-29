@@ -10,7 +10,8 @@ import {
   Plus, Pencil, Trash2, X, ToggleLeft, ToggleRight,
   Navigation, GripVertical, Link as LinkIcon, ChevronDown,
   Users, Award, Sparkles, BarChart2, Activity, ChevronUp,
-  Gauge, Smartphone, Monitor, AlertTriangle, TrendingUp, Zap
+  Gauge, Smartphone, Monitor, AlertTriangle, TrendingUp, Zap,
+  Search, Filter
 } from "lucide-react"
 import Link from "next/link"
 
@@ -25,7 +26,7 @@ interface NavPunkt { _key?: string; label: string; typ: string; href?: string; a
 const KNOWN_PAGES = [
   { label: "Startseite", value: "/" },
   { label: "Leistungen", value: "/leistungen" },
-  { label: "Ueber Uns", value: "/ueber-uns" },
+  { label: "Über Uns", value: "/ueber-uns" },
   { label: "Partner", value: "/partner" },
   { label: "Aktuelles / Baurecht IBR", value: "/aktuelles" },
   { label: "Zertifikate", value: "/zertifikate" },
@@ -88,8 +89,13 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   const [newNav, setNewNav] = useState(false)
   const [navForm, setNavForm] = useState<NavPunkt>({ label: "", typ: "link", href: "", aktiv: true, reihenfolge: 99, unterpunkte: [] })
 
+  // Filter & Suche
+  const [searchQuery, setSearchQuery] = useState("")
+  const [statusFilter, setStatusFilter] = useState<"all" | "aktiv" | "inaktiv">("all")
+
 
   useEffect(() => {
+    setSearchQuery(""); setStatusFilter("all")
     if (activeSection === "leistungen") load("leistungen")
     if (activeSection === "seminare") load("seminare")
     if (activeSection === "partner") load("partner")
@@ -132,7 +138,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   }
 
   async function deleteItem(type: string, id: string) {
-    if (!confirm("Wirklich loeschen?")) return
+    if (!confirm("Wirklich löschen?")) return
     await fetch(`/api/admin/${type}`, { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ _id: id }) })
     await load(type)
   }
@@ -165,7 +171,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   const navItems = [
     { id: "kontakt" as Section, label: "Kontaktdaten", icon: Phone },
     { id: "hero" as Section, label: "Hero & Startseite", icon: LayoutDashboard },
-    { id: "ueber" as Section, label: "Ueber uns", icon: FileText },
+    { id: "ueber" as Section, label: "Über uns", icon: FileText },
     { id: "leistungen" as Section, label: "Leistungen", icon: Briefcase },
     { id: "seminare" as Section, label: "Seminartermine", icon: Calendar },
     { id: "partner" as Section, label: "Partner", icon: Users },
@@ -232,7 +238,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
         <div className="sticky top-0 z-10 bg-zinc-950/80 backdrop-blur-sm border-b border-zinc-800 px-8 py-4 flex items-center justify-between">
           <div>
             <h1 className="text-white font-semibold">{navItems.find(n => n.id === activeSection)?.label}</h1>
-            <p className="text-zinc-500 text-sm">Aenderungen werden sofort nach dem Speichern sichtbar</p>
+            <p className="text-zinc-500 text-sm">Änderungen werden sofort nach dem Speichern sichtbar</p>
           </div>
           {showSaveButton && (
             <button onClick={getSaveAction()} disabled={saving}
@@ -249,18 +255,18 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
 
           {activeSection === "kontakt" && (
             <div className="space-y-6">
-              <Field label="Firmenname" icon={<Globe className="h-4 w-4" />} value={form.firmenname} onChange={v => setForm(p => ({...p, firmenname: v}))} placeholder="SQ Schmidt Qualitaetssicherung" />
+              <Field label="Firmenname" icon={<Globe className="h-4 w-4" />} value={form.firmenname} onChange={v => setForm(p => ({...p, firmenname: v}))} placeholder="SQ Schmidt Qualitätssicherung" />
               <Field label="Telefon" icon={<Phone className="h-4 w-4" />} value={form.telefon} onChange={v => setForm(p => ({...p, telefon: v}))} placeholder="07726 / 929394" />
               <Field label="E-Mail" icon={<Mail className="h-4 w-4" />} value={form.email} onChange={v => setForm(p => ({...p, email: v}))} placeholder="info@beispiel.de" type="email" />
               <Field label="Adresse" icon={<MapPin className="h-4 w-4" />} value={form.adresse} onChange={v => setForm(p => ({...p, adresse: v}))} placeholder="Marktplatz 21, 78647 Trossingen" />
-              <Field label="Oeffnungszeiten" icon={<Clock className="h-4 w-4" />} value={form.oeffnungszeiten} onChange={v => setForm(p => ({...p, oeffnungszeiten: v}))} placeholder="Mo-Fr 8:00-18:00 Uhr" />
+              <Field label="Öffnungszeiten" icon={<Clock className="h-4 w-4" />} value={form.oeffnungszeiten} onChange={v => setForm(p => ({...p, oeffnungszeiten: v}))} placeholder="Mo-Fr 8:00-18:00 Uhr" />
             </div>
           )}
 
           {activeSection === "hero" && (
             <div className="grid lg:grid-cols-2 gap-8">
               <div className="space-y-6">
-                <TextareaField label="Hero Titel" value={form.heroTitel} onChange={v => setForm(p => ({...p, heroTitel: v}))} rows={2} hint="Grosser Titel auf der Startseite" />
+                <TextareaField label="Hero Titel" value={form.heroTitel} onChange={v => setForm(p => ({...p, heroTitel: v}))} rows={2} hint="Großer Titel auf der Startseite" />
                 <TextareaField label="Hero Beschreibung" value={form.heroBeschreibung} onChange={v => setForm(p => ({...p, heroBeschreibung: v}))} rows={3} hint="Untertitel unter dem Hero-Titel" />
                 <div className="grid grid-cols-2 gap-4">
                   <NumberField label="Jahre Erfahrung" value={form.jahreErfahrung} onChange={v => setForm(p => ({...p, jahreErfahrung: v}))} />
@@ -277,8 +283,8 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
 
           {activeSection === "ueber" && (
             <div className="space-y-6">
-              <Field label="Ueber uns Titel" value={form.uebermichTitel} onChange={v => setForm(p => ({...p, uebermichTitel: v}))} />
-              <TextareaField label="Ueber uns Text" value={form.uebermichText} onChange={v => setForm(p => ({...p, uebermichText: v}))} rows={6} hint="Startseite und Ueber-uns-Seite" />
+              <Field label="Über uns Titel" value={form.uebermichTitel} onChange={v => setForm(p => ({...p, uebermichTitel: v}))} />
+              <TextareaField label="Über uns Text" value={form.uebermichText} onChange={v => setForm(p => ({...p, uebermichText: v}))} rows={6} hint="Startseite und Über-uns-Seite" />
             </div>
           )}
 
@@ -286,14 +292,17 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
             <div className="space-y-4">
               {!editLeistung && !newLeistung ? (
                 <>
-                  <div className="flex items-center justify-between">
-                    <p className="text-zinc-400 text-sm">{leistungen.length} Leistungen</p>
-                    <button onClick={() => { setNewLeistung(true); setLeistungForm({ titel: "", kurzBeschreibung: "", beschreibung: "", icon: "ShieldCheck", reihenfolge: leistungen.length + 1, aktiv: true }) }}
-                      className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90">
-                      <Plus className="h-4 w-4" /> Neue Leistung
-                    </button>
-                  </div>
-                  {leistungen.map((l) => (
+                  <ListToolbar
+                    count={leistungen.length}
+                    label="Leistungen"
+                    searchQuery={searchQuery}
+                    onSearch={setSearchQuery}
+                    statusFilter={statusFilter}
+                    onStatusFilter={setStatusFilter}
+                    onAdd={() => { setNewLeistung(true); setLeistungForm({ titel: "", kurzBeschreibung: "", beschreibung: "", icon: "ShieldCheck", reihenfolge: leistungen.length + 1, aktiv: true }) }}
+                    addLabel="Neue Leistung"
+                  />
+                  {filterItems(leistungen, searchQuery, statusFilter, l => l.titel).map((l) => (
                     <div key={l._id} className="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
                       <div className="flex-1 min-w-0">
                         <p className="text-white font-medium text-sm">{l.titel}</p>
@@ -319,7 +328,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                   </div>
                   <Field label="Titel *" value={leistungForm.titel} onChange={v => setLeistungForm(p => ({...p, titel: v}))} placeholder="z.B. Schadensgutachten" />
                   <TextareaField label="Kurzbeschreibung *" value={leistungForm.kurzBeschreibung} onChange={v => setLeistungForm(p => ({...p, kurzBeschreibung: v}))} rows={2} hint="Wird in der Kachel angezeigt" />
-                  <TextareaField label="Vollstaendige Beschreibung" value={leistungForm.beschreibung} onChange={v => setLeistungForm(p => ({...p, beschreibung: v}))} rows={5} hint="Wird auf der Detailseite angezeigt" />
+                  <TextareaField label="Vollständige Beschreibung" value={leistungForm.beschreibung} onChange={v => setLeistungForm(p => ({...p, beschreibung: v}))} rows={5} hint="Wird auf der Detailseite angezeigt" />
                   <div className="grid grid-cols-2 gap-4">
                     <Field label="Icon" value={leistungForm.icon} onChange={v => setLeistungForm(p => ({...p, icon: v}))} placeholder="ShieldCheck" />
                     <NumberField label="Reihenfolge" value={leistungForm.reihenfolge} onChange={v => setLeistungForm(p => ({...p, reihenfolge: v}))} />
@@ -333,14 +342,17 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
             <div className="space-y-6">
               {!editSeminar && !newSeminar ? (
                 <>
-                  <div className="flex items-center justify-between">
-                    <p className="text-zinc-400 text-sm">{seminare.length} Termine</p>
-                    <button onClick={() => { setNewSeminar(true); setSeminarForm({ titel: "", kategorie: "bau", datum: "", uhrzeit: "", ort: "", beschreibung: "", preis: "", anmeldeLink: "", aktiv: true }) }}
-                      className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90">
-                      <Plus className="h-4 w-4" /> Neuer Termin
-                    </button>
-                  </div>
-                  {seminare.map((s) => (
+                  <ListToolbar
+                    count={seminare.length}
+                    label="Termine"
+                    searchQuery={searchQuery}
+                    onSearch={setSearchQuery}
+                    statusFilter={statusFilter}
+                    onStatusFilter={setStatusFilter}
+                    onAdd={() => { setNewSeminar(true); setSeminarForm({ titel: "", kategorie: "bau", datum: "", uhrzeit: "", ort: "", beschreibung: "", preis: "", anmeldeLink: "", aktiv: true }) }}
+                    addLabel="Neuer Termin"
+                  />
+                  {filterItems(seminare, searchQuery, statusFilter, s => `${s.titel} ${s.ort}`).map((s) => (
                     <div key={s._id} className="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
                       <div className="h-10 w-10 rounded-xl bg-primary/10 flex flex-col items-center justify-center flex-shrink-0 text-primary">
                         <span className="text-xs font-bold">{s.datum ? new Date(s.datum).getDate() : "?"}</span>
@@ -364,7 +376,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                     <h2 className="text-white font-semibold">{editSeminar ? "Bearbeiten" : "Neuer Termin"}</h2>
                     <button onClick={() => { setEditSeminar(null); setNewSeminar(false) }} className="p-2 rounded-lg text-zinc-500 hover:text-white"><X className="h-4 w-4" /></button>
                   </div>
-                  <Field label="Titel *" value={seminarForm.titel} onChange={v => setSeminarForm(p => ({...p, titel: v}))} placeholder="z.B. Baurecht fuer Bauleiter" />
+                  <Field label="Titel *" value={seminarForm.titel} onChange={v => setSeminarForm(p => ({...p, titel: v}))} placeholder="z.B. Baurecht für Bauleiter" />
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-zinc-300 mb-2">Kategorie</label>
@@ -393,14 +405,17 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
             <div className="space-y-4">
               {!editPartner && !newPartner ? (
                 <>
-                  <div className="flex items-center justify-between">
-                    <p className="text-zinc-400 text-sm">{partner.length} Partner</p>
-                    <button onClick={() => { setNewPartner(true); setPartnerForm({ name: "", beschreibung: "", webseite: "", aktiv: true, reihenfolge: partner.length + 1 }) }}
-                      className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90">
-                      <Plus className="h-4 w-4" /> Neuer Partner
-                    </button>
-                  </div>
-                  {partner.map((p) => (
+                  <ListToolbar
+                    count={partner.length}
+                    label="Partner"
+                    searchQuery={searchQuery}
+                    onSearch={setSearchQuery}
+                    statusFilter={statusFilter}
+                    onStatusFilter={setStatusFilter}
+                    onAdd={() => { setNewPartner(true); setPartnerForm({ name: "", beschreibung: "", webseite: "", aktiv: true, reihenfolge: partner.length + 1 }) }}
+                    addLabel="Neuer Partner"
+                  />
+                  {filterItems(partner, searchQuery, statusFilter, p => `${p.name} ${p.beschreibung}`).map((p) => (
                     <div key={p._id} className="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
                       <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                         <Users className="h-5 w-5 text-primary" />
@@ -428,8 +443,8 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                     <h2 className="text-white font-semibold">{editPartner ? "Bearbeiten" : "Neuer Partner"}</h2>
                     <button onClick={() => { setEditPartner(null); setNewPartner(false) }} className="p-2 rounded-lg text-zinc-500 hover:text-white"><X className="h-4 w-4" /></button>
                   </div>
-                  <Field label="Name *" value={partnerForm.name} onChange={v => setPartnerForm(p => ({...p, name: v}))} placeholder="z.B. TUeV Rheinland" />
-                  <Field label="Beschreibung" value={partnerForm.beschreibung} onChange={v => setPartnerForm(p => ({...p, beschreibung: v}))} placeholder="Technische Pruefung" />
+                  <Field label="Name *" value={partnerForm.name} onChange={v => setPartnerForm(p => ({...p, name: v}))} placeholder="z.B. TÜV Rheinland" />
+                  <Field label="Beschreibung" value={partnerForm.beschreibung} onChange={v => setPartnerForm(p => ({...p, beschreibung: v}))} placeholder="Technische Prüfung" />
                   <Field label="Webseite" value={partnerForm.webseite} onChange={v => setPartnerForm(p => ({...p, webseite: v}))} placeholder="https://..." type="url" />
                   {editPartner && <AdminImageUpload documentId={editPartner._id} type="partner" onUploaded={(url) => console.log("Bild hochgeladen:", url)} />}
                   <NumberField label="Reihenfolge" value={partnerForm.reihenfolge} onChange={v => setPartnerForm(p => ({...p, reihenfolge: v}))} />
@@ -442,14 +457,17 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
             <div className="space-y-4">
               {!editZertifikat && !newZertifikat ? (
                 <>
-                  <div className="flex items-center justify-between">
-                    <p className="text-zinc-400 text-sm">{zertifikate.length} Zertifikate</p>
-                    <button onClick={() => { setNewZertifikat(true); setZertifikatForm({ name: "", beschreibung: "", aktiv: true, reihenfolge: zertifikate.length + 1 }) }}
-                      className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90">
-                      <Plus className="h-4 w-4" /> Neues Zertifikat
-                    </button>
-                  </div>
-                  {zertifikate.map((z) => (
+                  <ListToolbar
+                    count={zertifikate.length}
+                    label="Zertifikate"
+                    searchQuery={searchQuery}
+                    onSearch={setSearchQuery}
+                    statusFilter={statusFilter}
+                    onStatusFilter={setStatusFilter}
+                    onAdd={() => { setNewZertifikat(true); setZertifikatForm({ name: "", beschreibung: "", aktiv: true, reihenfolge: zertifikate.length + 1 }) }}
+                    addLabel="Neues Zertifikat"
+                  />
+                  {filterItems(zertifikate, searchQuery, statusFilter, z => `${z.name} ${z.beschreibung}`).map((z) => (
                     <div key={z._id} className="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
                       <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                         <Award className="h-5 w-5 text-primary" />
@@ -476,8 +494,8 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                     <h2 className="text-white font-semibold">{editZertifikat ? "Bearbeiten" : "Neues Zertifikat"}</h2>
                     <button onClick={() => { setEditZertifikat(null); setNewZertifikat(false) }} className="p-2 rounded-lg text-zinc-500 hover:text-white"><X className="h-4 w-4" /></button>
                   </div>
-                  <Field label="Name *" value={zertifikatForm.name} onChange={v => setZertifikatForm(p => ({...p, name: v}))} placeholder="z.B. TUeV Zertifizierung" />
-                  <Field label="Beschreibung" value={zertifikatForm.beschreibung} onChange={v => setZertifikatForm(p => ({...p, beschreibung: v}))} placeholder="Zertifizierter Sachverstaendiger" />
+                  <Field label="Name *" value={zertifikatForm.name} onChange={v => setZertifikatForm(p => ({...p, name: v}))} placeholder="z.B. TÜV Zertifizierung" />
+                  <Field label="Beschreibung" value={zertifikatForm.beschreibung} onChange={v => setZertifikatForm(p => ({...p, beschreibung: v}))} placeholder="Zertifizierter Sachverständiger" />
                   {editZertifikat && <AdminImageUpload documentId={editZertifikat._id} type="zertifikat" onUploaded={(url) => console.log("Bild hochgeladen:", url)} />}
                   <NumberField label="Reihenfolge" value={zertifikatForm.reihenfolge} onChange={v => setZertifikatForm(p => ({...p, reihenfolge: v}))} />
                 </div>
@@ -490,7 +508,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
               {!editNav && !newNav ? (
                 <>
                   <div className="flex items-center justify-between">
-                    <p className="text-zinc-400 text-sm">Header-Menuepunkte</p>
+                    <p className="text-zinc-400 text-sm">Header-Menüpunkte</p>
                     <button onClick={() => { setNewNav(true); setNavForm({ label: "", typ: "link", href: "", aktiv: true, reihenfolge: navPunkte.length + 1, unterpunkte: [] }) }}
                       className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90">
                       <Plus className="h-4 w-4" /> Neuer Punkt
@@ -519,7 +537,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                           {p.aktiv ? "Aktiv" : "Inaktiv"}
                         </button>
                         <button onClick={() => { setEditNav(p); setEditNavIndex(i); setNavForm(p) }} className="p-2 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-700"><Pencil className="h-4 w-4" /></button>
-                        <button onClick={async () => { if(!confirm("Loeschen?")) return; const u = navPunkte.filter((_,ni) => ni!==i); await fetch("/api/admin/navigation", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ punkte: u }) }); await load("navigation") }} className="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10"><Trash2 className="h-4 w-4" /></button>
+                        <button onClick={async () => { if(!confirm("Löschen?")) return; const u = navPunkte.filter((_,ni) => ni!==i); await fetch("/api/admin/navigation", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ punkte: u }) }); await load("navigation") }} className="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10"><Trash2 className="h-4 w-4" /></button>
                       </div>
                     </div>
                   ))}
@@ -527,7 +545,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
               ) : (
                 <div className="space-y-5">
                   <div className="flex items-center justify-between">
-                    <h2 className="text-white font-semibold">{editNav ? "Bearbeiten" : "Neuer Menuepunkt"}</h2>
+                    <h2 className="text-white font-semibold">{editNav ? "Bearbeiten" : "Neuer Menüpunkt"}</h2>
                     <button onClick={() => { setEditNav(null); setEditNavIndex(null); setNewNav(false) }} className="p-2 rounded-lg text-zinc-500 hover:text-white"><X className="h-4 w-4" /></button>
                   </div>
                   <Field label="Bezeichnung *" value={navForm.label} onChange={v => setNavForm(p => ({...p, label: v}))} placeholder="z.B. Blog" />
@@ -546,7 +564,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                       <label className="block text-sm font-medium text-zinc-300 mb-2">Zielseite</label>
                       <select value={navForm.href ?? ""} onChange={e => setNavForm(p => ({...p, href: e.target.value}))}
                         className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary">
-                        <option value="">Bitte waehlen...</option>
+                        <option value="">Bitte wählen...</option>
                         {KNOWN_PAGES.map(pg => <option key={pg.value} value={pg.value}>{pg.label}</option>)}
                       </select>
                     </div>
@@ -561,7 +579,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                               placeholder="Bezeichnung" className="flex-1 bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2 text-white text-sm focus:outline-none focus:border-primary" />
                             <select value={up.href} onChange={e => { const u = [...(navForm.unterpunkte ?? [])]; u[ui] = {...u[ui], href: e.target.value}; setNavForm(p => ({...p, unterpunkte: u})) }}
                               className="flex-1 bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2 text-white text-sm focus:outline-none focus:border-primary">
-                              <option value="">Link waehlen...</option>
+                              <option value="">Link wählen...</option>
                               {KNOWN_PAGES.map(pg => <option key={pg.value} value={pg.value}>{pg.label}</option>)}
                             </select>
                             <button onClick={() => setNavForm(p => ({...p, unterpunkte: p.unterpunkte?.filter((_,fi) => fi!==ui)}))} className="p-2 text-zinc-500 hover:text-red-400"><X className="h-4 w-4" /></button>
@@ -569,7 +587,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                         ))}
                         <button onClick={() => setNavForm(p => ({...p, unterpunkte: [...(p.unterpunkte ?? []), { label: "", href: "" }]}))}
                           className="flex items-center gap-2 text-sm text-primary hover:underline">
-                          <Plus className="h-3.5 w-3.5" /> Unterpunkt hinzufuegen
+                          <Plus className="h-3.5 w-3.5" /> Unterpunkt hinzufügen
                         </button>
                       </div>
                     </div>
@@ -598,12 +616,12 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                   <div><h3 className="text-white font-semibold text-sm">Cookie Banner</h3><p className="text-zinc-500 text-xs">DSGVO Cookie Hinweis</p></div>
                   <button onClick={() => { setForm((p: any) => ({...p, cookieBannerAktiv: !p.cookieBannerAktiv})); setSaved(false) }} className={`ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${form.cookieBannerAktiv ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>{form.cookieBannerAktiv ? "Aktiv" : "Inaktiv"}</button>
                 </div>
-                <TextareaField label="Banner Text" value={form.cookieBannerText ?? ""} onChange={(v: string) => { setForm((p: any) => ({...p, cookieBannerText: v})); setSaved(false) }} rows={2} hint="Leer lassen fuer Standard-Text" />
+                <TextareaField label="Banner Text" value={form.cookieBannerText ?? ""} onChange={(v: string) => { setForm((p: any) => ({...p, cookieBannerText: v})); setSaved(false) }} rows={2} hint="Leer lassen für Standard-Text" />
               </div>
               <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-2xl opacity-60">
-                <h3 className="text-white font-semibold text-sm mb-4">Demnachst verfuegbar</h3>
+                <h3 className="text-white font-semibold text-sm mb-4">Demnächst verfügbar</h3>
                 <div className="space-y-3">
-                  {[{label:"KI-Texte generieren",desc:"Leistungstexte mit KI verbessern"},{label:"Chat-Widget",desc:"KI-Assistent auf der Website"},{label:"Monatlicher Bericht",desc:"Automatischer Performance-Bericht"},{label:"Google Bewertungen",desc:"Bewertungen im Dashboard"},{label:"Termin-Buchung",desc:"Online-Kalender fuer Kunden"}].map((f,i) => (
+                  {[{label:"KI-Texte generieren",desc:"Leistungstexte mit KI verbessern"},{label:"Chat-Widget",desc:"KI-Assistent auf der Website"},{label:"Monatlicher Bericht",desc:"Automatischer Performance-Bericht"},{label:"Google Bewertungen",desc:"Bewertungen im Dashboard"},{label:"Termin-Buchung",desc:"Online-Kalender für Kunden"}].map((f,i) => (
                     <div key={i} className="flex items-center gap-3 p-3 bg-zinc-800 rounded-xl">
                       <Sparkles className="h-4 w-4 text-zinc-500 flex-shrink-0" />
                       <div><p className="text-zinc-300 text-sm font-medium">{f.label}</p><p className="text-zinc-500 text-xs">{f.desc}</p></div>
@@ -620,7 +638,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
               <TextareaField label="SEO Beschreibung" value={form.seoBeschreibung} onChange={v => setForm(p => ({...p, seoBeschreibung: v}))} rows={3} hint="Google Beschreibung (max. 160 Zeichen)" />
               <div className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
                 <p className="text-xs text-zinc-500 mb-3 uppercase tracking-wider">Google Vorschau</p>
-                <p className="text-blue-400 text-sm font-medium truncate">{form.seoTitel || "SQ Schmidt Qualitaetssicherung"}</p>
+                <p className="text-blue-400 text-sm font-medium truncate">{form.seoTitel || "SQ Schmidt Qualitätssicherung"}</p>
                 <p className="text-green-600 text-xs">www.ihre-domain.de</p>
                 <p className="text-zinc-400 text-xs mt-1 line-clamp-2">{form.seoBeschreibung || "Beschreibung..."}</p>
               </div>
@@ -665,6 +683,58 @@ function NumberField({ label, value, onChange }: any) {
       <label className="block text-sm font-medium text-zinc-300 mb-2">{label}</label>
       <input type="number" value={value} onChange={e => onChange(Number(e.target.value))}
         className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+    </div>
+  )
+}
+
+function filterItems<T extends { aktiv: boolean }>(
+  items: T[],
+  query: string,
+  status: "all" | "aktiv" | "inaktiv",
+  getText: (item: T) => string,
+): T[] {
+  let filtered = items
+  if (query) {
+    const q = query.toLowerCase()
+    filtered = filtered.filter(item => getText(item).toLowerCase().includes(q))
+  }
+  if (status === "aktiv") filtered = filtered.filter(item => item.aktiv)
+  if (status === "inaktiv") filtered = filtered.filter(item => !item.aktiv)
+  return filtered
+}
+
+function ListToolbar({ count, label, searchQuery, onSearch, statusFilter, onStatusFilter, onAdd, addLabel }: {
+  count: number; label: string; searchQuery: string; onSearch: (v: string) => void
+  statusFilter: "all" | "aktiv" | "inaktiv"; onStatusFilter: (v: "all" | "aktiv" | "inaktiv") => void
+  onAdd: () => void; addLabel: string
+}) {
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-3">
+        <div className="flex-1 relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={e => onSearch(e.target.value)}
+            placeholder={`${label} durchsuchen...`}
+            className="w-full bg-zinc-900 border border-zinc-700 rounded-xl pl-10 pr-4 py-2.5 text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-primary"
+          />
+        </div>
+        <div className="flex bg-zinc-900 border border-zinc-700 rounded-xl overflow-hidden">
+          {(["all", "aktiv", "inaktiv"] as const).map(s => (
+            <button key={s} onClick={() => onStatusFilter(s)}
+              className={`px-3 py-2.5 text-xs font-medium transition-all ${statusFilter === s ? "bg-primary text-primary-foreground" : "text-zinc-400 hover:text-white"}`}>
+              {s === "all" ? "Alle" : s === "aktiv" ? "Aktiv" : "Inaktiv"}
+            </button>
+          ))}
+        </div>
+        <button onClick={onAdd}
+          className="flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 flex-shrink-0">
+          <Plus className="h-4 w-4" /> {addLabel}
+        </button>
+      </div>
+      <p className="text-zinc-500 text-xs">{count} {label} gesamt{searchQuery || statusFilter !== "all" ? " (gefiltert)" : ""}</p>
     </div>
   )
 }

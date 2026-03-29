@@ -1,5 +1,6 @@
 import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
   title: "Datenschutz — SQ Schmidt Qualitätssicherung",
@@ -9,6 +10,7 @@ export const metadata = {
 export default function DatenschutzPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Datenschutz" }]} />
       <Header />
       <main className="pt-32 pb-24">
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
@@ -21,7 +23,7 @@ export default function DatenschutzPage() {
               <h2 className="text-xl font-semibold text-foreground mb-3">1. Verantwortlicher</h2>
               <p className="text-muted-foreground leading-relaxed">
                 SQ Schmidt Qualitätssicherung für das Bauwesen<br />
-                [Inhaber Vorname Nachname]<br />
+                Dipl.-Ing. Gerhard Schmidt<br />
                 Marktplatz 21, 78647 Trossingen<br />
                 Telefon: 07726 / 929394<br />
                 E-Mail: <a href="mailto:sqs@sq-sv.de" className="text-primary hover:underline">sqs@sq-sv.de</a>
@@ -52,34 +54,68 @@ export default function DatenschutzPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-foreground mb-3">4. Kontaktformular</h2>
+              <h2 className="text-xl font-semibold text-foreground mb-3">4. Content Management System (CMS)</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                Zur Verwaltung der Inhalte dieser Website nutzen wir Sanity AS, Storgata 8, 0155 Oslo, Norwegen.
+                Sanity speichert und verarbeitet die redaktionellen Inhalte unserer Website. Bei der Nutzung
+                können technische Daten (z.B. IP-Adressen) an Server von Sanity übermittelt werden.
+                Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am Betrieb der Website).
+                Weitere Informationen:{" "}
+                <a href="https://www.sanity.io/legal/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  sanity.io/legal/privacy
+                </a>
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-semibold text-foreground mb-3">5. Kontaktformular und E-Mail-Versand</h2>
               <p className="text-muted-foreground leading-relaxed">
                 Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem
                 Anfrageformular inklusive der von Ihnen angegebenen Kontaktdaten zwecks Bearbeitung der
                 Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir
                 nicht ohne Ihre Einwilligung weiter. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.
+                <br /><br />
+                Für den Versand der Kontaktformular-Nachrichten nutzen wir den Dienst Resend (Resend Inc.,
+                San Francisco, USA). Dabei werden die von Ihnen eingegebenen Daten (Name, E-Mail, Nachricht)
+                an Resend zur E-Mail-Zustellung übermittelt. Weitere Informationen:{" "}
+                <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  resend.com/legal/privacy-policy
+                </a>
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-foreground mb-3">5. Cookies</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                Diese Website verwendet keine Cookies zu Tracking- oder Werbezwecken. Es werden ausschließlich
-                technisch notwendige Cookies verwendet, die für den Betrieb der Website erforderlich sind.
-              </p>
+              <h2 className="text-xl font-semibold text-foreground mb-3">6. Cookies</h2>
+              <div className="text-muted-foreground leading-relaxed space-y-4">
+                <p>
+                  Diese Website verwendet keine Cookies zu Tracking- oder Werbezwecken.
+                </p>
+                <p>
+                  <strong className="text-foreground">Funktionale Cookies:</strong> Wir setzen einen Cookie
+                  zur Speicherung Ihrer Cookie-Banner-Einstellung ({'"'}cookies_accepted{'"'}). Dieser Cookie ist
+                  technisch notwendig und wird nur lokal in Ihrem Browser gespeichert (localStorage).
+                  Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO.
+                </p>
+                <p>
+                  <strong className="text-foreground">Analyse-Cookies:</strong> Vercel Analytics setzt keine
+                  eigenen Cookies. Die Auswertung erfolgt ohne personenbezogene Daten und ohne Cookies.
+                </p>
+              </div>
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-foreground mb-3">6. Analyse-Tools</h2>
+              <h2 className="text-xl font-semibold text-foreground mb-3">7. Analyse-Tools</h2>
               <p className="text-muted-foreground leading-relaxed">
                 Diese Website nutzt Vercel Analytics zur anonymen Auswertung von Seitenaufrufen.
-                Es werden keine personenbezogenen Daten gespeichert. Die Daten werden ausschließlich
-                aggregiert und anonym verarbeitet.
+                Es werden keine personenbezogenen Daten gespeichert und keine Cookies gesetzt.
+                Die Daten werden ausschließlich aggregiert und anonym verarbeitet.
+                Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der
+                Analyse der Websitenutzung).
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-semibold text-foreground mb-3">7. Ihre Rechte</h2>
+              <h2 className="text-xl font-semibold text-foreground mb-3">8. Ihre Rechte</h2>
               <p className="text-muted-foreground leading-relaxed">
                 Sie haben das Recht auf Auskunft über die bei uns gespeicherten personenbezogenen Daten
                 (Art. 15 DSGVO), Berichtigung unrichtiger Daten (Art. 16 DSGVO), Löschung Ihrer Daten

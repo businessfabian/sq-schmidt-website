@@ -4,6 +4,7 @@ import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { getEinstellungen } from "@/sanity/lib/queries"
 import { ExternalLink, Scale } from "lucide-react"
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
   title: "Aktuelles / Baurecht IBR | SQ Schmidt Qualitätssicherung",
@@ -15,6 +16,7 @@ export default async function AktuellesPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Aktuelles" }]} />
       <Header einstellungen={einstellungen} />
       <main className="min-h-screen bg-background">
 

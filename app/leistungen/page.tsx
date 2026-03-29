@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react"
 import { servicesData } from "@/lib/services-data"
 import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
   title: "Leistungen — SQ Schmidt Qualitätssicherung",
@@ -39,6 +40,7 @@ export default function LeistungenPage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <BreadcrumbJsonLd items={[{ name: "Leistungen" }]} />
       <Header />
       <main className="pt-32 pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">

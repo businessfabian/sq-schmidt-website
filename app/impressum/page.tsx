@@ -3,6 +3,7 @@ export const revalidate = 60
 import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { getEinstellungen } from "@/sanity/lib/queries"
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
   title: "Impressum | SQ Schmidt Qualitätssicherung",
@@ -26,6 +27,7 @@ export default async function ImpressumPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Impressum" }]} />
       <Header einstellungen={e} />
       <main className="min-h-screen bg-background">
         <div className="mx-auto max-w-3xl px-6 lg:px-8 py-32">

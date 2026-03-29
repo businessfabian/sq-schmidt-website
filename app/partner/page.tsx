@@ -4,6 +4,7 @@ import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { partnersData } from "@/lib/services-data"
 import { Building2, ExternalLink } from "lucide-react"
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
   title: "Partner — SQ Schmidt Qualitätssicherung",
@@ -13,6 +14,7 @@ export const metadata = {
 export default function PartnerPage() {
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Partner" }]} />
       <Header />
       <main className="pt-32 pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">

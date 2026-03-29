@@ -8,6 +8,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { existsSync } from "fs"
 import { join } from "path"
+import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
   title: "Über Uns | SQ Schmidt Qualitätssicherung",
@@ -40,6 +41,7 @@ export default async function UeberUnsPage() {
 
   return (
     <>
+      <BreadcrumbJsonLd items={[{ name: "Über Uns" }]} />
       <Header einstellungen={einstellungen} />
       <main className="min-h-screen bg-background">
 

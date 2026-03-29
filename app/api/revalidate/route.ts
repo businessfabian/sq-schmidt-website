@@ -7,5 +7,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
   revalidatePath("/", "layout")
+
+  // Sitemap auto-submission an Google
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sq-schmidt-website.vercel.app"
+  fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(`${siteUrl}/sitemap.xml`)}`).catch(() => {})
+
   return NextResponse.json({ revalidated: true })
 }

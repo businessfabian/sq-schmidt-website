@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     const safeNachricht = escapeHtml(nachricht)
 
     await sendMail({
-      to: "sqs@sq-sv.de",
+      to: process.env.CONTACT_EMAIL || "sqs@sq-sv.de",
       replyTo: email,
       subject: `Neue Anfrage von ${vorname} ${nachname}${leistung ? ` - ${leistung}` : ""}`,
       html: `
@@ -74,7 +74,6 @@ export async function POST(req: Request) {
     })
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error("Kontakt-Fehler:", (error as Error).message)
     return NextResponse.json({ error: "Fehler beim Senden" }, { status: 500 })
   }
 }

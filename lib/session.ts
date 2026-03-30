@@ -1,6 +1,9 @@
 import { createHmac, randomBytes } from "crypto"
 
-const SECRET = process.env.ADMIN_PASSWORD ?? ""
+const SECRET = process.env.ADMIN_SESSION_SECRET || process.env.ADMIN_PASSWORD || ""
+if (!SECRET) {
+  throw new Error("ADMIN_SESSION_SECRET or ADMIN_PASSWORD must be set")
+}
 
 /**
  * Create a signed session token.

@@ -27,7 +27,7 @@ export async function sendMail({ to, subject, html, replyTo, category = "transac
   }
 
   await resend.emails.send({
-    from: "SQ Schmidt Kontaktformular <noreply@meyso.de>",
+    from: process.env.MAIL_FROM || "SQ Schmidt Kontaktformular <noreply@meyso.de>",
     to: Array.isArray(to) ? to : [to],
     replyTo,
     subject,

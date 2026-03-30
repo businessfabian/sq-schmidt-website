@@ -652,7 +652,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   )
 }
 
-function Field({ label, icon, value, onChange, placeholder, type = "text", hint }: any) {
+function Field({ label, icon, value, onChange, placeholder, type = "text", hint }: { label: string; icon?: React.ReactNode; value: string; onChange: (v: string) => void; placeholder?: string; type?: string; hint?: string }) {
   return (
     <div>
       <label className="block text-sm font-medium text-zinc-300 mb-2">{label}</label>
@@ -666,7 +666,7 @@ function Field({ label, icon, value, onChange, placeholder, type = "text", hint 
   )
 }
 
-function TextareaField({ label, value, onChange, placeholder, rows = 4, hint }: any) {
+function TextareaField({ label, value, onChange, placeholder, rows = 4, hint }: { label: string; value: string; onChange: (v: string) => void; placeholder?: string; rows?: number; hint?: string }) {
   return (
     <div>
       <label className="block text-sm font-medium text-zinc-300 mb-2">{label}</label>
@@ -677,7 +677,7 @@ function TextareaField({ label, value, onChange, placeholder, rows = 4, hint }: 
   )
 }
 
-function NumberField({ label, value, onChange }: any) {
+function NumberField({ label, value, onChange }: { label: string; value: number; onChange: (v: number) => void }) {
   return (
     <div>
       <label className="block text-sm font-medium text-zinc-300 mb-2">{label}</label>

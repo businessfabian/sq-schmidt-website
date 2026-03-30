@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@sanity/client"
-import { cookies } from "next/headers"
+import { isAdmin } from "@/lib/auth"
 
 export async function POST(req: Request) {
-  const cookieStore = await cookies()
-  const auth = cookieStore.get("admin_auth")
-  if (!auth || auth.value !== "true") {
+  if (!await isAdmin()) {
     return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   }
   const client = createClient({

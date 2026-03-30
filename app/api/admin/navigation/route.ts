@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@sanity/client"
-import { cookies } from "next/headers"
+import { isAdmin } from "@/lib/auth"
 
 function getClient() {
   return createClient({
@@ -12,19 +12,14 @@ function getClient() {
   })
 }
 
-async function checkAuth() {
-  const cookieStore = await cookies()
-  return cookieStore.get("admin_auth")?.value === "true"
-}
-
 export async function GET() {
-  if (!await checkAuth()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
+  if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   const data = await getClient().fetch(`*[_type == "navigation"][0]`)
   return NextResponse.json(data ?? { punkte: [] })
 }
 
 export async function POST(req: Request) {
-  if (!await checkAuth()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
+  if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   const client = getClient()
   const { punkte } = await req.json()
   const existing = await client.fetch(`*[_type == "navigation"][0]._id`)

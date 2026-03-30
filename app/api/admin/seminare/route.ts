@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@sanity/client"
-import { cookies } from "next/headers"
+import { isAdmin } from "@/lib/auth"
 
 function getClient() {
   return createClient({
@@ -12,19 +12,14 @@ function getClient() {
   })
 }
 
-async function checkAuth() {
-  const cookieStore = await cookies()
-  return cookieStore.get("admin_auth")?.value === "true"
-}
-
 export async function GET() {
-  if (!await checkAuth()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
+  if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   const data = await getClient().fetch(`*[_type == "seminartermin"] | order(datum asc)`)
   return NextResponse.json(data)
 }
 
 export async function POST(req: Request) {
-  if (!await checkAuth()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
+  if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   const data = await req.json()
   const result = await getClient().create({
     _type: "seminartermin",
@@ -36,7 +31,7 @@ export async function POST(req: Request) {
 }
 
 export async function PATCH(req: Request) {
-  if (!await checkAuth()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
+  if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   const { _id, ...data } = await req.json()
   const result = await getClient().patch(_id).set({
     ...data,
@@ -46,7 +41,7 @@ export async function PATCH(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  if (!await checkAuth()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
+  if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   const { _id } = await req.json()
   await getClient().delete(_id)
   return NextResponse.json({ success: true })

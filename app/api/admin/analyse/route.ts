@@ -1,13 +1,8 @@
 import { NextResponse } from "next/server"
-import { cookies } from "next/headers"
-
-async function checkAuth() {
-  const cookieStore = await cookies()
-  return cookieStore.get("admin_auth")?.value === "true"
-}
+import { isAdmin } from "@/lib/auth"
 
 export async function GET(req: Request) {
-  if (!await checkAuth()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
+  if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
 
   const { searchParams } = new URL(req.url)
   const siteUrl = searchParams.get("url") || process.env.NEXT_PUBLIC_SITE_URL || "https://sq-schmidt-website.vercel.app"

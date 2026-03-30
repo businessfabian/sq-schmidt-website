@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@sanity/client"
-import { cookies } from "next/headers"
+import { isAdmin } from "@/lib/auth"
 
 function getClient() {
   return createClient({
@@ -12,15 +12,9 @@ function getClient() {
   })
 }
 
-async function checkAuth() {
-  const cookieStore = await cookies()
-  const auth = cookieStore.get("admin_auth")
-  return auth?.value === "true"
-}
-
 // GET - alle Leistungen laden
 export async function GET() {
-  if (!await checkAuth()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
+  if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   const client = getClient()
   const leistungen = await client.fetch(`*[_type == "leistung"] | order(reihenfolge asc)`)
   return NextResponse.json(leistungen)
@@ -28,7 +22,7 @@ export async function GET() {
 
 // POST - neue Leistung erstellen
 export async function POST(req: Request) {
-  if (!await checkAuth()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
+  if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   const client = getClient()
   const data = await req.json()
   const result = await client.create({
@@ -46,7 +40,7 @@ export async function POST(req: Request) {
 
 // PATCH - Leistung aktualisieren
 export async function PATCH(req: Request) {
-  if (!await checkAuth()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
+  if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   const client = getClient()
   const { _id, ...data } = await req.json()
   const result = await client.patch(_id).set({
@@ -58,7 +52,7 @@ export async function PATCH(req: Request) {
 
 // DELETE - Leistung loeschen
 export async function DELETE(req: Request) {
-  if (!await checkAuth()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
+  if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   const client = getClient()
   const { _id } = await req.json()
   await client.delete(_id)

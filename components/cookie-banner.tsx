@@ -36,7 +36,8 @@ export function CookieBanner({ text }: Props) {
             Akzeptieren
           </button>
           <button onClick={() => setVisible(false)}
-            className="p-2 text-zinc-500 hover:text-white transition-colors">
+            aria-label="Schließen"
+            className="p-3 min-h-[44px] min-w-[44px] flex items-center justify-center text-zinc-500 hover:text-white transition-colors">
             <X className="h-4 w-4" />
           </button>
         </div>

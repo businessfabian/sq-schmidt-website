@@ -8,10 +8,10 @@
 export const config = {
   // ── Firma ──────────────────────────────────────────────────────────────
   firma: {
-    name: "SQ Schmidt Qualitaetssicherung",
+    name: "SQ Schmidt Qualitätssicherung",
     branche: "sachverstaendiger" as "sachverstaendiger" | "handwerker" | "dienstleister" | "gastronomie",
-    logoText: "SQ",           // Kuerzel im Header-Logo
-    logoSubtitle: "Qualitaetssicherung", // Untertitel im Header
+    logoText: "SQ",           // Kürzel im Header-Logo
+    logoSubtitle: "Qualitätssicherung", // Untertitel im Header
   },
 
   // ── Homepage Sections (true = sichtbar) ────────────────────────────────

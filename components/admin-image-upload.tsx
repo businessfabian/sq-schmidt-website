@@ -12,6 +12,7 @@ interface Props {
 export function AdminImageUpload({ documentId, type, currentImage, onUploaded }: Props) {
   const [uploading, setUploading] = useState(false)
   const [done, setDone] = useState(false)
+  const [uploadError, setUploadError] = useState("")
   const [preview, setPreview] = useState<string | null>(currentImage || null)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -32,10 +33,15 @@ export function AdminImageUpload({ documentId, type, currentImage, onUploaded }:
     formData.append("id", documentId)
 
     try {
+      setUploadError("")
       const res = await fetch("/api/admin/upload", { method: "POST", body: formData })
+      if (!res.ok) throw new Error()
       const data = await res.json()
       if (data.url) { onUploaded(data.url); setDone(true) }
-    } catch { } finally { setUploading(false) }
+      else throw new Error()
+    } catch {
+      setUploadError("Upload fehlgeschlagen.")
+    } finally { setUploading(false) }
   }
 
   return (
@@ -64,6 +70,7 @@ export function AdminImageUpload({ documentId, type, currentImage, onUploaded }:
         )}
       </div>
       <input ref={inputRef} type="file" accept="image/*" onChange={handleUpload} className="hidden" />
+      {uploadError && <p className="text-xs text-red-400 mt-1">{uploadError}</p>}
       <p className="text-xs text-zinc-500 mt-1">PNG, JPG, SVG — max. 5MB</p>
     </div>
   )

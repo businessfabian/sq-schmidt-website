@@ -23,38 +23,50 @@ export async function GET() {
 // POST - neue Leistung erstellen
 export async function POST(req: Request) {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
-  const client = getClient()
-  const data = await req.json()
-  const result = await client.create({
-    _type: "leistung",
-    titel: data.titel,
-    slug: { _type: "slug", current: data.titel.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-") },
-    kurzBeschreibung: data.kurzBeschreibung,
-    beschreibung: data.beschreibung,
-    icon: data.icon ?? "ShieldCheck",
-    reihenfolge: data.reihenfolge ?? 99,
-    aktiv: data.aktiv ?? true,
-  })
-  return NextResponse.json(result)
+  try {
+    const client = getClient()
+    const data = await req.json()
+    const result = await client.create({
+      _type: "leistung",
+      titel: data.titel,
+      slug: { _type: "slug", current: data.titel.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-") },
+      kurzBeschreibung: data.kurzBeschreibung,
+      beschreibung: data.beschreibung,
+      icon: data.icon ?? "ShieldCheck",
+      reihenfolge: data.reihenfolge ?? 99,
+      aktiv: data.aktiv ?? true,
+    })
+    return NextResponse.json(result)
+  } catch {
+    return NextResponse.json({ error: "Fehler beim Erstellen" }, { status: 500 })
+  }
 }
 
 // PATCH - Leistung aktualisieren
 export async function PATCH(req: Request) {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
-  const client = getClient()
-  const { _id, ...data } = await req.json()
-  const result = await client.patch(_id).set({
-    ...data,
-    slug: { _type: "slug", current: data.titel.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-") },
-  }).commit()
-  return NextResponse.json(result)
+  try {
+    const client = getClient()
+    const { _id, ...data } = await req.json()
+    const result = await client.patch(_id).set({
+      ...data,
+      slug: { _type: "slug", current: data.titel.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-") },
+    }).commit()
+    return NextResponse.json(result)
+  } catch {
+    return NextResponse.json({ error: "Fehler beim Aktualisieren" }, { status: 500 })
+  }
 }
 
 // DELETE - Leistung loeschen
 export async function DELETE(req: Request) {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
-  const client = getClient()
-  const { _id } = await req.json()
-  await client.delete(_id)
-  return NextResponse.json({ success: true })
+  try {
+    const client = getClient()
+    const { _id } = await req.json()
+    await client.delete(_id)
+    return NextResponse.json({ success: true })
+  } catch {
+    return NextResponse.json({ error: "Fehler beim Löschen" }, { status: 500 })
+  }
 }

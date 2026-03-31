@@ -20,21 +20,33 @@ export async function GET() {
 
 export async function POST(req: Request) {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
-  const data = await req.json()
-  const result = await getClient().create({ _type: "zertifikat", ...data })
-  return NextResponse.json(result)
+  try {
+    const data = await req.json()
+    const result = await getClient().create({ _type: "zertifikat", ...data })
+    return NextResponse.json(result)
+  } catch {
+    return NextResponse.json({ error: "Fehler beim Erstellen" }, { status: 500 })
+  }
 }
 
 export async function PATCH(req: Request) {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
-  const { _id, ...data } = await req.json()
-  const result = await getClient().patch(_id).set(data).commit()
-  return NextResponse.json(result)
+  try {
+    const { _id, ...data } = await req.json()
+    const result = await getClient().patch(_id).set(data).commit()
+    return NextResponse.json(result)
+  } catch {
+    return NextResponse.json({ error: "Fehler beim Aktualisieren" }, { status: 500 })
+  }
 }
 
 export async function DELETE(req: Request) {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
-  const { _id } = await req.json()
-  await getClient().delete(_id)
-  return NextResponse.json({ success: true })
+  try {
+    const { _id } = await req.json()
+    await getClient().delete(_id)
+    return NextResponse.json({ success: true })
+  } catch {
+    return NextResponse.json({ error: "Fehler beim Löschen" }, { status: 500 })
+  }
 }

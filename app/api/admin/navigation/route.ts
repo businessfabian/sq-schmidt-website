@@ -20,13 +20,17 @@ export async function GET() {
 
 export async function POST(req: Request) {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
-  const client = getClient()
-  const { punkte } = await req.json()
-  const existing = await client.fetch(`*[_type == "navigation"][0]._id`)
-  if (existing) {
-    await client.patch(existing).set({ punkte }).commit()
-  } else {
-    await client.create({ _type: "navigation", punkte })
+  try {
+    const client = getClient()
+    const { punkte } = await req.json()
+    const existing = await client.fetch(`*[_type == "navigation"][0]._id`)
+    if (existing) {
+      await client.patch(existing).set({ punkte }).commit()
+    } else {
+      await client.create({ _type: "navigation", punkte })
+    }
+    return NextResponse.json({ success: true })
+  } catch {
+    return NextResponse.json({ error: "Fehler beim Speichern" }, { status: 500 })
   }
-  return NextResponse.json({ success: true })
 }

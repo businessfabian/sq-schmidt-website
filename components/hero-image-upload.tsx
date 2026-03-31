@@ -5,19 +5,21 @@ import { Upload, Loader2, CheckCircle, ImageIcon } from "lucide-react"
 export function HeroImageUpload() {
   const [uploading, setUploading] = useState(false)
   const [done, setDone] = useState(false)
+  const [uploadError, setUploadError] = useState("")
   const [preview, setPreview] = useState<string | null>(null)
   const [einstellungenId, setEinstellungenId] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    // Einstellungen-Dokument ID und aktuelles Bild laden
-    fetch("/api/admin/hero-image")
+    const controller = new AbortController()
+    fetch("/api/admin/hero-image", { signal: controller.signal })
       .then(r => r.json())
       .then(data => {
         if (data.id) setEinstellungenId(data.id)
         if (data.url) setPreview(data.url)
       })
       .catch(() => {})
+    return () => controller.abort()
   }, [])
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -37,10 +39,15 @@ export function HeroImageUpload() {
     formData.append("id", einstellungenId)
 
     try {
+      setUploadError("")
       const res = await fetch("/api/admin/upload", { method: "POST", body: formData })
+      if (!res.ok) throw new Error()
       const data = await res.json()
       if (data.url) setDone(true)
-    } catch { } finally { setUploading(false) }
+      else throw new Error()
+    } catch {
+      setUploadError("Upload fehlgeschlagen.")
+    } finally { setUploading(false) }
   }
 
   return (
@@ -69,6 +76,7 @@ export function HeroImageUpload() {
         )}
       </div>
       <input ref={inputRef} type="file" accept="image/*" onChange={handleUpload} className="hidden" />
+      {uploadError && <p className="text-xs text-red-400 mt-1">{uploadError}</p>}
       <p className="text-xs text-zinc-500 mt-1">JPG, PNG — dunkles Baubild empfohlen</p>
     </div>
   )

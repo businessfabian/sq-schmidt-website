@@ -104,13 +104,18 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   }, [activeSection])
 
   async function load(type: string) {
-    const res = await fetch(`/api/admin/${type}`)
-    const data = await res.json()
-    if (type === "leistungen") setLeistungen(Array.isArray(data) ? data : [])
-    if (type === "seminare") setSeminare(Array.isArray(data) ? data : [])
-    if (type === "partner") setPartner(Array.isArray(data) ? data : [])
-    if (type === "zertifikate") setZertifikate(Array.isArray(data) ? data : [])
-    if (type === "navigation") setNavPunkte(data?.punkte ?? [])
+    try {
+      const res = await fetch(`/api/admin/${type}`)
+      if (!res.ok) throw new Error(`Fehler beim Laden (${type})`)
+      const data = await res.json()
+      if (type === "leistungen") setLeistungen(Array.isArray(data) ? data : [])
+      if (type === "seminare") setSeminare(Array.isArray(data) ? data : [])
+      if (type === "partner") setPartner(Array.isArray(data) ? data : [])
+      if (type === "zertifikate") setZertifikate(Array.isArray(data) ? data : [])
+      if (type === "navigation") setNavPunkte(data?.punkte ?? [])
+    } catch {
+      setError(`Fehler beim Laden von ${type}.`)
+    }
   }
 
   async function saveForm() {
@@ -139,8 +144,13 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
 
   async function deleteItem(type: string, id: string) {
     if (!confirm("Wirklich löschen?")) return
-    await fetch(`/api/admin/${type}`, { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ _id: id }) })
-    await load(type)
+    try {
+      const res = await fetch(`/api/admin/${type}`, { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ _id: id }) })
+      if (!res.ok) throw new Error()
+      await load(type)
+    } catch {
+      setError("Fehler beim Löschen.")
+    }
   }
 
   async function saveNavigation() {
@@ -163,7 +173,9 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   }
 
   async function handleLogout() {
-    await fetch("/api/admin/logout", { method: "POST" })
+    try {
+      await fetch("/api/admin/logout", { method: "POST" })
+    } catch { /* navigate to login regardless */ }
     router.push("/admin")
   }
 
@@ -309,7 +321,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                         <p className="text-zinc-500 text-xs truncate">{l.kurzBeschreibung}</p>
                       </div>
                       <div className="flex gap-2">
-                        <button onClick={async () => { await fetch("/api/admin/leistungen", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...l, aktiv: !l.aktiv }) }); await load("leistungen") }}
+                        <button onClick={async () => { try { const res = await fetch("/api/admin/leistungen", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...l, aktiv: !l.aktiv }) }); if (!res.ok) throw new Error(); await load("leistungen") } catch { setError("Fehler beim Aktualisieren.") } }}
                           className={`px-2.5 py-1 rounded-lg text-xs font-medium ${l.aktiv ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>
                           {l.aktiv ? "Aktiv" : "Inaktiv"}
                         </button>
@@ -426,7 +438,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                         {p.webseite && <p className="text-xs text-primary truncate">{p.webseite}</p>}
                       </div>
                       <div className="flex gap-2">
-                        <button onClick={async () => { await fetch("/api/admin/partner", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...p, aktiv: !p.aktiv }) }); await load("partner") }}
+                        <button onClick={async () => { try { const res = await fetch("/api/admin/partner", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...p, aktiv: !p.aktiv }) }); if (!res.ok) throw new Error(); await load("partner") } catch { setError("Fehler beim Aktualisieren.") } }}
                           className={`px-2.5 py-1 rounded-lg text-xs font-medium ${p.aktiv ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>
                           {p.aktiv ? "Aktiv" : "Inaktiv"}
                         </button>
@@ -477,7 +489,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                         <p className="text-zinc-500 text-xs">{z.beschreibung}</p>
                       </div>
                       <div className="flex gap-2">
-                        <button onClick={async () => { await fetch("/api/admin/zertifikate", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...z, aktiv: !z.aktiv }) }); await load("zertifikate") }}
+                        <button onClick={async () => { try { const res = await fetch("/api/admin/zertifikate", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...z, aktiv: !z.aktiv }) }); if (!res.ok) throw new Error(); await load("zertifikate") } catch { setError("Fehler beim Aktualisieren.") } }}
                           className={`px-2.5 py-1 rounded-lg text-xs font-medium ${z.aktiv ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>
                           {z.aktiv ? "Aktiv" : "Inaktiv"}
                         </button>
@@ -532,12 +544,12 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                         <p className="text-zinc-500 text-xs">{p.typ === "link" ? p.href : p.typ === "leistungen" ? "Auto: Leistungen" : p.typ === "seminare" ? "Auto: Seminare" : `Dropdown (${p.unterpunkte?.length ?? 0})`}</p>
                       </div>
                       <div className="flex gap-2">
-                        <button onClick={async () => { const u = navPunkte.map((np,ni) => ni===i ? {...np, aktiv: !np.aktiv} : np); setNavPunkte(u); await fetch("/api/admin/navigation", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ punkte: u }) }) }}
+                        <button onClick={async () => { const u = navPunkte.map((np,ni) => ni===i ? {...np, aktiv: !np.aktiv} : np); setNavPunkte(u); try { const res = await fetch("/api/admin/navigation", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ punkte: u }) }); if (!res.ok) throw new Error() } catch { setError("Fehler beim Aktualisieren."); await load("navigation") } }}
                           className={`px-2.5 py-1 rounded-lg text-xs font-medium ${p.aktiv ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>
                           {p.aktiv ? "Aktiv" : "Inaktiv"}
                         </button>
                         <button onClick={() => { setEditNav(p); setEditNavIndex(i); setNavForm(p) }} className="p-2 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-700"><Pencil className="h-4 w-4" /></button>
-                        <button onClick={async () => { if(!confirm("Löschen?")) return; const u = navPunkte.filter((_,ni) => ni!==i); await fetch("/api/admin/navigation", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ punkte: u }) }); await load("navigation") }} className="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10"><Trash2 className="h-4 w-4" /></button>
+                        <button onClick={async () => { if(!confirm("Löschen?")) return; const u = navPunkte.filter((_,ni) => ni!==i); try { const res = await fetch("/api/admin/navigation", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ punkte: u }) }); if (!res.ok) throw new Error(); await load("navigation") } catch { setError("Fehler beim Löschen."); await load("navigation") } }} className="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10"><Trash2 className="h-4 w-4" /></button>
                       </div>
                     </div>
                   ))}

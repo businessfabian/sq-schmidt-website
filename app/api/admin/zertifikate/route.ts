@@ -14,8 +14,12 @@ function getClient() {
 
 export async function GET() {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
-  const data = await getClient().fetch(`*[_type == "zertifikat"] | order(reihenfolge asc) { _id, name, beschreibung, aktiv, reihenfolge }`)
-  return NextResponse.json(data)
+  try {
+    const data = await getClient().fetch(`*[_type == "zertifikat"] | order(reihenfolge asc) { _id, name, beschreibung, aktiv, reihenfolge }`)
+    return NextResponse.json(data)
+  } catch {
+    return NextResponse.json({ error: "Fehler beim Laden" }, { status: 500 })
+  }
 }
 
 export async function POST(req: Request) {

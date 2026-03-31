@@ -15,9 +15,13 @@ function getClient() {
 // GET - alle Leistungen laden
 export async function GET() {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
-  const client = getClient()
-  const leistungen = await client.fetch(`*[_type == "leistung"] | order(reihenfolge asc)`)
-  return NextResponse.json(leistungen)
+  try {
+    const client = getClient()
+    const leistungen = await client.fetch(`*[_type == "leistung"] | order(reihenfolge asc)`)
+    return NextResponse.json(leistungen)
+  } catch {
+    return NextResponse.json({ error: "Fehler beim Laden" }, { status: 500 })
+  }
 }
 
 // POST - neue Leistung erstellen

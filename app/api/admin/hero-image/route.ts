@@ -15,10 +15,13 @@ export async function GET() {
     useCdn: false,
   })
 
-  const result = await client.fetch(`*[_type == "einstellungen"][0]{ _id, "url": heroBild.asset->url }`)
-
-  return NextResponse.json({
-    id: result?._id ?? null,
-    url: result?.url ?? null,
-  })
+  try {
+    const result = await client.fetch(`*[_type == "einstellungen"][0]{ _id, "url": heroBild.asset->url }`)
+    return NextResponse.json({
+      id: result?._id ?? null,
+      url: result?.url ?? null,
+    })
+  } catch {
+    return NextResponse.json({ error: "Fehler beim Laden" }, { status: 500 })
+  }
 }

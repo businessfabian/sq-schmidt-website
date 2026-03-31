@@ -28,20 +28,24 @@ export async function POST(req: Request) {
   if (!ALLOWED_TYPES.includes(file.type)) return NextResponse.json({ error: "Nur JPG, PNG, WebP oder SVG erlaubt" }, { status: 400 })
   if (!ALLOWED_UPLOAD_TYPES.includes(type)) return NextResponse.json({ error: "Ungueltiger Upload-Typ" }, { status: 400 })
 
-  const buffer = Buffer.from(await file.arrayBuffer())
-  const sanitizedFilename = file.name.replace(/[^a-z0-9._-]/gi, "_")
-  const asset = await client.assets.upload("image", buffer, {
-    filename: sanitizedFilename,
-    contentType: file.type,
-  })
+  try {
+    const buffer = Buffer.from(await file.arrayBuffer())
+    const sanitizedFilename = file.name.replace(/[^a-z0-9._-]/gi, "_")
+    const asset = await client.assets.upload("image", buffer, {
+      filename: sanitizedFilename,
+      contentType: file.type,
+    })
 
-  // Bild direkt dem Dokument zuweisen
-  const imageRef = { _type: "image", asset: { _type: "reference", _ref: asset._id } }
-  const fieldMap: Record<string, string> = { partner: "logo", zertifikat: "bild", hero: "heroBild" }
-  const field = fieldMap[type]
-  if (field) {
-    await client.patch(id).set({ [field]: imageRef }).commit()
+    // Bild direkt dem Dokument zuweisen
+    const imageRef = { _type: "image", asset: { _type: "reference", _ref: asset._id } }
+    const fieldMap: Record<string, string> = { partner: "logo", zertifikat: "bild", hero: "heroBild" }
+    const field = fieldMap[type]
+    if (field) {
+      await client.patch(id).set({ [field]: imageRef }).commit()
+    }
+
+    return NextResponse.json({ url: asset.url, assetId: asset._id })
+  } catch {
+    return NextResponse.json({ error: "Upload fehlgeschlagen" }, { status: 500 })
   }
-
-  return NextResponse.json({ url: asset.url, assetId: asset._id })
 }

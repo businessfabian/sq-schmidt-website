@@ -133,9 +133,11 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     setSaving(true)
     try {
       if (editItem) {
-        await fetch(`/api/admin/${type}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ _id: editItem._id, ...itemForm }) })
+        const res = await fetch(`/api/admin/${type}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ _id: editItem._id, ...itemForm }) })
+        if (!res.ok) throw new Error()
       } else {
-        await fetch(`/api/admin/${type}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(itemForm) })
+        const res = await fetch(`/api/admin/${type}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(itemForm) })
+        if (!res.ok) throw new Error()
       }
       await load(type); setEdit(null); setNew(false)
       fetch("/api/admin/revalidate", { method: "POST" }).catch(() => {})
@@ -798,6 +800,7 @@ function AnalyseSection() {
     setData(null)
     try {
       const res = await fetch(`/api/admin/analyse?strategy=${strategy}`)
+      if (!res.ok) throw new Error()
       const result = await res.json()
       setData(result)
     } catch { setData({ error: "Analyse fehlgeschlagen" }) }

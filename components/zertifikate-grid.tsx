@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import Image from "next/image"
 import { X, ZoomIn, Award } from "lucide-react"
 
@@ -85,28 +85,56 @@ export function ZertifikateGrid({ zertifikate = [] }: Props) {
 
       {/* Popup Modal */}
       {selected && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-          onClick={() => setSelected(null)}>
-          <div className="relative bg-card border border-border rounded-2xl overflow-hidden max-w-4xl w-full shadow-2xl"
-            onClick={e => e.stopPropagation()}>
-            <button onClick={() => setSelected(null)}
-              className="absolute top-4 right-4 z-10 h-9 w-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-black/70 transition-colors">
-              <X className="h-4 w-4 text-white" />
-            </button>
-            <div className="relative aspect-[4/3] w-full min-h-[500px] bg-zinc-950 flex items-center justify-center">
-              {bildUrl(selected) ? (
-                <Image src={bildUrl(selected)!} alt={selected.name} fill sizes="80vw" className="object-contain p-8" />
-              ) : (
-                <Award className="h-24 w-24 text-zinc-700" />
-              )}
-            </div>
-            <div className="p-6 border-t border-border">
-              <h3 className="text-xl font-bold text-foreground mb-1" style={{ fontFamily: "var(--font-display)" }}>{selected.name}</h3>
-              <p className="text-muted-foreground">{selected.beschreibung}</p>
-            </div>
-          </div>
-        </div>
+        <ZertifikatModal selected={selected} bildUrl={bildUrl} onClose={() => setSelected(null)} />
       )}
+    </div>
+  )
+}
+
+function ZertifikatModal({ selected, bildUrl, onClose }: { selected: Zertifikat; bildUrl: (z: Zertifikat) => string | null; onClose: () => void }) {
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const modalRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    closeRef.current?.focus()
+    document.body.style.overflow = "hidden"
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") { onClose(); return }
+      if (e.key !== "Tab" || !modalRef.current) return
+      const focusable = modalRef.current.querySelectorAll<HTMLElement>("button, [href], [tabindex]:not([tabindex='-1'])")
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus() }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus() }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+    return () => { document.removeEventListener("keydown", handleKeyDown); document.body.style.overflow = "" }
+  }, [onClose])
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+      onClick={onClose}>
+      <div ref={modalRef} role="dialog" aria-modal="true" aria-label={selected.name}
+        className="relative bg-card border border-border rounded-2xl overflow-hidden max-w-4xl w-full shadow-2xl"
+        onClick={e => e.stopPropagation()}>
+        <button ref={closeRef} onClick={onClose} aria-label="Schließen"
+          className="absolute top-4 right-4 z-10 h-9 w-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-black/70 transition-colors">
+          <X className="h-4 w-4 text-white" />
+        </button>
+        <div className="relative aspect-[4/3] w-full min-h-[500px] bg-zinc-950 flex items-center justify-center">
+          {bildUrl(selected) ? (
+            <Image src={bildUrl(selected)!} alt={selected.name} fill sizes="80vw" className="object-contain p-8" />
+          ) : (
+            <Award className="h-24 w-24 text-zinc-700" />
+          )}
+        </div>
+        <div className="p-6 border-t border-border">
+          <h3 className="text-xl font-bold text-foreground mb-1" style={{ fontFamily: "var(--font-display)" }}>{selected.name}</h3>
+          <p className="text-muted-foreground">{selected.beschreibung}</p>
+        </div>
+      </div>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { servicesData } from "@/lib/services-data"
 import * as Icons from "lucide-react"
-import { Reveal } from "./animations"
+import { ScrollReveal } from "./ScrollReveal"
 
 interface Props {
   leistungen?: any[]
@@ -24,7 +24,7 @@ export function Services({ leistungen }: Props) {
   return (
     <section id="leistungen" className="py-24 lg:py-32 bg-secondary/30">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <Reveal>
+        <ScrollReveal>
           <div className="flex flex-col items-center text-center gap-4 mb-16">
             <span className="text-sm font-medium text-primary uppercase tracking-wider">Unsere Expertise</span>
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground" style={{ fontFamily: "var(--font-display)" }}>
@@ -34,14 +34,14 @@ export function Services({ leistungen }: Props) {
               Profitieren Sie von unserer langjährigen Erfahrung in der Qualitätssicherung im Bauwesen.
             </p>
           </div>
-        </Reveal>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {services.map((service, index) => {
-            const slug = hasSanityLeistungen ? service.slug?.current ?? service.slug : service.slug
-            const Icon = hasSanityLeistungen ? getIcon(service.icon) : service.icon
-            return (
-              <Reveal key={index} delay={index * 80}>
-                <Link href={`/leistungen/${slug}`} className="block h-full">
+        </ScrollReveal>
+        <ScrollReveal stagger={100}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {services.map((service, index) => {
+              const slug = hasSanityLeistungen ? service.slug?.current ?? service.slug : service.slug
+              const Icon = hasSanityLeistungen ? getIcon(service.icon) : service.icon
+              return (
+                <Link key={index} href={`/leistungen/${slug}`} className="block h-full">
                   <Card className="bg-card border-border hover:border-primary/50 transition-all group h-full hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5">
                     <CardHeader>
                       <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 group-hover:scale-110 transition-all">
@@ -59,11 +59,11 @@ export function Services({ leistungen }: Props) {
                     </CardContent>
                   </Card>
                 </Link>
-              </Reveal>
-            )
-          })}
-        </div>
-        <Reveal delay={500}>
+              )
+            })}
+          </div>
+        </ScrollReveal>
+        <ScrollReveal delay={300}>
           <div className="mt-12 flex justify-center">
             <Button size="lg" variant="outline" asChild>
               <Link href="/leistungen" className="gap-2 flex items-center">
@@ -72,7 +72,7 @@ export function Services({ leistungen }: Props) {
               </Link>
             </Button>
           </div>
-        </Reveal>
+        </ScrollReveal>
       </div>
     </section>
   )

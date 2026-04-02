@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { CheckCircle, Phone, Mail, MapPin, Clock, Loader2, ArrowRight } from "lucide-react"
+import { ScrollReveal } from "./ScrollReveal"
 
 interface Props {
   einstellungen?: any
@@ -104,17 +105,19 @@ export function ContactForm({ einstellungen }: Props) {
   return (
     <section id="kontakt" className="py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <span className="text-primary text-sm font-semibold tracking-wider uppercase">Kontakt</span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
-            Sprechen wir über Ihr Projekt
-          </h2>
-          <p className="mt-4 text-muted-foreground">
-            Kontaktieren Sie uns für eine unverbindliche Anfrage. Wir melden uns innerhalb von 24 Stunden.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <span className="text-primary text-sm font-semibold tracking-wider uppercase">Kontakt</span>
+            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
+              Sprechen wir über Ihr Projekt
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Kontaktieren Sie uns für eine unverbindliche Anfrage. Wir melden uns innerhalb von 24 Stunden.
+            </p>
+          </div>
+        </ScrollReveal>
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-          <div className="flex flex-col gap-6">
+          <ScrollReveal direction="left"><div className="flex flex-col gap-6">
             {kontaktInfos.map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="flex items-start gap-4 p-5 bg-card border border-border rounded-xl">
                 <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -130,8 +133,8 @@ export function ContactForm({ einstellungen }: Props) {
                 </div>
               </div>
             ))}
-          </div>
-          <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-8">
+          </div></ScrollReveal>
+          <ScrollReveal direction="right"><form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-8">
             <div className="flex flex-col gap-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
@@ -181,7 +184,7 @@ export function ContactForm({ einstellungen }: Props) {
                 <Link href="/datenschutz" className="text-primary hover:underline">Datenschutzerklärung</Link> zu.
               </p>
             </div>
-          </form>
+          </form></ScrollReveal>
         </div>
       </div>
     </section>

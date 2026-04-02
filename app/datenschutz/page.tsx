@@ -12,9 +12,9 @@ export default function DatenschutzPage() {
     <>
       <BreadcrumbJsonLd items={[{ name: "Datenschutz" }]} />
       <Header />
-      <main className="pt-32 pb-24">
+      <main className="pt-28 sm:pt-32 pb-16 sm:pb-24">
         <div className="mx-auto max-w-3xl px-6 lg:px-8">
-          <h1 className="text-4xl font-bold tracking-tight text-foreground mb-2">Datenschutzerklärung</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground mb-2">Datenschutzerklärung</h1>
           <p className="text-muted-foreground mb-12">Stand: März 2026</p>
 
           <div className="space-y-10">

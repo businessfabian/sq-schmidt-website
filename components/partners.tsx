@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { partnersData } from "@/lib/services-data"
 import { Building2, ArrowRight } from "lucide-react"
-import { Reveal } from "./animations"
+import { ScrollReveal } from "./ScrollReveal"
 
 interface Props {
   partner?: any[]
@@ -17,7 +17,7 @@ export function Partners({ partner }: Props) {
   return (
     <section id="partner" className="py-24 bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <Reveal>
+        <ScrollReveal>
           <div className="text-center mb-14">
             <span className="text-primary text-sm font-semibold tracking-wider uppercase">Netzwerk</span>
             <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
@@ -27,31 +27,31 @@ export function Partners({ partner }: Props) {
               Wir arbeiten mit führenden Experten und Institutionen der Baubranche zusammen.
             </p>
           </div>
-        </Reveal>
+        </ScrollReveal>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
-          {list.map((p: any, i: number) => (
-            <Reveal key={i} delay={i * 60}>
-            <div className="flex items-center gap-4 p-5 bg-card border border-border rounded-xl hover:border-primary/50 hover:-translate-y-0.5 hover:shadow-lg transition-all group">
-              <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
-                <Building2 className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+        <ScrollReveal stagger={60}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+            {list.map((p: any, i: number) => (
+              <div key={i} className="flex items-center gap-4 p-5 bg-card border border-border rounded-xl hover:border-primary/50 hover:-translate-y-0.5 hover:shadow-lg transition-all group">
+                <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+                  <Building2 className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-foreground truncate">{p.name}</p>
+                  <p className="text-xs text-muted-foreground truncate">{p.beschreibung}</p>
+                </div>
               </div>
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-foreground truncate">{p.name}</p>
-                <p className="text-xs text-muted-foreground truncate">{p.beschreibung}</p>
-              </div>
-            </div>
-            </Reveal>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ScrollReveal>
 
-        <Reveal delay={400}>
-        <div className="mt-10 flex justify-center">
-          <Link href="/partner" className="inline-flex items-center gap-2 text-sm text-primary hover:underline">
-            Alle Partner ansehen <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-        </Reveal>
+        <ScrollReveal delay={300}>
+          <div className="mt-10 flex justify-center">
+            <Link href="/partner" className="inline-flex items-center gap-2 text-sm text-primary hover:underline">
+              Alle Partner ansehen <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )

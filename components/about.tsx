@@ -1,5 +1,6 @@
 import { Award, Users, Building, MapPin } from "lucide-react"
-import { Reveal, AnimatedCounter } from "./animations"
+import { AnimatedCounter } from "./animations"
+import { ScrollReveal } from "./ScrollReveal"
 
 interface Props {
   einstellungen?: any
@@ -23,7 +24,7 @@ export function About({ einstellungen }: Props) {
     <section id="ueber-uns" className="py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          <Reveal>
+          <ScrollReveal direction="left">
             <div className="flex flex-col gap-6">
               <span className="text-sm font-medium text-primary uppercase tracking-wider">Über {firmenname}</span>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground" style={{ fontFamily: "var(--font-display)" }}>
@@ -56,21 +57,21 @@ export function About({ einstellungen }: Props) {
                 ))}
               </div>
             </div>
-          </Reveal>
+          </ScrollReveal>
 
-          <div className="grid sm:grid-cols-2 gap-6">
-            {features.map((feature, i) => (
-              <Reveal key={i} delay={i * 100}>
-                <div className="flex flex-col gap-3 p-6 rounded-xl bg-card border border-border hover:-translate-y-1 hover:shadow-lg hover:border-primary/30 transition-all h-full">
+          <ScrollReveal direction="right" stagger={100}>
+            <div className="grid sm:grid-cols-2 gap-6">
+              {features.map((feature, i) => (
+                <div key={i} className="flex flex-col gap-3 p-6 rounded-xl bg-card border border-border hover:-translate-y-1 hover:shadow-lg hover:border-primary/30 transition-all h-full">
                   <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
                     <feature.icon className="h-5 w-5 text-primary" />
                   </div>
                   <h3 className="font-semibold text-foreground" style={{ fontFamily: "var(--font-display)" }}>{feature.title}</h3>
                   <p className="text-sm text-muted-foreground">{feature.description}</p>
                 </div>
-              </Reveal>
-            ))}
-          </div>
+              ))}
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

@@ -30,8 +30,8 @@ export default async function ImpressumPage() {
       <BreadcrumbJsonLd items={[{ name: "Impressum" }]} />
       <Header einstellungen={e} />
       <main className="min-h-screen bg-background">
-        <div className="mx-auto max-w-3xl px-6 lg:px-8 py-32">
-          <h1 className="text-4xl font-bold text-foreground mb-12" style={{ fontFamily: "var(--font-display)" }}>
+        <div className="mx-auto max-w-3xl px-6 lg:px-8 pt-28 sm:pt-32 pb-16 sm:pb-24">
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-12" style={{ fontFamily: "var(--font-display)" }}>
             Impressum
           </h1>
 

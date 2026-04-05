@@ -1,17 +1,17 @@
 /**
  * MEYSO TEMPLATE CONFIG
  * ─────────────────────
- * Diese Datei beim Klonen fuer neuen Kunden anpassen.
- * Kein anderer Code muss veraendert werden.
+ * Diese Datei beim Klonen für neuen Kunden anpassen.
+ * Kein anderer Code muss verändert werden.
  */
 
 export const config = {
   // ── Firma ──────────────────────────────────────────────────────────────
   firma: {
-    name: "SQ Schmidt Qualitaetssicherung",
-    branche: "sachverstaendiger" as "sachverstaendiger" | "handwerker" | "dienstleister" | "gastronomie",
-    logoText: "SQ",           // Kuerzel im Header-Logo
-    logoSubtitle: "Qualitaetssicherung", // Untertitel im Header
+    name: "SQ Schmidt Qualitätssicherung",
+    branche: "sachverständiger" as "sachverständiger" | "handwerker" | "dienstleister" | "gastronomie",
+    logoText: "SQ",           // Kürzel im Header-Logo
+    logoSubtitle: "Qualitätssicherung", // Untertitel im Header
   },
 
   // ── Homepage Sections (true = sichtbar) ────────────────────────────────
@@ -24,7 +24,7 @@ export const config = {
     kontakt: true,
   },
 
-  // ── Dashboard Tabs (true = sichtbar fuer Kunde) ────────────────────────
+  // ── Dashboard Tabs (true = sichtbar für Kunde) ────────────────────────
   dashboard: {
     kontakt: true,
     hero: true,

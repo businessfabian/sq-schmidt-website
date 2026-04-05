@@ -16,11 +16,11 @@ export default function PartnerPage() {
     <>
       <BreadcrumbJsonLd items={[{ name: "Partner" }]} />
       <Header />
-      <main className="pt-32 pb-24">
+      <main className="pt-24 sm:pt-32 pb-16 sm:pb-24">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-primary text-sm font-semibold tracking-wider uppercase">Netzwerk</span>
-            <h1 className="mt-3 text-4xl md:text-5xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
+            <h1 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
               Unsere Kooperationspartner
             </h1>
             <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">

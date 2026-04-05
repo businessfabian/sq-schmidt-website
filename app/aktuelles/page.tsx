@@ -30,10 +30,10 @@ export default async function AktuellesPage() {
               backgroundSize: "60px 60px"
             }}
           />
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-32">
             <div className="max-w-2xl">
               <span className="text-sm font-medium text-primary uppercase tracking-wider">Baurecht & Urteile</span>
-              <h1 className="text-5xl font-bold text-white mt-4 mb-6 leading-tight" style={{ fontFamily: "var(--font-display)" }}>
+              <h1 className="text-3xl sm:text-5xl font-bold text-white mt-4 mb-6 leading-tight" style={{ fontFamily: "var(--font-display)" }}>
                 Aktuelles / Baurecht IBR
               </h1>
               <p className="text-zinc-400 text-lg leading-relaxed">

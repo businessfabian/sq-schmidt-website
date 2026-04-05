@@ -52,7 +52,7 @@ export function Hero({ einstellungen }: Props) {
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
 
       {/* Content mit Staggered Fade-in */}
-      <div className="relative w-full mx-auto max-w-7xl px-6 lg:px-8 pb-20 pt-40">
+      <div className="relative w-full mx-auto max-w-7xl px-6 lg:px-8 pb-16 sm:pb-20 pt-32 sm:pt-40">
         <div className="max-w-3xl">
 
           {/* Badge */}
@@ -62,7 +62,7 @@ export function Hero({ einstellungen }: Props) {
           >
             <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-primary/40 bg-primary/10 backdrop-blur-sm">
               <ShieldCheck className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Oeffentlich bestellter Sachverstaendiger · IHK Konstanz</span>
+              <span className="text-xs sm:text-sm font-medium text-primary">Oeffentlich bestellter Sachverstaendiger · IHK Konstanz</span>
             </div>
           </div>
 
@@ -120,22 +120,22 @@ export function Hero({ einstellungen }: Props) {
             style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.8s ease 1s" }}
           >
             <div>
-              <span className="block text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
+              <span className="block text-2xl sm:text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
                 <AnimatedCounter target={jahre} suffix="+" />
               </span>
-              <span className="text-sm text-zinc-400 mt-1 block">Jahre Erfahrung</span>
+              <span className="text-xs sm:text-sm text-zinc-400 mt-1 block">Jahre Erfahrung</span>
             </div>
-            <div className="w-px h-10 bg-white/10" />
+            <div className="w-px h-8 sm:h-10 bg-white/10" />
             <div>
-              <span className="block text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
+              <span className="block text-2xl sm:text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
                 <AnimatedCounter target={projekte} suffix="+" />
               </span>
-              <span className="text-sm text-zinc-400 mt-1 block">Projekte</span>
+              <span className="text-xs sm:text-sm text-zinc-400 mt-1 block">Projekte</span>
             </div>
-            <div className="w-px h-10 bg-white/10" />
+            <div className="w-px h-8 sm:h-10 bg-white/10" />
             <div>
-              <span className="block text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>100%</span>
-              <span className="text-sm text-zinc-400 mt-1 block">TUeV-zertifiziert</span>
+              <span className="block text-2xl sm:text-4xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>100%</span>
+              <span className="text-xs sm:text-sm text-zinc-400 mt-1 block">TUeV-zertifiziert</span>
             </div>
             <div className="hidden lg:flex items-center gap-2 ml-auto text-sm text-zinc-400">
               <MapPin className="h-4 w-4" />

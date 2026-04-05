@@ -16,7 +16,7 @@ export default async function SeminarDetailPage({ params }: { params: { slug: st
       <main className="min-h-screen bg-background">
         <section className="relative bg-zinc-950 overflow-hidden">
           <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-32">
             <Link href="/seminare" className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-300 mb-6 transition-colors">
               Zurueck zu Seminartermine
             </Link>
@@ -27,7 +27,7 @@ export default async function SeminarDetailPage({ params }: { params: { slug: st
                 </span>
               </div>
             )}
-            <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6" style={{ fontFamily: "var(--font-display)" }}>{seminar.titel}</h1>
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-6" style={{ fontFamily: "var(--font-display)" }}>{seminar.titel}</h1>
             <div className="flex flex-wrap gap-6 text-zinc-400">
               {seminar.datum && <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-primary" />{new Date(seminar.datum).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}</div>}
               {seminar.uhrzeit && <div className="flex items-center gap-2"><Clock className="h-4 w-4 text-primary" />{seminar.uhrzeit}</div>}
@@ -38,7 +38,7 @@ export default async function SeminarDetailPage({ params }: { params: { slug: st
 
         <section className="py-16">
           <div className="mx-auto max-w-4xl px-6 lg:px-8">
-            <div className="grid lg:grid-cols-3 gap-10">
+            <div className="grid lg:grid-cols-3 gap-6 lg:gap-10">
               <div className="lg:col-span-2">
                 <h2 className="text-xl font-semibold text-foreground mb-4">Beschreibung</h2>
                 <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">{seminar.beschreibung}</p>

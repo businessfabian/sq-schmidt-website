@@ -27,9 +27,9 @@ export default async function SeminarePage({ searchParams }: { searchParams: Pro
         <section className="relative bg-zinc-950 overflow-hidden">
           <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-32">
             <span className="text-sm font-medium text-primary uppercase tracking-wider">Fortbildung</span>
-            <h1 className="text-5xl font-bold text-white mt-4 mb-4" style={{ fontFamily: "var(--font-display)" }}>Seminartermine</h1>
+            <h1 className="text-3xl sm:text-5xl font-bold text-white mt-4 mb-4" style={{ fontFamily: "var(--font-display)" }}>Seminartermine</h1>
             <p className="text-zinc-400 text-lg max-w-xl">Praxisnahe Seminare und Fortbildungen rund um Bauqualität, Baurecht und Schadensprävention.</p>
           </div>
         </section>

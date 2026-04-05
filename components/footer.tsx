@@ -13,7 +13,7 @@ export function Footer({ einstellungen }: Props) {
   return (
     <footer className="bg-card border-t border-border">
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-4">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">

@@ -17,7 +17,7 @@ export default async function ZertifikatePage() {
     <>
       <BreadcrumbJsonLd items={[{ name: "Zertifikate" }]} />
       <Header einstellungen={einstellungen} />
-      <main className="pt-32 pb-24">
+      <main className="pt-24 sm:pt-32 pb-16 sm:pb-24">
         <ZertifikateGrid zertifikate={zertifikate} />
       </main>
       <Footer einstellungen={einstellungen} />

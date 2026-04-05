@@ -48,7 +48,7 @@ export default async function UeberUnsPage() {
         <section className="relative bg-zinc-950 overflow-hidden">
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
           <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-32">
             <div className="max-w-2xl">
               <span className="text-sm font-medium text-primary uppercase tracking-wider">Seit 2001</span>
               <h1 className="text-3xl sm:text-5xl font-bold text-white mt-4 mb-6 leading-tight" style={{ fontFamily: "var(--font-display)" }}>Über uns</h1>
@@ -59,7 +59,7 @@ export default async function UeberUnsPage() {
 
         <section className="py-24 bg-background">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <div className="relative">
                 <div className="aspect-[4/5] rounded-2xl bg-zinc-100 dark:bg-zinc-900 overflow-hidden relative flex items-center justify-center">
                   {hasPhoto ? (

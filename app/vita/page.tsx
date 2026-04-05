@@ -194,17 +194,17 @@ export default async function VitaPage() {
               backgroundSize: "60px 60px"
             }}
           />
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-32">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <span className="text-sm font-medium text-primary uppercase tracking-wider">Beruflicher Werdegang</span>
-                <h1 className="text-5xl font-bold text-white mt-4 mb-6 leading-tight" style={{ fontFamily: "var(--font-display)" }}>
+                <h1 className="text-3xl sm:text-5xl font-bold text-white mt-4 mb-6 leading-tight" style={{ fontFamily: "var(--font-display)" }}>
                   Vita
                 </h1>
                 <p className="text-zinc-400 text-lg leading-relaxed mb-8">
                   Über 40 Jahre Erfahrung im Bauwesen — von der Maurerlehre bis zum öffentlich bestellten und vereidigten Sachverständigen.
                 </p>
-                <div className="flex gap-8">
+                <div className="flex flex-wrap gap-6 sm:gap-8">
                   <div>
                     <span className="block text-3xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>2001</span>
                     <span className="text-zinc-500 text-sm">Gründungsjahr</span>

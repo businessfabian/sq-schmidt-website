@@ -116,7 +116,7 @@ export function ContactForm({ einstellungen }: Props) {
             </p>
           </div>
         </ScrollReveal>
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-20">
           <ScrollReveal direction="left"><div className="flex flex-col gap-6">
             {kontaktInfos.map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="flex items-start gap-4 p-5 bg-card border border-border rounded-xl">
@@ -134,7 +134,7 @@ export function ContactForm({ einstellungen }: Props) {
               </div>
             ))}
           </div></ScrollReveal>
-          <ScrollReveal direction="right"><form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-8">
+          <ScrollReveal direction="right"><form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-5 sm:p-8">
             <div className="flex flex-col gap-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">

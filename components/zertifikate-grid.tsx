@@ -32,7 +32,7 @@ export function ZertifikateGrid({ zertifikate = [] }: Props) {
     <div className="mx-auto max-w-7xl px-6 lg:px-8">
       <div className="text-center mb-16">
         <span className="text-primary text-sm font-semibold tracking-wider uppercase">Qualifikationen</span>
-        <h1 className="mt-3 text-4xl md:text-5xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
+        <h1 className="mt-3 text-3xl sm:text-4xl md:text-5xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
           Zertifikate & Akkreditierungen
         </h1>
         <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
@@ -117,13 +117,13 @@ function ZertifikatModal({ selected, bildUrl, onClose }: { selected: Zertifikat;
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
       onClick={onClose}>
       <div ref={modalRef} role="dialog" aria-modal="true" aria-label={selected.name}
-        className="relative bg-card border border-border rounded-2xl overflow-hidden max-w-4xl w-full shadow-2xl"
+        className="relative bg-card border border-border rounded-2xl overflow-y-auto max-w-4xl w-full max-h-[90vh] shadow-2xl"
         onClick={e => e.stopPropagation()}>
         <button ref={closeRef} onClick={onClose} aria-label="Schließen"
           className="absolute top-4 right-4 z-10 h-9 w-9 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center hover:bg-black/70 transition-colors">
           <X className="h-4 w-4 text-white" />
         </button>
-        <div className="relative aspect-[4/3] w-full min-h-[500px] bg-zinc-950 flex items-center justify-center">
+        <div className="relative aspect-[4/3] w-full min-h-[300px] sm:min-h-[500px] bg-zinc-950 flex items-center justify-center">
           {bildUrl(selected) ? (
             <Image src={bildUrl(selected)!} alt={selected.name} fill sizes="80vw" className="object-contain p-8" />
           ) : (

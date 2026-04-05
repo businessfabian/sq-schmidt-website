@@ -38,13 +38,13 @@ export default async function LeistungDetailPage({ params }: { params: { slug: s
           <section className="relative bg-zinc-950 overflow-hidden">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
             <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
-            <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-32">
               <Link href="/leistungen" className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-300 mb-8 transition-colors">
                 <ArrowLeft className="h-4 w-4" /> Alle Leistungen
               </Link>
-              <div className="flex items-start gap-6">
-                <div className="h-16 w-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
-                  <Icon className="h-8 w-8 text-primary" />
+              <div className="flex items-start gap-4 sm:gap-6">
+                <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                  <Icon className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
                 </div>
                 <div>
                   <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>
@@ -58,7 +58,7 @@ export default async function LeistungDetailPage({ params }: { params: { slug: s
 
           <section className="py-16">
             <div className="mx-auto max-w-4xl px-6 lg:px-8">
-              <div className="grid lg:grid-cols-3 gap-10">
+              <div className="grid lg:grid-cols-3 gap-6 lg:gap-10">
                 <div className="lg:col-span-2">
                   <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap text-lg">
                     {sanityLeistung.beschreibung || sanityLeistung.kurzBeschreibung}
@@ -91,13 +91,13 @@ export default async function LeistungDetailPage({ params }: { params: { slug: s
       <main className="min-h-screen bg-background">
         <section className="relative bg-zinc-950 overflow-hidden">
           <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
-          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20 sm:py-32">
             <Link href="/leistungen" className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-300 mb-8 transition-colors">
               <ArrowLeft className="h-4 w-4" /> Alle Leistungen
             </Link>
-            <div className="flex items-start gap-6">
-              <div className="h-16 w-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
-                <Icon className="h-8 w-8 text-primary" />
+            <div className="flex items-start gap-4 sm:gap-6">
+              <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
+                <Icon className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
               </div>
               <div>
                 <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white mb-4" style={{ fontFamily: "var(--font-display)" }}>{service.title}</h1>
@@ -108,7 +108,7 @@ export default async function LeistungDetailPage({ params }: { params: { slug: s
         </section>
         <section className="py-16">
           <div className="mx-auto max-w-4xl px-6 lg:px-8">
-            <div className="grid lg:grid-cols-3 gap-10">
+            <div className="grid lg:grid-cols-3 gap-6 lg:gap-10">
               <div className="lg:col-span-2 space-y-8">
                 <p className="text-muted-foreground leading-relaxed text-lg">{service.fullDescription}</p>
                 {service.features && (

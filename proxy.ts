@@ -15,20 +15,20 @@ export function proxy(request: NextRequest) {
 
   // /admin und /api/admin schützen
   if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
-    const adminCookie = request.cookies.get("admin_auth")?.value
+    const session = request.cookies.get("admin_session")?.value || request.cookies.get("admin_auth")?.value
 
-    if (!adminCookie) {
+    if (!session) {
       if (pathname.startsWith("/api/")) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
       }
-      return NextResponse.redirect(new URL("/", request.url))
+      return NextResponse.redirect(new URL("/admin", request.url))
     }
   }
 
   // Sanity Studio schützen
   if (pathname.startsWith("/studio")) {
-    const adminCookie = request.cookies.get("admin_auth")?.value
-    if (!adminCookie) {
+    const session = request.cookies.get("admin_session")?.value || request.cookies.get("admin_auth")?.value
+    if (!session) {
       return NextResponse.redirect(new URL("/", request.url))
     }
   }

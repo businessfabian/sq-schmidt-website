@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react"
 
 /**
  * Hook: Element faded rein wenn es in den Viewport scrollt.
- * Gibt ref und className zurueck.
+ * Gibt ref und className zurück.
  */
 export function useScrollReveal(delay = 0) {
   const ref = useRef<HTMLDivElement>(null)
@@ -31,7 +31,7 @@ export function useScrollReveal(delay = 0) {
 }
 
 /**
- * Wrapper-Komponente fuer Scroll-Reveal
+ * Wrapper-Komponente für Scroll-Reveal
  */
 export function Reveal({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   const { ref, style } = useScrollReveal(delay)
@@ -39,7 +39,7 @@ export function Reveal({ children, delay = 0, className = "" }: { children: Reac
 }
 
 /**
- * Animierter Zaehler der hochzaehlt wenn sichtbar
+ * Animierter Zähler der hochzählt wenn sichtbar
  */
 export function AnimatedCounter({ target, suffix = "", duration = 2000 }: { target: number; suffix?: string; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null)

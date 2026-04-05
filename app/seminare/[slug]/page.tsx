@@ -18,7 +18,7 @@ export default async function SeminarDetailPage({ params }: { params: { slug: st
           <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
           <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
             <Link href="/seminare" className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-300 mb-6 transition-colors">
-              Zurueck zu Seminartermine
+              Zurück zu Seminartermine
             </Link>
             {seminar.kategorie && (
               <div className="flex items-center gap-2 mb-4">

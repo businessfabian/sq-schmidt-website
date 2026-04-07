@@ -17,6 +17,18 @@ const nextConfig = {
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-XSS-Protection", value: "1; mode=block" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data: blob: https://cdn.sanity.io",
+              "font-src 'self'",
+              "connect-src 'self' https://cdn.sanity.io https://www.googletagmanager.com https://www.google-analytics.com",
+              "frame-src 'self'",
+            ].join("; "),
+          },
         ],
       },
     ]

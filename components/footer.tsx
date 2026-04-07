@@ -57,7 +57,7 @@ export function Footer({ einstellungen }: Props) {
         </div>
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} SQ Schmidt Qualitätssicherung. Alle Rechte vorbehalten.</p>
-          <p className="text-sm text-muted-foreground">Webseite erstellt von <a href="https://meyso.de" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Meyso</a></p>
+          <p className="text-sm text-muted-foreground">Webseite erstellt von <a href="https://meyso.de/ref/sq-schmidt" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Meyso</a></p>
         </div>
       </div>
     </footer>

@@ -57,6 +57,9 @@ export default defineType({
       description: 'z.B. G-XXXXXXXXXX' }),
     defineField({ name: 'cookieBannerAktiv', title: 'Cookie Banner anzeigen', type: 'boolean', group: 'extras', initialValue: true }),
     defineField({ name: 'cookieBannerText', title: 'Cookie Banner Text', type: 'text', rows: 2, group: 'extras' }),
+    defineField({ name: 'tawkPropertyId', title: 'Tawk.to Property ID', type: 'string', group: 'extras',
+      description: 'Aus Tawk.to Dashboard kopieren (z.B. 6123abc...)' }),
+    defineField({ name: 'chatWidgetAktiv', title: 'Chat Widget aktiv', type: 'boolean', group: 'extras', initialValue: false }),
 
     // SEO
     defineField({ name: "seoTitel", title: "SEO Titel", type: "string", group: "seo" }),

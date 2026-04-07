@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { getEinstellungen } from "@/sanity/lib/queries"
 import { GoogleAnalytics } from "@/components/google-analytics"
 import { CookieBanner } from "@/components/cookie-banner"
+import { TawkChat } from "@/components/tawk-chat"
 import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -51,6 +52,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         {children}
         {(einstellungen?.cookieBannerAktiv !== false) && (
           <CookieBanner text={einstellungen?.cookieBannerText} />
+        )}
+        {einstellungen?.chatWidgetAktiv && einstellungen?.tawkPropertyId && (
+          <TawkChat propertyId={einstellungen.tawkPropertyId} />
         )}
         <Analytics />
       </body>

@@ -61,6 +61,8 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     googleAnalyticsId: einstellungen?.googleAnalyticsId ?? "",
     cookieBannerAktiv: einstellungen?.cookieBannerAktiv ?? false,
     cookieBannerText: einstellungen?.cookieBannerText ?? "",
+    chatWidgetAktiv: einstellungen?.chatWidgetAktiv ?? false,
+    tawkPropertyId: einstellungen?.tawkPropertyId ?? "",
   })
 
   const [leistungen, setLeistungen] = useState<Leistung[]>([])
@@ -618,10 +620,18 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                 </div>
                 <TextareaField label="Banner Text" value={form.cookieBannerText ?? ""} onChange={(v: string) => { setForm((p: any) => ({...p, cookieBannerText: v})); setSaved(false) }} rows={2} hint="Leer lassen für Standard-Text" />
               </div>
+              <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-2xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center"><Sparkles className="h-4 w-4 text-primary" /></div>
+                  <div><h3 className="text-white font-semibold text-sm">Chat Widget</h3><p className="text-zinc-500 text-xs">Tawk.to Live-Chat fuer Besucher</p></div>
+                  <button onClick={() => { setForm((p: any) => ({...p, chatWidgetAktiv: !p.chatWidgetAktiv})); setSaved(false) }} className={`ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${form.chatWidgetAktiv ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>{form.chatWidgetAktiv ? "Aktiv" : "Inaktiv"}</button>
+                </div>
+                <Field label="Tawk.to Property ID" value={form.tawkPropertyId ?? ""} onChange={(v: string) => { setForm((p: any) => ({...p, tawkPropertyId: v})); setSaved(false) }} placeholder="z.B. 6123abc..." hint="Aus Tawk.to Dashboard → Administration → Chat Widget kopieren" />
+              </div>
               <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-2xl opacity-60">
                 <h3 className="text-white font-semibold text-sm mb-4">Demnächst verfügbar</h3>
                 <div className="space-y-3">
-                  {[{label:"KI-Texte generieren",desc:"Leistungstexte mit KI verbessern"},{label:"Chat-Widget",desc:"KI-Assistent auf der Website"},{label:"Monatlicher Bericht",desc:"Automatischer Performance-Bericht"},{label:"Google Bewertungen",desc:"Bewertungen im Dashboard"},{label:"Termin-Buchung",desc:"Online-Kalender für Kunden"}].map((f,i) => (
+                  {[{label:"KI-Texte generieren",desc:"Leistungstexte mit KI verbessern"},{label:"Monatlicher Bericht",desc:"Automatischer Performance-Bericht"},{label:"Google Bewertungen",desc:"Bewertungen im Dashboard"},{label:"Termin-Buchung",desc:"Online-Kalender für Kunden"}].map((f,i) => (
                     <div key={i} className="flex items-center gap-3 p-3 bg-zinc-800 rounded-xl">
                       <Sparkles className="h-4 w-4 text-zinc-500 flex-shrink-0" />
                       <div><p className="text-zinc-300 text-sm font-medium">{f.label}</p><p className="text-zinc-500 text-xs">{f.desc}</p></div>

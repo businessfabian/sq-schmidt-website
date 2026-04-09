@@ -31,7 +31,7 @@ Antworte auf Deutsch.
 ## Beziehung zum kmu-template
 
 Basiert auf dem meyso-kmu-template (kein Git-Fork, eigenstaendiges Repo auf Template-Basis). Das heisst:
-- Alle Regeln aus `C:\Users\fabia\meyso-kmu-template\CLAUDE.md` gelten hier auch
+- Alle Regeln aus `D:\dev\meyso\meyso-kmu-template\CLAUDE.md` gelten hier auch
 - `config.ts` (eine Datei, nicht config/modules.ts + config/site.ts wie im aktuellen Template) ist der Ort fuer kundenspezifische Anpassungen
 - Bei Updates am kmu-template: diesem Repo manuell nachziehen falls relevant und Gerhard zustimmt
 

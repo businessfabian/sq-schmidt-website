@@ -11,8 +11,8 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export async function generateMetadata(): Promise<Metadata> {
   const e = await getEinstellungen()
-  const title = e?.seoTitel ?? e?.firmenname ?? "SQ Schmidt Qualitaetssicherung"
-  const description = e?.seoBeschreibung ?? "Oeffentlich bestellter und vereidigter Sachverstaendiger der IHK Konstanz. Gerichtsfeste Gutachten und professionelle Baubegleitung."
+  const title = e?.seoTitel ?? e?.firmenname ?? "SQ Schmidt Qualitätssicherung"
+  const description = e?.seoBeschreibung ?? "Öffentlich bestellter und vereidigter Sachverständiger der IHK Konstanz. Gerichtsfeste Gutachten und professionelle Baubegleitung."
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sq-schmidt-website.vercel.app"
 
   return {
@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       url: siteUrl,
-      siteName: "SQ Schmidt Qualitaetssicherung",
+      siteName: "SQ Schmidt Qualitätssicherung",
       locale: "de_DE",
       type: "website",
     },

@@ -12,9 +12,9 @@ const client = createClient({
 
 const mapping = [
   { file: "zert_03.jpg", name: "Beratender Ingenieur" },
-  { file: "zert_04.jpg", name: "IQ-ZERT Sachverstaendiger" },
-  { file: "zert_07.jpg", name: "Sachverstaendigen Akademie Aachen" },
-  { file: "zert_08.jpg", name: "TUeV Rheinland" },
+  { file: "zert_04.jpg", name: "IQ-ZERT Sachverständiger" },
+  { file: "zert_07.jpg", name: "Sachverständigen Akademie Aachen" },
+  { file: "zert_08.jpg", name: "TÜV Rheinland" },
   { file: "zert_11.jpg", name: "SiGeKo" },
   { file: "zert_12.jpg", name: "Dipl.-Ing. (FH) Baubetrieb" },
 ]

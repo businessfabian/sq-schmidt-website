@@ -17,14 +17,14 @@ async function main() {
 
   await client.create({
     _type: "zertifikat",
-    name: "TUeV SUeD Schimmelpilzsanierung",
-    beschreibung: "Fachkraft zur Sanierung von Schimmelpilzschaeden — TUeV SUeD Akademie, April 2008",
+    name: "TÜV SÜD Schimmelpilzsanierung",
+    beschreibung: "Fachkraft zur Sanierung von Schimmelpilzschäden — TÜV SÜD Akademie, April 2008",
     reihenfolge: 9,
     aktiv: true,
     bild: { _type: "image", asset: { _type: "reference", _ref: asset._id } }
   })
 
-  console.log("TUeV SUeD Zertifikat angelegt!")
+  console.log("TÜV SÜD Zertifikat angelegt!")
 }
 
 main().catch(console.error)

@@ -20,10 +20,10 @@ export function ZertifikateGrid({ zertifikate = [] }: Props) {
 
   // Fallback Daten falls Sanity noch leer
   const data = zertifikate.length > 0 ? zertifikate : [
-    { name: "TUeV Rheinland", beschreibung: "Zertifizierter Sachverstaendiger" },
-    { name: "IHK Konstanz", beschreibung: "Oeffentlich bestellter und vereidigter Sachverstaendiger" },
-    { name: "IQ-ZERT", beschreibung: "EU-zertifizierter Sachverstaendiger nach DIN EN ISO/IEC 17024" },
-    { name: "DEKRA", beschreibung: "Zertifizierter Sachverstaendiger" },
+    { name: "TÜV Rheinland", beschreibung: "Zertifizierter Sachverständiger" },
+    { name: "IHK Konstanz", beschreibung: "Öffentlich bestellter und vereidigter Sachverständiger" },
+    { name: "IQ-ZERT", beschreibung: "EU-zertifizierter Sachverständiger nach DIN EN ISO/IEC 17024" },
+    { name: "DEKRA", beschreibung: "Zertifizierter Sachverständiger" },
   ]
 
   const bildUrl = (item: Zertifikat) => item.bild || item.image || null
@@ -36,7 +36,7 @@ export function ZertifikateGrid({ zertifikate = [] }: Props) {
           Zertifikate & Akkreditierungen
         </h1>
         <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
-          Unsere Qualifikationen und Zertifizierungen sind Ihr Garant fuer professionelle und verlassliche Arbeit.
+          Unsere Qualifikationen und Zertifizierungen sind Ihr Garant für professionelle und verlässliche Arbeit.
         </p>
       </div>
 
@@ -67,7 +67,7 @@ export function ZertifikateGrid({ zertifikate = [] }: Props) {
       <div className="grid lg:grid-cols-2 gap-8">
         <div className="p-8 bg-card border border-border rounded-2xl">
           <h2 className="text-xl font-bold text-foreground mb-4" style={{ fontFamily: "var(--font-display)" }}>Kontinuierliche Weiterbildung</h2>
-          <p className="text-muted-foreground leading-relaxed">Regelmaessige Fortbildung auf dem neuesten Stand der Technik und Rechtsprechung.</p>
+          <p className="text-muted-foreground leading-relaxed">Regelmäßige Fortbildung auf dem neuesten Stand der Technik und Rechtsprechung.</p>
           <div className="flex gap-8 mt-6">
             <div><span className="block text-3xl font-bold text-primary">500+</span><span className="text-sm text-muted-foreground">Fortbildungsstunden</span></div>
             <div><span className="block text-3xl font-bold text-primary">25+</span><span className="text-sm text-muted-foreground">Jahre Erfahrung</span></div>
@@ -76,7 +76,7 @@ export function ZertifikateGrid({ zertifikate = [] }: Props) {
         <div className="p-8 bg-card border border-border rounded-2xl">
           <h2 className="text-xl font-bold text-foreground mb-4" style={{ fontFamily: "var(--font-display)" }}>Mitgliedschaften</h2>
           <div className="flex flex-wrap gap-3">
-            {["IHK Konstanz", "BVS", "TUeV Rheinland", "IQ-ZERT", "DEKRA"].map((m) => (
+            {["IHK Konstanz", "BVS", "TÜV Rheinland", "IQ-ZERT", "DEKRA"].map((m) => (
               <span key={m} className="px-4 py-2 bg-secondary rounded-lg text-sm font-medium text-foreground">{m}</span>
             ))}
           </div>

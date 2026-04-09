@@ -12,8 +12,8 @@ const client = createClient({
 
 async function main() {
   const items = [
-    { file: "zert_06.jpg", name: "Ingenieurkammer BW Mitglied", beschreibung: "Freiwilliges Mitglied der Ingenieurkammer Baden-Wuerttemberg Nr. 4856 — November 2009", reihenfolge: 10 },
-    { file: "zert_10.jpg", name: "TUeV SUeD Sachkundenachweis", beschreibung: "Sachkundenachweis zur Schimmelpilzsanierung — TUeV SUeD Akademie, April 2008", reihenfolge: 11 },
+    { file: "zert_06.jpg", name: "Ingenieurkammer BW Mitglied", beschreibung: "Freiwilliges Mitglied der Ingenieurkammer Baden-Württemberg Nr. 4856 — November 2009", reihenfolge: 10 },
+    { file: "zert_10.jpg", name: "TÜV SÜD Sachkundenachweis", beschreibung: "Sachkundenachweis zur Schimmelpilzsanierung — TÜV SÜD Akademie, April 2008", reihenfolge: 11 },
   ]
 
   for (const item of items) {

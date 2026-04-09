@@ -7,7 +7,7 @@ export default defineType({
   groups: [
     { name: "allgemein", title: "Allgemein" },
     { name: "hero", title: "Hero" },
-    { name: "ueber", title: "Ueber uns" },
+    { name: "ueber", title: "Über uns" },
     { name: "impressum", title: "Impressum & Rechtliches" },
     { name: "seo", title: "SEO" },
   ],
@@ -18,7 +18,7 @@ export default defineType({
     defineField({ name: "telefon", title: "Telefon", type: "string", group: "allgemein" }),
     defineField({ name: "email", title: "E-Mail", type: "string", group: "allgemein" }),
     defineField({ name: "adresse", title: "Adresse (einzeilig)", type: "string", group: "allgemein" }),
-    defineField({ name: "oeffnungszeiten", title: "Oeffnungszeiten", type: "string", group: "allgemein" }),
+    defineField({ name: "oeffnungszeiten", title: "Öffnungszeiten", type: "string", group: "allgemein" }),
     defineField({ name: "jahreErfahrung", title: "Jahre Erfahrung", type: "number", group: "allgemein" }),
     defineField({ name: "anzahlProjekte", title: "Anzahl Projekte", type: "number", group: "allgemein" }),
 
@@ -28,14 +28,14 @@ export default defineType({
     defineField({ name: "heroBild", title: "Hero Hintergrundbild", type: "image", group: "hero",
       description: "Dunkles Baubild empfohlen — wird als Fullscreen-Hintergrund angezeigt" }),
 
-    // Ueber uns
-    defineField({ name: "uebermichTitel", title: "Ueber uns Titel", type: "string", group: "ueber" }),
-    defineField({ name: "uebermichText", title: "Ueber uns Text", type: "text", rows: 5, group: "ueber" }),
+    // Über uns
+    defineField({ name: "uebermichTitel", title: "Über uns Titel", type: "string", group: "ueber" }),
+    defineField({ name: "uebermichText", title: "Über uns Text", type: "text", rows: 5, group: "ueber" }),
 
     // Impressum
     defineField({ name: "inhaberName", title: "Inhaber Name", type: "string", group: "impressum",
       description: "z.B. Dipl.-Ing. Gerhard Schmidt" }),
-    defineField({ name: "strasseHausnummer", title: "Strasse & Hausnummer", type: "string", group: "impressum",
+    defineField({ name: "strasseHausnummer", title: "Straße & Hausnummer", type: "string", group: "impressum",
       description: "z.B. Marktplatz 21" }),
     defineField({ name: "plzOrt", title: "PLZ & Ort", type: "string", group: "impressum",
       description: "z.B. 78647 Trossingen" }),
@@ -44,12 +44,12 @@ export default defineType({
     defineField({ name: "kleinunternehmer", title: "Kleinunternehmer nach Par. 19 UStG", type: "boolean", group: "impressum",
       initialValue: true }),
     defineField({ name: "berufsbezeichnung", title: "Berufsbezeichnung", type: "string", group: "impressum",
-      description: "z.B. Oeffentlich bestellter und vereidigter Sachverstaendiger" }),
-    defineField({ name: "bestellendeKammer", title: "Bestellende Koerperschaft", type: "string", group: "impressum",
+      description: "z.B. Öffentlich bestellter und vereidigter Sachverständiger" }),
+    defineField({ name: "bestellendeKammer", title: "Bestellende Körperschaft", type: "string", group: "impressum",
       description: "z.B. IHK Konstanz" }),
     defineField({ name: "berufshaftpflichtVersicherer", title: "Berufshaftpflicht Versicherer", type: "string", group: "impressum" }),
     defineField({ name: "berufshaftpflichtOrt", title: "Berufshaftpflicht Sitz", type: "string", group: "impressum" }),
-    defineField({ name: "verantwortlicherInhalte", title: "Verantwortlicher fuer Inhalte", type: "string", group: "impressum",
+    defineField({ name: "verantwortlicherInhalte", title: "Verantwortlicher für Inhalte", type: "string", group: "impressum",
       description: "Falls abweichend vom Inhaber" }),
 
     // Extras

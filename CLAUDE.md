@@ -16,6 +16,11 @@ Wenn eine Verbesserung hier entwickelt wird die auch anderen Projekten helfen wu
 ## Sprache
 Antworte auf Deutsch.
 
+## Tasks
+Tasks werden in `D:\dev\meyso\meyso-os\TASKS.md` gepflegt (Single Source of Truth fuer alle meyso Projekte).
+Erledigte Tasks dort als [x] markieren und in meyso-os committen und pushen.
+Raw-URL: https://raw.githubusercontent.com/businessfabian/meyso-os/main/TASKS.md
+
 ## Stack
 
 | Technologie   | Version |

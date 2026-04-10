@@ -22,16 +22,7 @@ Erledigte Tasks dort als [x] markieren und in meyso-os committen und pushen.
 Raw-URL: https://raw.githubusercontent.com/businessfabian/meyso-os/main/TASKS.md
 
 ## Stack
-
-| Technologie   | Version |
-|---------------|---------|
-| Next.js       | 16.1.6  |
-| React         | 19.2.4  |
-| TypeScript    | 5.7.3   |
-| Sanity CMS    | 4.22.0  |
-| Tailwind CSS  | 4.2.0   |
-| Resend        | 6.9.4   |
-| Vercel Analytics | 1.6.1 |
+Next.js 16 / React 19 / TypeScript 5 / Sanity CMS 4 / Tailwind 4 / Resend / Vercel Analytics. Versionen in package.json.
 
 ## Beziehung zum kmu-template
 
@@ -42,31 +33,7 @@ Basiert auf dem meyso-kmu-template (kein Git-Fork, eigenstaendiges Repo auf Temp
 
 ## Aktuelle Konfiguration
 
-### config.ts — Sections
-
-| Section     | Status |
-|-------------|--------|
-| hero        | aktiv  |
-| leistungen  | aktiv  |
-| ueber       | aktiv  |
-| partner     | aktiv  |
-| zertifikate | aktiv  |
-| kontakt     | aktiv  |
-
-### config.ts — Features
-
-| Feature        | Status      |
-|----------------|-------------|
-| kontaktformular | aktiv      |
-| seminare        | aktiv      |
-| newsletter      | deaktiviert |
-| buchung         | deaktiviert |
-| blog            | deaktiviert |
-| referenzen      | deaktiviert |
-
-### config.ts — Dashboard-Tabs
-
-Alle aktiv: kontakt, hero, ueber, leistungen, seminare, partner, zertifikate, navigation, seo
+Module und Section-Flags in config.ts nachschauen (Claude liest das direkt).
 
 ### Site-Daten (config.ts + Sanity)
 
@@ -80,38 +47,6 @@ Alle aktiv: kontakt, hero, ueber, leistungen, seminare, partner, zertifikate, na
 - **Live-Domain:** (TODO - nicht im Repo erkennbar, Dave fragen)
 - **Farben:** via Tailwind CSS, kein explizites Hex in config.ts (TODO - pruefen ob in globals.css)
 - **Fonts:** (TODO - nicht im explorer-Output erfasst)
-
-### Custom Content ueber Template hinaus
-
-**Pages:**
-- `/leistungen` + `/leistungen/[slug]`
-- `/seminare` + `/seminare/[slug]`
-- `/vita`
-- `/aktuelles`
-- `/zertifikate`
-- `/partner`
-- `/kontakt`
-- `/impressum`
-- `/datenschutz`
-
-**Sanity-Schemas (custom):**
-- `leistung.ts`
-- `seminartermin.ts`
-- `zertifikat.ts`
-- `partner.ts`
-- `einstellungen.ts`
-- `navigation.ts`
-
-**API-Routes:**
-- 14 Admin-Endpoints
-- Kontaktformular-Handler
-- Token-Login
-
-**Komponenten (custom):**
-- Admin-Dashboard
-- Breadcrumb mit JSON-LD
-- Cookie-Banner
-- Tawk.to Chat-Widget
 
 ## Bekannte offene Punkte
 
@@ -138,6 +73,12 @@ Alle aktiv: kontakt, hero, ueber, leistungen, seminare, partner, zertifikate, na
 - TypeScript strict, kein `any` ohne Kommentar
 - Tailwind only, keine inline styles
 - GROQ ohne Wildcards, explizite Felder
+
+## Context Management
+- Ein Task pro Session. Nach Abschluss /clear oder neue Session starten.
+- Bei /compact bewahren: geaenderte Files, Test-Status, offene TODOs dieser Session.
+- Subagents nutzen fuer Research statt im Haupt-Context hunderte Files zu lesen.
+- /btw fuer schnelle Fragen die nicht in den Context muessen.
 
 ## Was du IMMER tun sollst
 

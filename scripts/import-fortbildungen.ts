@@ -10,6 +10,26 @@ import { createClient } from "@sanity/client"
 import { readFileSync, existsSync } from "fs"
 import { join } from "path"
 
+// .env.local manuell laden (tsx laedt es nicht automatisch)
+function loadEnvLocal() {
+  const envPath = join(process.cwd(), ".env.local")
+  if (!existsSync(envPath)) return
+  const lines = readFileSync(envPath, "utf-8").split("\n")
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (!trimmed || trimmed.startsWith("#")) continue
+    const eqIdx = trimmed.indexOf("=")
+    if (eqIdx === -1) continue
+    const key = trimmed.slice(0, eqIdx).trim()
+    const val = trimmed.slice(eqIdx + 1).trim().replace(/^["']|["']$/g, "")
+    if (key && !(key in process.env)) {
+      process.env[key] = val
+    }
+  }
+}
+
+loadEnvLocal()
+
 // Themenbereich-Mapping: JSON-Label -> Sanity-Slug
 const THEMENBEREICH_MAP: Record<string, string> = {
   "Feuchte & Schimmel": "feuchte-schimmel",
@@ -31,18 +51,11 @@ interface FortbildungJSON {
   hervorgehoben?: boolean
 }
 
-const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
-  token: process.env.SANITY_WRITE_TOKEN,
-  apiVersion: "2024-01-01",
-  useCdn: false,
-})
-
 async function main() {
   // Vorab-Pruefungen
   if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
     console.error("FEHLER: NEXT_PUBLIC_SANITY_PROJECT_ID nicht gesetzt.")
+    console.error("Bitte in .env.local eintragen.")
     process.exit(1)
   }
   if (!process.env.SANITY_WRITE_TOKEN) {
@@ -50,6 +63,15 @@ async function main() {
     console.error("Bitte in .env.local eintragen: SANITY_WRITE_TOKEN=sk...")
     process.exit(1)
   }
+
+  // Client erst nach Env-Check erstellen
+  const client = createClient({
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
+    token: process.env.SANITY_WRITE_TOKEN,
+    apiVersion: "2024-01-01",
+    useCdn: false,
+  })
 
   // JSON einlesen
   const jsonPath = join(process.cwd(), "scripts", "import-fortbildungen.json")
@@ -62,12 +84,11 @@ async function main() {
   const eintraege: FortbildungJSON[] = JSON.parse(raw)
   console.log(`\n${eintraege.length} Fortbildungen geladen.\n`)
 
-  // Schema-Typ pruefen: Testabfrage gegen Sanity
+  // Sanity-Verbindung pruefen
   try {
     await client.fetch(`*[_type == "fortbildung"][0]{ _id }`)
   } catch (err) {
-    console.error('FEHLER: Sanity-Schema "fortbildung" nicht erreichbar.')
-    console.error("Bitte sicherstellen dass das Schema deployed ist.")
+    console.error('FEHLER: Sanity nicht erreichbar oder Schema "fortbildung" fehlt.')
     console.error(err)
     process.exit(1)
   }

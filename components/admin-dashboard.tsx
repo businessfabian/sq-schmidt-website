@@ -38,6 +38,7 @@ const KNOWN_PAGES = [
   { label: "Zertifikate", value: "/zertifikate" },
   { label: "Vita", value: "/vita" },
   { label: "Seminartermine", value: "/seminare" },
+  { label: "Fortbildungen", value: "/fortbildungen" },
   { label: "Kontakt", value: "/kontakt" },
   { label: "Impressum", value: "/impressum" },
   { label: "Datenschutz", value: "/datenschutz" },

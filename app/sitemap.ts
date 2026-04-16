@@ -13,6 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/partner`, lastModified: new Date(), priority: 0.7 },
     { url: `${baseUrl}/zertifikate`, lastModified: new Date(), priority: 0.7 },
     { url: `${baseUrl}/vita`, lastModified: new Date(), priority: 0.7 },
+    { url: `${baseUrl}/fortbildungen`, lastModified: new Date(), priority: 0.7 },
     { url: `${baseUrl}/aktuelles`, lastModified: new Date(), priority: 0.6 },
     { url: `${baseUrl}/seminare`, lastModified: new Date(), priority: 0.8 },
     { url: `${baseUrl}/kontakt`, lastModified: new Date(), priority: 0.9 },

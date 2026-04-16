@@ -1,6 +1,7 @@
 import Link from "next/link"
+import Image from "next/image"
 import { partnersData } from "@/lib/services-data"
-import { Building2, ArrowRight } from "lucide-react"
+import { Building2, ArrowRight, ExternalLink } from "lucide-react"
 import { Reveal } from "./animations"
 
 interface Props {
@@ -8,50 +9,97 @@ interface Props {
 }
 
 export function Partners({ partner }: Props) {
-  const allList = (partner && partner.length > 0)
-    ? partner.map((p: any) => ({ name: p.name, beschreibung: p.beschreibung }))
-    : partnersData.map((p) => ({ name: p.name, beschreibung: p.description }))
+  const hasSanity = partner && partner.length > 0
 
-  const list = allList.slice(0, 6)
+  const list = (hasSanity
+    ? partner.map((p: any) => ({
+        name: p.name,
+        beschreibung: p.beschreibung ?? "",
+        webseite: p.webseite ?? null,
+        logo: p.logo ?? null,
+      }))
+    : partnersData.map((p) => ({
+        name: p.name,
+        beschreibung: p.description,
+        webseite: null,
+        logo: null,
+      }))
+  ).slice(0, 4)
 
   return (
     <section id="partner" className="py-24 bg-background">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal>
-          <div className="text-center mb-14">
-            <span className="text-primary text-sm font-semibold tracking-wider uppercase">Netzwerk</span>
-            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
-              Unsere Kooperationspartner
-            </h2>
-            <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
-              Wir arbeiten mit führenden Experten und Institutionen der Baubranche zusammen.
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-14">
+            <div>
+              <span className="text-primary text-sm font-semibold tracking-wider uppercase">Netzwerk</span>
+              <h2
+                className="mt-2 text-3xl md:text-4xl font-bold text-foreground"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Kooperationspartner
+              </h2>
+            </div>
+            <Link
+              href="/partner"
+              className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors group flex-shrink-0"
+            >
+              Alle Partner
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
-          {list.map((p: any, i: number) => (
-            <Reveal key={i} delay={i * 60}>
-            <div className="flex items-center gap-4 p-5 bg-card border border-border rounded-xl hover:border-primary/50 hover:-translate-y-0.5 hover:shadow-lg transition-all group">
-              <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
-                <Building2 className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-foreground truncate">{p.name}</p>
-                <p className="text-xs text-muted-foreground truncate">{p.beschreibung}</p>
-              </div>
-            </div>
-            </Reveal>
-          ))}
-        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          {list.map((p, i) => {
+            const isExternal = !!p.webseite
+            const Wrapper = isExternal ? "a" : Link
+            const wrapperProps = isExternal
+              ? { href: p.webseite, target: "_blank", rel: "noopener noreferrer" }
+              : { href: "/partner" }
 
-        <Reveal delay={400}>
-        <div className="mt-10 flex justify-center">
-          <Link href="/partner" className="inline-flex items-center gap-2 text-sm text-primary hover:underline">
-            Alle Partner ansehen <ArrowRight className="h-4 w-4" />
-          </Link>
+            return (
+              <Reveal key={i} delay={i * 80}>
+                <Wrapper
+                  {...(wrapperProps as any)}
+                  className="group flex flex-col items-center gap-4 p-6 bg-card border border-border rounded-2xl hover:border-primary/50 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 transition-all text-center"
+                >
+                  {/* Logo oder Platzhalter */}
+                  <div className="relative h-14 w-full flex items-center justify-center">
+                    {p.logo ? (
+                      <Image
+                        src={p.logo}
+                        alt={p.name}
+                        fill
+                        sizes="(max-width: 640px) 40vw, 20vw"
+                        className="object-contain"
+                      />
+                    ) : (
+                      <div className="h-14 w-14 rounded-xl bg-secondary flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                        <Building2 className="h-7 w-7 text-muted-foreground group-hover:text-primary transition-colors" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Name */}
+                  <div className="min-w-0 w-full">
+                    <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors leading-snug">
+                      {p.name}
+                    </p>
+                    {p.beschreibung && (
+                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{p.beschreibung}</p>
+                    )}
+                  </div>
+
+                  {/* Link-Indikator */}
+                  {isExternal && (
+                    <ExternalLink className="h-3.5 w-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+                  )}
+                </Wrapper>
+              </Reveal>
+            )
+          })}
         </div>
-        </Reveal>
       </div>
     </section>
   )

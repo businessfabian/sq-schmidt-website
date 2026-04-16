@@ -28,6 +28,7 @@ interface Seminar { _id: string; titel: string; kategorie: string; datum: string
 interface Partner { _id: string; name: string; beschreibung: string; webseite: string; aktiv: boolean; reihenfolge: number }
 interface Zertifikat { _id: string; name: string; beschreibung: string; aktiv: boolean; reihenfolge: number }
 interface NavPunkt { _key?: string; label: string; typ: string; href?: string; aktiv: boolean; reihenfolge: number; unterpunkte?: { _key?: string; label: string; href: string }[] }
+interface FortbildungEintrag { _id: string; titel: string; datum: string; veranstalter: string; themenbereich?: string }
 
 const KNOWN_PAGES = [
   { label: "Startseite", value: "/" },
@@ -105,6 +106,8 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   const [newNav, setNewNav] = useState(false)
   const [navForm, setNavForm] = useState<NavPunkt>({ label: "", typ: "link", href: "", aktiv: true, reihenfolge: 99, unterpunkte: [] })
 
+  const [fortbildungenList, setFortbildungenList] = useState<FortbildungEintrag[]>([])
+
   // Filter & Suche
   const [searchQuery, setSearchQuery] = useState("")
   const [statusFilter, setStatusFilter] = useState<"all" | "aktiv" | "inaktiv">("all")
@@ -117,6 +120,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     if (activeSection === "partner") load("partner")
     if (activeSection === "zertifikate") load("zertifikate")
     if (activeSection === "navigation") load("navigation")
+    if (activeSection === "fortbildungen") load("fortbildungen")
   }, [activeSection])
 
   async function load(type: string) {
@@ -127,6 +131,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     if (type === "partner") setPartner(Array.isArray(data) ? data : [])
     if (type === "zertifikate") setZertifikate(Array.isArray(data) ? data : [])
     if (type === "navigation") setNavPunkte(data?.punkte ?? [])
+    if (type === "fortbildungen") setFortbildungenList(Array.isArray(data) ? data : [])
   }
 
   async function saveForm() {
@@ -192,14 +197,14 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     { id: "seminare" as Section, label: "Seminartermine", icon: Calendar },
     { id: "partner" as Section, label: "Partner", icon: Users },
     { id: "zertifikate" as Section, label: "Zertifikate", icon: Award },
-    { id: "fortbildungen" as Section, label: "Fortbildungen", icon: GraduationCap },
+    { id: "fortbildungen" as Section, label: "Fortbildungen", icon: GraduationCap, badge: fortbildungenList.length },
     { id: "navigation" as Section, label: "Navigation", icon: Navigation },
     { id: "seo" as Section, label: "SEO & Meta", icon: Globe },
     { id: "extras" as Section, label: "Extras & KI", icon: Sparkles },
     { id: "analyse" as Section, label: "Website Analyse", icon: Activity },
   ]
 
-  const isFormSection = ["kontakt", "hero", "ueber", "seo", "extras", "fortbildungen"].includes(activeSection)
+  const isFormSection = ["kontakt", "hero", "ueber", "seo", "extras"].includes(activeSection)
   const isEditingItem = editLeistung || newLeistung || editSeminar || newSeminar || editPartner || newPartner || editZertifikat || newZertifikat || editNav || newNav
 
   function getSaveAction() {
@@ -237,7 +242,13 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${activeSection === item.id ? "bg-primary/10 text-primary border border-primary/20" : "text-zinc-400 hover:text-white hover:bg-zinc-800"}`}>
               <item.icon className="h-4 w-4 flex-shrink-0" />
               {item.label}
-              {activeSection === item.id && <ChevronRight className="h-3 w-3 ml-auto" />}
+              {(item as { badge?: number }).badge ? (
+                <span className="ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-primary/20 text-primary min-w-[20px] text-center">
+                  {(item as { badge?: number }).badge}
+                </span>
+              ) : activeSection === item.id ? (
+                <ChevronRight className="h-3 w-3 ml-auto" />
+              ) : null}
             </button>
           ))}
         </nav>
@@ -558,25 +569,88 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
 
           {activeSection === "fortbildungen" && (
             <div className="space-y-6">
-              <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-2xl">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <GraduationCap className="h-4 w-4 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-white font-semibold text-sm">Fortbildungen</h3>
-                    <p className="text-zinc-500 text-xs">Seite ist als Coming Soon geschaltet</p>
-                  </div>
-                  <a href="/fortbildungen" target="_blank" className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all">
-                    <Eye className="h-3.5 w-3.5" /> Seite ansehen
-                  </a>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-white font-semibold">Fortbildungen</h2>
+                  <p className="text-zinc-500 text-sm">
+                    {fortbildungenList.length > 0
+                      ? `${fortbildungenList.length} Eintraege in Sanity`
+                      : "Noch keine Fortbildungen erfasst"}
+                  </p>
                 </div>
-                <div className="p-4 bg-zinc-950 border border-zinc-700 rounded-xl text-center">
-                  <GraduationCap className="h-10 w-10 text-zinc-600 mx-auto mb-3" />
-                  <p className="text-zinc-300 text-sm font-medium mb-1">Inhalt folgt</p>
-                  <p className="text-zinc-500 text-xs">Sobald Sie wissen was auf der Fortbildungen-Seite stehen soll, kann der Inhalt hier gepflegt werden.</p>
-                </div>
+                <a
+                  href="/fortbildungen"
+                  target="_blank"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all"
+                >
+                  <Eye className="h-3.5 w-3.5" /> Seite ansehen
+                </a>
               </div>
+
+              <div className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-zinc-500">
+                Fortbildungen werden direkt in Sanity Studio gepflegt. Neue Eintraege unter{" "}
+                <a href="/studio" target="_blank" className="text-primary hover:underline">
+                  /studio
+                </a>{" "}
+                anlegen.
+              </div>
+
+              {fortbildungenList.length > 0 ? (
+                <div className="space-y-2">
+                  {fortbildungenList.map((f) => {
+                    const themenLabel: Record<string, string> = {
+                      "feuchte-schimmel": "Feuchte & Schimmel",
+                      "abdichtung": "Abdichtung",
+                      "wdvs-fassade": "WDVS & Fassade",
+                      "energieeffizienz": "Energieeffizienz",
+                      "recht-sachverstaendigenwesen": "Recht",
+                    }
+                    const themenBadgeClass: Record<string, string> = {
+                      "feuchte-schimmel": "bg-blue-500/10 text-blue-400",
+                      "abdichtung": "bg-emerald-500/10 text-emerald-400",
+                      "wdvs-fassade": "bg-amber-500/10 text-amber-400",
+                      "energieeffizienz": "bg-violet-500/10 text-violet-400",
+                      "recht-sachverstaendigenwesen": "bg-rose-500/10 text-rose-400",
+                    }
+                    const datumFormatiert = f.datum
+                      ? new Date(f.datum).toLocaleDateString("de-DE", { year: "numeric", month: "long" })
+                      : "Kein Datum"
+                    return (
+                      <div
+                        key={f._id}
+                        className="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl"
+                      >
+                        <div className="h-10 w-10 rounded-xl bg-primary/10 flex flex-col items-center justify-center flex-shrink-0 text-primary">
+                          <GraduationCap className="h-5 w-5" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white font-medium text-sm">{f.titel}</p>
+                          <p className="text-zinc-500 text-xs">
+                            {datumFormatiert} &middot; {f.veranstalter}
+                          </p>
+                        </div>
+                        {f.themenbereich && themenLabel[f.themenbereich] && (
+                          <span
+                            className={`text-xs font-medium px-2 py-0.5 rounded-full flex-shrink-0 ${
+                              themenBadgeClass[f.themenbereich] ?? "bg-zinc-700 text-zinc-400"
+                            }`}
+                          >
+                            {themenLabel[f.themenbereich]}
+                          </span>
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : (
+                <div className="p-8 bg-zinc-900 border border-zinc-800 rounded-xl text-center">
+                  <GraduationCap className="h-10 w-10 text-zinc-600 mx-auto mb-3" />
+                  <p className="text-zinc-300 text-sm font-medium mb-1">Noch keine Eintraege</p>
+                  <p className="text-zinc-500 text-xs">
+                    Legen Sie Fortbildungen direkt im Sanity Studio an.
+                  </p>
+                </div>
+              )}
             </div>
           )}
 

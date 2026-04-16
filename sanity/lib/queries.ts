@@ -38,3 +38,8 @@ export async function getSeminarBySlug(slug: string) {
 export async function getNavigation() {
   return client.fetch(`*[_type == "navigation"][0]`)
 }
+export async function getFortbildungen() {
+  return client.fetch(`*[_type == "fortbildung"] | order(datum desc) {
+    _id, titel, datum, veranstalter, ort, themenbereich, unterrichtseinheiten, hervorgehoben
+  }`)
+}

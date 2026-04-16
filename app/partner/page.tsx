@@ -89,6 +89,11 @@ export default async function PartnerPage() {
                     {p.beschreibung && (
                       <p className="text-xs text-muted-foreground mt-0.5 truncate">{p.beschreibung}</p>
                     )}
+                    {p.webseite && (
+                      <p className="text-xs text-primary/60 group-hover:text-primary mt-1 transition-colors truncate">
+                        {new URL(p.webseite).hostname.replace(/^www\./, "")}
+                      </p>
+                    )}
                   </div>
 
                   {/* Arrow */}

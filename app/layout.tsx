@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Geist, Geist_Mono, Barlow_Condensed } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { getEinstellungen } from "@/sanity/lib/queries"
 import { GoogleAnalytics } from "@/components/google-analytics"
@@ -9,6 +9,11 @@ import "./globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-display",
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   const e = await getEinstellungen()
@@ -46,7 +51,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const einstellungen = await getEinstellungen()
   return (
     <html lang="de">
-      <body className="font-sans antialiased">
+      <body className={`font-sans antialiased ${barlowCondensed.variable}`}>
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-lg focus:text-sm focus:font-medium">Zum Inhalt springen</a>
         <GoogleAnalytics gaId={einstellungen?.googleAnalyticsId} />
         {children}

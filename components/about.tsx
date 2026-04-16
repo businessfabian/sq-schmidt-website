@@ -62,7 +62,7 @@ export function About({ einstellungen }: Props) {
 
           {uebermichBildUrl ? (
             <Reveal>
-              <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border border-border bg-secondary">
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-border bg-secondary">
                 <Image
                   src={uebermichBildUrl}
                   alt={`Über ${firmenname}`}

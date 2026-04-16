@@ -1,16 +1,24 @@
 import Link from "next/link"
 import { partnersData } from "@/lib/services-data"
-import { Building2, ArrowRight } from "lucide-react"
+import { Building2, ArrowRight, ExternalLink } from "lucide-react"
 import { ScrollReveal } from "./ScrollReveal"
 
 interface Props {
   partner?: any[]
 }
 
+function normalizeUrl(url?: string): string | null {
+  if (!url) return null
+  const trimmed = url.trim()
+  if (!trimmed) return null
+  if (/^https?:\/\//i.test(trimmed)) return trimmed
+  return `https://${trimmed}`
+}
+
 export function Partners({ partner }: Props) {
   const allList = (partner && partner.length > 0)
-    ? partner.map((p: any) => ({ name: p.name, beschreibung: p.beschreibung }))
-    : partnersData.map((p) => ({ name: p.name, beschreibung: p.description }))
+    ? partner.map((p: any) => ({ name: p.name, beschreibung: p.beschreibung, webseite: p.webseite }))
+    : partnersData.map((p) => ({ name: p.name, beschreibung: p.description, webseite: undefined }))
 
   const list = allList.slice(0, 6)
 
@@ -31,17 +39,35 @@ export function Partners({ partner }: Props) {
 
         <ScrollReveal stagger={60}>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-            {list.map((p: any, i: number) => (
-              <div key={i} className="flex items-center gap-4 p-5 bg-card border border-border rounded-xl hover:border-primary/50 hover:-translate-y-0.5 hover:shadow-lg transition-all group">
-                <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
-                  <Building2 className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+            {list.map((p: any, i: number) => {
+              const url = normalizeUrl(p.webseite)
+              const content = (
+                <>
+                  <div className="h-10 w-10 rounded-lg bg-secondary flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+                    <Building2 className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold text-foreground truncate">{p.name}</p>
+                    <p className="text-xs text-muted-foreground truncate">{p.beschreibung}</p>
+                  </div>
+                  {url && <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" aria-hidden="true" />}
+                </>
+              )
+              const baseClass = "flex items-center gap-4 p-5 bg-card border border-border rounded-xl transition-all group"
+              if (url) {
+                return (
+                  <a key={i} href={url} target="_blank" rel="noopener noreferrer"
+                    className={`${baseClass} hover:border-primary/50 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary`}>
+                    {content}
+                  </a>
+                )
+              }
+              return (
+                <div key={i} className={baseClass}>
+                  {content}
                 </div>
-                <div className="min-w-0">
-                  <p className="text-sm font-semibold text-foreground truncate">{p.name}</p>
-                  <p className="text-xs text-muted-foreground truncate">{p.beschreibung}</p>
-                </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </ScrollReveal>
 

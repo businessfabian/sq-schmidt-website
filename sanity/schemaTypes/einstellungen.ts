@@ -9,6 +9,7 @@ export default defineType({
     { name: "hero", title: "Hero" },
     { name: "ueber", title: "Ueber uns" },
     { name: "impressum", title: "Impressum & Rechtliches" },
+    { name: "extras", title: "Extras (Analytics, Cookie, Chat)" },
     { name: "seo", title: "SEO" },
   ],
   fields: [
@@ -26,7 +27,7 @@ export default defineType({
     defineField({ name: "heroTitel", title: "Hero Titel", type: "string", group: "hero" }),
     defineField({ name: "heroBeschreibung", title: "Hero Beschreibung", type: "text", rows: 3, group: "hero" }),
     defineField({ name: "heroBild", title: "Hero Hintergrundbild", type: "image", group: "hero",
-      description: "Dunkles Baubild empfohlen — wird als Fullscreen-Hintergrund angezeigt" }),
+      description: "Dunkles Baubild empfohlen, wird als Fullscreen-Hintergrund angezeigt" }),
 
     // Ueber uns
     defineField({ name: "uebermichTitel", title: "Ueber uns Titel", type: "string", group: "ueber" }),
@@ -40,7 +41,7 @@ export default defineType({
     defineField({ name: "plzOrt", title: "PLZ & Ort", type: "string", group: "impressum",
       description: "z.B. 78647 Trossingen" }),
     defineField({ name: "ustId", title: "USt-ID (optional)", type: "string", group: "impressum",
-      description: "z.B. DE123456789 — leer lassen wenn Kleinunternehmer" }),
+      description: "z.B. DE123456789, leer lassen wenn Kleinunternehmer" }),
     defineField({ name: "kleinunternehmer", title: "Kleinunternehmer nach Par. 19 UStG", type: "boolean", group: "impressum",
       initialValue: true }),
     defineField({ name: "berufsbezeichnung", title: "Berufsbezeichnung", type: "string", group: "impressum",

@@ -29,6 +29,7 @@ const DEFAULT_NAV: NavPunkt[] = [
     { label: "Aktuelles / Baurecht IBR", href: "/aktuelles" },
     { label: "Zertifikate", href: "/zertifikate" },
     { label: "Vita", href: "/vita" },
+    { label: "Fortbildungen", href: "/fortbildungen" },
   ]},
   { label: "Seminartermine", typ: "seminare", aktiv: true, reihenfolge: 3 },
   { label: "Kontakt", typ: "link", href: "/kontakt", aktiv: true, reihenfolge: 4 },

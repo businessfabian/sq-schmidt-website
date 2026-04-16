@@ -223,13 +223,13 @@ export default async function VitaPage() {
                 </div>
               </div>
               <div className="relative hidden lg:block">
-                <div className="aspect-square max-w-sm rounded-2xl bg-zinc-900 overflow-hidden relative mx-auto">
+                <div className="aspect-[3/4] max-w-sm rounded-2xl bg-zinc-900 overflow-hidden relative mx-auto">
                   <Image
                     src={bildUrl}
                     alt="Dipl.-Ing. Gerhard Schmidt"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover opacity-80"
+                    className="object-cover object-top opacity-80"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 to-transparent" />
                   <div className="absolute bottom-6 left-6 right-6">

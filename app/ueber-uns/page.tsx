@@ -64,7 +64,7 @@ export default async function UeberUnsPage() {
               <div className="relative">
                 <div className="aspect-[4/5] rounded-2xl bg-zinc-100 dark:bg-zinc-900 overflow-hidden relative flex items-center justify-center">
                   {hasPhoto ? (
-                    <Image src={bildUrl} alt="Dipl.-Ing. Gerhard Schmidt" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover" />
+                    <Image src={bildUrl} alt="Dipl.-Ing. Gerhard Schmidt" fill sizes="(max-width: 768px) 100vw, 40vw" className="object-cover object-top" />
                   ) : (
                     <div className="flex flex-col items-center justify-center gap-4 text-zinc-400">
                       <User className="h-24 w-24 opacity-20" />

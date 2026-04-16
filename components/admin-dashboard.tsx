@@ -28,7 +28,7 @@ interface Seminar { _id: string; titel: string; kategorie: string; datum: string
 interface Partner { _id: string; name: string; beschreibung: string; webseite: string; aktiv: boolean; reihenfolge: number }
 interface Zertifikat { _id: string; name: string; beschreibung: string; aktiv: boolean; reihenfolge: number }
 interface NavPunkt { _key?: string; label: string; typ: string; href?: string; aktiv: boolean; reihenfolge: number; unterpunkte?: { _key?: string; label: string; href: string }[] }
-interface FortbildungEintrag { _id: string; titel: string; datum: string; veranstalter: string; themenbereich?: string }
+interface FortbildungEintrag { _id: string; titel: string; datum: string; veranstalter: string; ort?: string; themenbereich?: string; unterrichtseinheiten?: number; hervorgehoben?: boolean }
 
 const KNOWN_PAGES = [
   { label: "Startseite", value: "/" },
@@ -107,6 +107,11 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   const [navForm, setNavForm] = useState<NavPunkt>({ label: "", typ: "link", href: "", aktiv: true, reihenfolge: 99, unterpunkte: [] })
 
   const [fortbildungenList, setFortbildungenList] = useState<FortbildungEintrag[]>([])
+  const [editFortbildung, setEditFortbildung] = useState<FortbildungEintrag | null>(null)
+  const [newFortbildung, setNewFortbildung] = useState(false)
+  const [fortbildungForm, setFortbildungForm] = useState({
+    titel: "", datum: "", veranstalter: "", ort: "", themenbereich: "", unterrichtseinheiten: "", hervorgehoben: false
+  })
 
   // Filter & Suche
   const [searchQuery, setSearchQuery] = useState("")
@@ -205,7 +210,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   ]
 
   const isFormSection = ["kontakt", "hero", "ueber", "seo", "extras"].includes(activeSection)
-  const isEditingItem = editLeistung || newLeistung || editSeminar || newSeminar || editPartner || newPartner || editZertifikat || newZertifikat || editNav || newNav
+  const isEditingItem = editLeistung || newLeistung || editSeminar || newSeminar || editPartner || newPartner || editZertifikat || newZertifikat || editNav || newNav || editFortbildung || newFortbildung
 
   function getSaveAction() {
     if (isFormSection) return saveForm
@@ -214,6 +219,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     if (activeSection === "partner") return () => saveItem("partner", editPartner, partnerForm, setEditPartner, setNewPartner)
     if (activeSection === "zertifikate") return () => saveItem("zertifikate", editZertifikat, zertifikatForm, setEditZertifikat, setNewZertifikat)
     if (activeSection === "navigation") return isEditingItem ? saveNavigation : saveNavOrder
+    if (activeSection === "fortbildungen") return () => saveItem("fortbildungen", editFortbildung, { ...fortbildungForm, unterrichtseinheiten: fortbildungForm.unterrichtseinheiten ? Number(fortbildungForm.unterrichtseinheiten) : undefined }, setEditFortbildung, setNewFortbildung)
     return saveForm
   }
 
@@ -567,92 +573,172 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
             </div>
           )}
 
-          {activeSection === "fortbildungen" && (
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-white font-semibold">Fortbildungen</h2>
-                  <p className="text-zinc-500 text-sm">
-                    {fortbildungenList.length > 0
-                      ? `${fortbildungenList.length} Eintraege in Sanity`
-                      : "Noch keine Fortbildungen erfasst"}
-                  </p>
-                </div>
-                <a
-                  href="/fortbildungen"
-                  target="_blank"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all"
-                >
-                  <Eye className="h-3.5 w-3.5" /> Seite ansehen
-                </a>
-              </div>
+          {activeSection === "fortbildungen" && (() => {
+            const THEMEN_LABEL: Record<string, string> = {
+              "feuchte-schimmel": "Feuchte & Schimmel",
+              "abdichtung": "Abdichtung",
+              "wdvs-fassade": "WDVS & Fassade",
+              "energieeffizienz": "Energieeffizienz",
+              "recht-sachverstaendigenwesen": "Recht",
+            }
+            const THEMEN_BADGE: Record<string, string> = {
+              "feuchte-schimmel": "bg-blue-500/10 text-blue-400",
+              "abdichtung": "bg-emerald-500/10 text-emerald-400",
+              "wdvs-fassade": "bg-amber-500/10 text-amber-400",
+              "energieeffizienz": "bg-violet-500/10 text-violet-400",
+              "recht-sachverstaendigenwesen": "bg-rose-500/10 text-rose-400",
+            }
+            const THEMEN_OPTIONS = [
+              { value: "", label: "Kein Themenbereich" },
+              { value: "feuchte-schimmel", label: "Feuchte & Schimmel" },
+              { value: "abdichtung", label: "Abdichtung" },
+              { value: "wdvs-fassade", label: "WDVS & Fassade" },
+              { value: "energieeffizienz", label: "Energieeffizienz" },
+              { value: "recht-sachverstaendigenwesen", label: "Recht & Sachverstaendigenwesen" },
+            ]
 
-              <div className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl text-xs text-zinc-500">
-                Fortbildungen werden direkt in Sanity Studio gepflegt. Neue Eintraege unter{" "}
-                <a href="/studio" target="_blank" className="text-primary hover:underline">
-                  /studio
-                </a>{" "}
-                anlegen.
-              </div>
+            if (editFortbildung || newFortbildung) {
+              return (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <button onClick={() => { setEditFortbildung(null); setNewFortbildung(false) }} className="text-zinc-400 hover:text-white transition-colors">
+                      <X className="h-5 w-5" />
+                    </button>
+                    <h2 className="text-white font-semibold">{editFortbildung ? "Fortbildung bearbeiten" : "Neue Fortbildung"}</h2>
+                  </div>
 
-              {fortbildungenList.length > 0 ? (
-                <div className="space-y-2">
-                  {fortbildungenList.map((f) => {
-                    const themenLabel: Record<string, string> = {
-                      "feuchte-schimmel": "Feuchte & Schimmel",
-                      "abdichtung": "Abdichtung",
-                      "wdvs-fassade": "WDVS & Fassade",
-                      "energieeffizienz": "Energieeffizienz",
-                      "recht-sachverstaendigenwesen": "Recht",
-                    }
-                    const themenBadgeClass: Record<string, string> = {
-                      "feuchte-schimmel": "bg-blue-500/10 text-blue-400",
-                      "abdichtung": "bg-emerald-500/10 text-emerald-400",
-                      "wdvs-fassade": "bg-amber-500/10 text-amber-400",
-                      "energieeffizienz": "bg-violet-500/10 text-violet-400",
-                      "recht-sachverstaendigenwesen": "bg-rose-500/10 text-rose-400",
-                    }
-                    const datumFormatiert = f.datum
-                      ? new Date(f.datum).toLocaleDateString("de-DE", { year: "numeric", month: "long" })
-                      : "Kein Datum"
-                    return (
-                      <div
-                        key={f._id}
-                        className="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl"
-                      >
-                        <div className="h-10 w-10 rounded-xl bg-primary/10 flex flex-col items-center justify-center flex-shrink-0 text-primary">
-                          <GraduationCap className="h-5 w-5" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-white font-medium text-sm">{f.titel}</p>
-                          <p className="text-zinc-500 text-xs">
-                            {datumFormatiert} &middot; {f.veranstalter}
-                          </p>
-                        </div>
-                        {f.themenbereich && themenLabel[f.themenbereich] && (
-                          <span
-                            className={`text-xs font-medium px-2 py-0.5 rounded-full flex-shrink-0 ${
-                              themenBadgeClass[f.themenbereich] ?? "bg-zinc-700 text-zinc-400"
-                            }`}
-                          >
-                            {themenLabel[f.themenbereich]}
-                          </span>
-                        )}
-                      </div>
-                    )
-                  })}
+                  <div>
+                    <label className="block text-xs text-zinc-400 mb-1">Titel *</label>
+                    <input value={fortbildungForm.titel} onChange={e => setFortbildungForm(f => ({ ...f, titel: e.target.value }))}
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary" placeholder="z.B. Schimmelpilzsanierung nach WTA-Merkblatt" />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs text-zinc-400 mb-1">Datum *</label>
+                      <input type="date" value={fortbildungForm.datum} onChange={e => setFortbildungForm(f => ({ ...f, datum: e.target.value }))}
+                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary" />
+                    </div>
+                    <div>
+                      <label className="block text-xs text-zinc-400 mb-1">Unterrichtseinheiten</label>
+                      <input type="number" value={fortbildungForm.unterrichtseinheiten} onChange={e => setFortbildungForm(f => ({ ...f, unterrichtseinheiten: e.target.value }))}
+                        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary" placeholder="z.B. 8" min="1" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs text-zinc-400 mb-1">Veranstalter *</label>
+                    <input value={fortbildungForm.veranstalter} onChange={e => setFortbildungForm(f => ({ ...f, veranstalter: e.target.value }))}
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary" placeholder="z.B. TUeV Rheinland" />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs text-zinc-400 mb-1">Ort (optional)</label>
+                    <input value={fortbildungForm.ort} onChange={e => setFortbildungForm(f => ({ ...f, ort: e.target.value }))}
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary" placeholder="z.B. Stuttgart" />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs text-zinc-400 mb-1">Themenbereich</label>
+                    <select value={fortbildungForm.themenbereich} onChange={e => setFortbildungForm(f => ({ ...f, themenbereich: e.target.value }))}
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary">
+                      {THEMEN_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+                    </select>
+                  </div>
+
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input type="checkbox" checked={fortbildungForm.hervorgehoben} onChange={e => setFortbildungForm(f => ({ ...f, hervorgehoben: e.target.checked }))}
+                      className="w-4 h-4 rounded accent-primary" />
+                    <span className="text-sm text-zinc-300">Hervorgehoben (erscheint prominent auf der Seite)</span>
+                  </label>
+
+                  <div className="flex gap-3 pt-2">
+                    <button onClick={() => saveItem("fortbildungen", editFortbildung, { ...fortbildungForm, unterrichtseinheiten: fortbildungForm.unterrichtseinheiten ? Number(fortbildungForm.unterrichtseinheiten) : undefined }, setEditFortbildung, setNewFortbildung)}
+                      disabled={!fortbildungForm.titel || !fortbildungForm.datum || !fortbildungForm.veranstalter || saving}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed">
+                      {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                      {editFortbildung ? "Speichern" : "Anlegen"}
+                    </button>
+                    <button onClick={() => { setEditFortbildung(null); setNewFortbildung(false) }}
+                      className="px-4 py-2.5 bg-zinc-800 text-zinc-300 rounded-xl text-sm hover:bg-zinc-700">
+                      Abbrechen
+                    </button>
+                  </div>
                 </div>
-              ) : (
-                <div className="p-8 bg-zinc-900 border border-zinc-800 rounded-xl text-center">
-                  <GraduationCap className="h-10 w-10 text-zinc-600 mx-auto mb-3" />
-                  <p className="text-zinc-300 text-sm font-medium mb-1">Noch keine Eintraege</p>
-                  <p className="text-zinc-500 text-xs">
-                    Legen Sie Fortbildungen direkt im Sanity Studio an.
-                  </p>
+              )
+            }
+
+            return (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-white font-semibold">Fortbildungen</h2>
+                    <p className="text-zinc-500 text-sm">{fortbildungenList.length} Eintraege</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <a href="/fortbildungen" target="_blank"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all">
+                      <Eye className="h-3.5 w-3.5" /> Seite
+                    </a>
+                    <button onClick={() => { setNewFortbildung(true); setFortbildungForm({ titel: "", datum: "", veranstalter: "", ort: "", themenbereich: "", unterrichtseinheiten: "", hervorgehoben: false }) }}
+                      className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl text-sm font-medium hover:bg-primary/90">
+                      <Plus className="h-4 w-4" /> Neue Fortbildung
+                    </button>
+                  </div>
                 </div>
-              )}
-            </div>
-          )}
+
+                {fortbildungenList.length === 0 ? (
+                  <div className="p-8 bg-zinc-900 border border-zinc-800 rounded-xl text-center">
+                    <GraduationCap className="h-10 w-10 text-zinc-600 mx-auto mb-3" />
+                    <p className="text-zinc-300 text-sm font-medium mb-1">Noch keine Eintraege</p>
+                    <p className="text-zinc-500 text-xs">Klicken Sie auf "Neue Fortbildung" um zu beginnen.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {fortbildungenList.map((f) => {
+                      const datumFormatiert = f.datum
+                        ? new Date(f.datum).toLocaleDateString("de-DE", { year: "numeric", month: "long" })
+                        : "Kein Datum"
+                      return (
+                        <div key={f._id} className="flex items-center gap-3 p-3 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors">
+                          <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary">
+                            <GraduationCap className="h-4 w-4" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-white font-medium text-sm truncate">{f.titel}</p>
+                            <p className="text-zinc-500 text-xs">{datumFormatiert} &middot; {f.veranstalter}</p>
+                          </div>
+                          {f.themenbereich && THEMEN_LABEL[f.themenbereich] && (
+                            <span className={`text-xs font-medium px-2 py-0.5 rounded-full flex-shrink-0 hidden sm:inline ${THEMEN_BADGE[f.themenbereich] ?? "bg-zinc-700 text-zinc-400"}`}>
+                              {THEMEN_LABEL[f.themenbereich]}
+                            </span>
+                          )}
+                          <button onClick={() => {
+                            setEditFortbildung(f)
+                            setFortbildungForm({
+                              titel: f.titel,
+                              datum: f.datum,
+                              veranstalter: f.veranstalter,
+                              ort: f.ort ?? "",
+                              themenbereich: f.themenbereich ?? "",
+                              unterrichtseinheiten: f.unterrichtseinheiten?.toString() ?? "",
+                              hervorgehoben: f.hervorgehoben ?? false,
+                            })
+                          }} className="p-1.5 text-zinc-500 hover:text-primary hover:bg-zinc-800 rounded-lg transition-all flex-shrink-0">
+                            <Pencil className="h-3.5 w-3.5" />
+                          </button>
+                          <button onClick={() => deleteItem("fortbildungen", f._id)}
+                            className="p-1.5 text-zinc-500 hover:text-red-400 hover:bg-zinc-800 rounded-lg transition-all flex-shrink-0">
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            )
+          })()}
 
           {activeSection === "navigation" && (
             <div className="space-y-4">

@@ -17,6 +17,11 @@ import Link from "next/link"
 
 type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "navigation" | "seo" | "extras" | "analyse"
 
+// Stable client-side id for React keys in editable arrays
+function uid() {
+  return `k_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 9)}`
+}
+
 interface ProzessSchritt { _key?: string; titel: string; beschreibung: string }
 interface Leistung { _id: string; titel: string; kurzBeschreibung: string; beschreibung: string; icon: string; reihenfolge: number; aktiv: boolean; bildUrl?: string; leistungsumfang?: string[]; prozess?: ProzessSchritt[] }
 interface Seminar { _id: string; titel: string; kategorie: string; datum: string; uhrzeit: string; ort: string; beschreibung: string; preis: string; anmeldeLink: string; aktiv: boolean }
@@ -319,7 +324,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                           className={`px-2.5 py-1 rounded-lg text-xs font-medium ${l.aktiv ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>
                           {l.aktiv ? "Aktiv" : "Inaktiv"}
                         </button>
-                        <button onClick={() => { setEditLeistung(l); setLeistungForm({ titel: l.titel, kurzBeschreibung: l.kurzBeschreibung, beschreibung: l.beschreibung, icon: l.icon, reihenfolge: l.reihenfolge, aktiv: l.aktiv, bildUrl: l.bildUrl, leistungsumfang: l.leistungsumfang ?? [], prozess: l.prozess ?? [] }) }}
+                        <button onClick={() => { setEditLeistung(l); setLeistungForm({ titel: l.titel, kurzBeschreibung: l.kurzBeschreibung, beschreibung: l.beschreibung, icon: l.icon, reihenfolge: l.reihenfolge, aktiv: l.aktiv, bildUrl: l.bildUrl, leistungsumfang: l.leistungsumfang ?? [], prozess: (l.prozess ?? []).map(p => ({ ...p, _key: p._key ?? uid() })) }) }}
                           className="p-2 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-700"><Pencil className="h-4 w-4" /></button>
                         <button onClick={() => deleteItem("leistungen", l._id)} className="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10"><Trash2 className="h-4 w-4" /></button>
                       </div>
@@ -725,22 +730,40 @@ function NumberField({ label, value, onChange }: { label: string; value: number;
   )
 }
 
+type StringRow = { k: string; v: string }
+
 function StringArrayField({ label, hint, items, onChange, placeholder }: {
   label: string; hint?: string; items: string[]; onChange: (items: string[]) => void; placeholder?: string
 }) {
-  const update = (i: number, v: string) => onChange(items.map((it, idx) => idx === i ? v : it))
-  const remove = (i: number) => onChange(items.filter((_, idx) => idx !== i))
-  const add = () => onChange([...items, ""])
+  const [rows, setRows] = useState<StringRow[]>(() => items.map(v => ({ k: uid(), v })))
+  // Derived-state: wenn externes items nicht mehr mit internen values uebereinstimmt
+  // (z.B. Form wurde mit anderer Leistung neu geoeffnet), resynchronisieren.
+  const externalSig = items.join("\u0001")
+  const internalSig = rows.map(r => r.v).join("\u0001")
+  const [lastExternalSig, setLastExternalSig] = useState(externalSig)
+  if (externalSig !== lastExternalSig) {
+    setLastExternalSig(externalSig)
+    if (externalSig !== internalSig) {
+      setRows(items.map(v => ({ k: uid(), v })))
+    }
+  }
+  const commit = (next: StringRow[]) => {
+    setRows(next)
+    onChange(next.map(r => r.v))
+  }
+  const update = (k: string, v: string) => commit(rows.map(r => r.k === k ? { ...r, v } : r))
+  const remove = (k: string) => commit(rows.filter(r => r.k !== k))
+  const add = () => commit([...rows, { k: uid(), v: "" }])
   return (
     <div>
       <label className="block text-sm font-medium text-zinc-300 mb-2">{label}</label>
       {hint && <p className="text-xs text-zinc-500 mb-2">{hint}</p>}
       <div className="space-y-2">
-        {items.map((it, i) => (
-          <div key={i} className="flex gap-2">
-            <input type="text" value={it} onChange={e => update(i, e.target.value)} placeholder={placeholder}
+        {rows.map(r => (
+          <div key={r.k} className="flex gap-2">
+            <input type="text" value={r.v} onChange={e => update(r.k, e.target.value)} placeholder={placeholder}
               className="flex-1 bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-sm" />
-            <button type="button" onClick={() => remove(i)} aria-label="Eintrag entfernen"
+            <button type="button" onClick={() => remove(r.k)} aria-label="Eintrag entfernen"
               className="p-2.5 rounded-xl text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-colors">
               <Trash2 className="h-4 w-4" />
             </button>
@@ -761,7 +784,7 @@ function ProzessArrayField({ label, hint, items, onChange }: {
   const update = (i: number, patch: Partial<ProzessSchritt>) =>
     onChange(items.map((it, idx) => idx === i ? { ...it, ...patch } : it))
   const remove = (i: number) => onChange(items.filter((_, idx) => idx !== i))
-  const add = () => onChange([...items, { titel: "", beschreibung: "" }])
+  const add = () => onChange([...items, { _key: uid(), titel: "", beschreibung: "" }])
   const move = (i: number, dir: -1 | 1) => {
     const target = i + dir
     if (target < 0 || target >= items.length) return
@@ -777,7 +800,7 @@ function ProzessArrayField({ label, hint, items, onChange }: {
       {hint && <p className="text-xs text-zinc-500 mb-2">{hint}</p>}
       <div className="space-y-3">
         {items.map((it, i) => (
-          <div key={i} className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
+          <div key={it._key ?? i} className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-primary">Schritt {i + 1}</span>
               <div className="flex gap-1">

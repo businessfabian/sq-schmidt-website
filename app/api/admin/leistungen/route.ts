@@ -12,7 +12,11 @@ function getClient() {
   })
 }
 
-type ProzessSchritt = { titel: string; beschreibung: string }
+type ProzessSchritt = { _key?: string; titel: string; beschreibung: string }
+
+function freshKey(i: number) {
+  return `ps_${Date.now().toString(36)}_${i}_${Math.random().toString(36).slice(2, 8)}`
+}
 
 function normalizePayload(data: Record<string, unknown>) {
   const out: Record<string, unknown> = {
@@ -31,13 +35,14 @@ function normalizePayload(data: Record<string, unknown>) {
       .filter(Boolean)
   }
 
-  // Prozess: leere Schritte rausfiltern und keyed-Objekte setzen
+  // Prozess: leere Schritte rausfiltern, _key erhalten (Sanity-History-stabil),
+  // nur fehlende neu erzeugen
   if (Array.isArray(data.prozess)) {
     out.prozess = (data.prozess as ProzessSchritt[])
       .filter(p => p && (String(p.titel ?? "").trim() || String(p.beschreibung ?? "").trim()))
       .map((p, i) => ({
         _type: "prozessSchritt",
-        _key: `ps_${Date.now()}_${i}`,
+        _key: p._key && typeof p._key === "string" && p._key.length > 0 ? p._key : freshKey(i),
         titel: String(p.titel ?? "").trim(),
         beschreibung: String(p.beschreibung ?? "").trim(),
       }))

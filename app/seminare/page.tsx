@@ -4,6 +4,7 @@ import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { getSeminare, getEinstellungen } from "@/sanity/lib/queries"
 import { Calendar, MapPin, Clock, ArrowRight, Tag } from "lucide-react"
+import { formatSeminarDatum } from "@/lib/formatSeminarDatum"
 import Link from "next/link"
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
@@ -73,7 +74,7 @@ export default async function SeminarePage({ searchParams }: { searchParams: Pro
                       {s.titel}
                     </h3>
                     <div className="space-y-2 text-sm text-muted-foreground">
-                      {s.datum && <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-primary flex-shrink-0" />{new Date(s.datum).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}</div>}
+                      {s.datumVon && <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-primary flex-shrink-0" />{formatSeminarDatum(s.datumVon, s.datumBis)}</div>}
                       {s.uhrzeit && <div className="flex items-center gap-2"><Clock className="h-4 w-4 text-primary flex-shrink-0" />{s.uhrzeit}</div>}
                       {s.ort && <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-primary flex-shrink-0" />{s.ort}</div>}
                     </div>

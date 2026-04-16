@@ -2,6 +2,7 @@ import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { getSeminarBySlug, getEinstellungen } from "@/sanity/lib/queries"
 import { Calendar, MapPin, Clock, ArrowRight, Tag, ExternalLink } from "lucide-react"
+import { formatSeminarDatum } from "@/lib/formatSeminarDatum"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
@@ -29,7 +30,7 @@ export default async function SeminarDetailPage({ params }: { params: { slug: st
             )}
             <h1 className="text-4xl lg:text-5xl font-bold text-white mb-6" style={{ fontFamily: "var(--font-display)" }}>{seminar.titel}</h1>
             <div className="flex flex-wrap gap-6 text-zinc-400">
-              {seminar.datum && <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-primary" />{new Date(seminar.datum).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}</div>}
+              {seminar.datumVon && <div className="flex items-center gap-2"><Calendar className="h-4 w-4 text-primary" />{formatSeminarDatum(seminar.datumVon, seminar.datumBis)}</div>}
               {seminar.uhrzeit && <div className="flex items-center gap-2"><Clock className="h-4 w-4 text-primary" />{seminar.uhrzeit}</div>}
               {seminar.ort && <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-primary" />{seminar.ort}</div>}
             </div>
@@ -47,7 +48,7 @@ export default async function SeminarDetailPage({ params }: { params: { slug: st
                 <div className="p-6 bg-card border border-border rounded-2xl">
                   <h3 className="font-semibold text-foreground mb-4">Details</h3>
                   <div className="space-y-3 text-sm">
-                    {seminar.datum && <div><p className="text-muted-foreground">Datum</p><p className="font-medium text-foreground">{new Date(seminar.datum).toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })}</p></div>}
+                    {seminar.datumVon && <div><p className="text-muted-foreground">Datum</p><p className="font-medium text-foreground">{formatSeminarDatum(seminar.datumVon, seminar.datumBis)}</p></div>}
                     {seminar.uhrzeit && <div><p className="text-muted-foreground">Uhrzeit</p><p className="font-medium text-foreground">{seminar.uhrzeit}</p></div>}
                     {seminar.ort && <div><p className="text-muted-foreground">Ort</p><p className="font-medium text-foreground">{seminar.ort}</p></div>}
                     {seminar.preis && <div><p className="text-muted-foreground">Preis</p><p className="font-bold text-primary text-lg">{seminar.preis}</p></div>}

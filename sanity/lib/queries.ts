@@ -28,8 +28,8 @@ export async function getZertifikate() {
   }`)
 }
 export async function getSeminare() {
-  return client.fetch(`*[_type == "seminartermin" && aktiv == true] | order(datum asc) {
-    _id, titel, slug, kategorie, datum, uhrzeit, ort, beschreibung, preis, anmeldeLink
+  return client.fetch(`*[_type == "seminartermin" && aktiv == true] | order(datumVon asc) {
+    _id, titel, slug, kategorie, datumVon, datumBis, uhrzeit, ort, beschreibung, preis, anmeldeLink
   }`)
 }
 export async function getSeminarBySlug(slug: string) {

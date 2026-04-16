@@ -106,12 +106,12 @@ export function ContactForm({ einstellungen }: Props) {
   return (
     <section id="kontakt" className="py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <span className="text-primary text-sm font-semibold tracking-wider uppercase">Kontakt</span>
-          <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground" style={{ fontFamily: "var(--font-display)" }}>
+        <div className="mb-14">
+          <span className="text-sm font-medium text-primary uppercase tracking-wider">Kontakt</span>
+          <h2 className="mt-2 text-3xl md:text-4xl font-bold tracking-tight text-foreground" style={{ fontFamily: "var(--font-display)" }}>
             Sprechen wir über Ihr Projekt
           </h2>
-          <p className="mt-4 text-muted-foreground">
+          <p className="mt-3 text-muted-foreground">
             Kontaktieren Sie uns für eine unverbindliche Anfrage. Wir melden uns innerhalb von 24 Stunden.
           </p>
         </div>

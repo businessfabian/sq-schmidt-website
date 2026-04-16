@@ -12,13 +12,13 @@ export function Certificates({ zertifikate }: Props) {
     : certificatesData
 
   return (
-    <section id="zertifikate" className="py-24 bg-secondary/30">
+    <section id="zertifikate" className="py-24 bg-muted/40">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal>
-          <div className="text-center mb-16">
-            <span className="text-primary text-sm font-semibold tracking-wider uppercase">Qualifikationen</span>
-            <h2 className="mt-3 text-3xl md:text-4xl font-bold text-foreground text-balance" style={{ fontFamily: "var(--font-display)" }}>Zertifikate & Akkreditierungen</h2>
-            <p className="mt-4 text-muted-foreground max-w-2xl mx-auto leading-relaxed">Unsere Qualifikationen und Zertifizierungen sind Ihr Garant für professionelle und verlässliche Arbeit nach höchsten Standards.</p>
+          <div className="mb-14">
+            <span className="text-sm font-medium text-primary uppercase tracking-wider">Qualifikationen</span>
+            <h2 className="mt-2 text-3xl md:text-4xl font-bold tracking-tight text-foreground" style={{ fontFamily: "var(--font-display)" }}>Zertifikate & Akkreditierungen</h2>
+            <p className="mt-3 text-muted-foreground max-w-2xl leading-relaxed">Unsere Qualifikationen und Zertifizierungen sind Ihr Garant für professionelle und verlässliche Arbeit nach höchsten Standards.</p>
           </div>
         </Reveal>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

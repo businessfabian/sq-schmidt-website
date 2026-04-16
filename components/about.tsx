@@ -27,8 +27,8 @@ export function About({ einstellungen }: Props) {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           <Reveal>
             <div className="flex flex-col gap-6">
-              <span className="text-sm font-medium text-primary uppercase tracking-wider">Über {firmenname}</span>
-              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground" style={{ fontFamily: "var(--font-display)" }}>
+              <span className="text-sm font-medium text-primary uppercase tracking-wider">Über uns</span>
+              <h2 className="mt-2 text-3xl md:text-4xl font-bold tracking-tight text-foreground" style={{ fontFamily: "var(--font-display)" }}>
                 {titel}
               </h2>
               <p className="text-muted-foreground leading-relaxed">{text}</p>

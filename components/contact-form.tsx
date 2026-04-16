@@ -22,6 +22,7 @@ export function ContactForm({ einstellungen }: Props) {
   const telefon = einstellungen?.telefon ?? "07726 / 929394"
   const email = einstellungen?.email ?? "sqs@sq-sv.de"
   const adresse = einstellungen?.adresse ?? "Marktplatz 21, 78647 Trossingen"
+  const adresse2: string = einstellungen?.adresse2 ?? ""
   const oeffnungszeiten = einstellungen?.oeffnungszeiten ?? "Mo-Fr 8:00-18:00 Uhr"
   const telefonHref = "tel:+" + telefon.replace(/\D/g, "")
 
@@ -29,6 +30,7 @@ export function ContactForm({ einstellungen }: Props) {
     { icon: Phone, label: "Telefon", value: telefon, href: telefonHref },
     { icon: Mail, label: "E-Mail", value: email, href: `mailto:${email}` },
     { icon: MapPin, label: "Adresse", value: adresse, href: null },
+    ...(adresse2 ? [{ icon: MapPin, label: "Weitere Adresse", value: adresse2, href: null }] : []),
     { icon: Clock, label: "Erreichbarkeit", value: oeffnungszeiten, href: null },
   ]
 

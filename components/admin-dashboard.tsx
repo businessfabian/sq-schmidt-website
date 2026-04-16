@@ -55,6 +55,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     telefon: einstellungen?.telefon ?? "",
     email: einstellungen?.email ?? "",
     adresse: einstellungen?.adresse ?? "",
+    adresse2: einstellungen?.adresse2 ?? "",
     oeffnungszeiten: einstellungen?.oeffnungszeiten ?? "",
     heroTitel: einstellungen?.heroTitel ?? "",
     heroBeschreibung: einstellungen?.heroBeschreibung ?? "",
@@ -270,6 +271,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
               <Field label="Telefon" icon={<Phone className="h-4 w-4" />} value={form.telefon} onChange={v => setForm(p => ({...p, telefon: v}))} placeholder="07726 / 929394" />
               <Field label="E-Mail" icon={<Mail className="h-4 w-4" />} value={form.email} onChange={v => setForm(p => ({...p, email: v}))} placeholder="info@beispiel.de" type="email" />
               <Field label="Adresse" icon={<MapPin className="h-4 w-4" />} value={form.adresse} onChange={v => setForm(p => ({...p, adresse: v}))} placeholder="Marktplatz 21, 78647 Trossingen" />
+              <Field label="Weitere Adresse (optional)" icon={<MapPin className="h-4 w-4" />} value={form.adresse2} onChange={v => setForm(p => ({...p, adresse2: v}))} placeholder="z.B. Zweigstelle oder Postadresse" />
               <Field label="Öffnungszeiten" icon={<Clock className="h-4 w-4" />} value={form.oeffnungszeiten} onChange={v => setForm(p => ({...p, oeffnungszeiten: v}))} placeholder="Mo-Fr 8:00-18:00 Uhr" />
             </div>
           )}

@@ -19,6 +19,8 @@ export default defineType({
     defineField({ name: "telefon", title: "Telefon", type: "string", group: "allgemein" }),
     defineField({ name: "email", title: "E-Mail", type: "string", group: "allgemein" }),
     defineField({ name: "adresse", title: "Adresse (einzeilig)", type: "string", group: "allgemein" }),
+    defineField({ name: "adresse2", title: "Weitere Adresse (optional)", type: "string", group: "allgemein",
+      description: "Zweite Anschrift, z.B. Zweigstelle oder Postadresse. Bleibt leer, wenn nicht benoetigt." }),
     defineField({ name: "oeffnungszeiten", title: "Oeffnungszeiten", type: "string", group: "allgemein" }),
     defineField({ name: "jahreErfahrung", title: "Jahre Erfahrung", type: "number", group: "allgemein" }),
     defineField({ name: "anzahlProjekte", title: "Anzahl Projekte", type: "number", group: "allgemein" }),

@@ -8,6 +8,7 @@ export function Footer({ einstellungen }: Props) {
   const telefon = einstellungen?.telefon ?? "07726 / 929394"
   const email = einstellungen?.email ?? "sqs@sq-sv.de"
   const adresse = einstellungen?.adresse ?? "Marktplatz 21, 78647 Trossingen"
+  const adresse2 = einstellungen?.adresse2 ?? ""
   const telefonHref = "tel:+" + telefon.replace(/\D/g, "")
 
   return (
@@ -29,6 +30,7 @@ export function Footer({ einstellungen }: Props) {
               <a href={telefonHref} className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">{telefon}</a>
               <a href={`mailto:${email}`} className="hover:text-primary transition-colors underline decoration-zinc-700 underline-offset-2 hover:decoration-primary">{email}</a>
               <span>{adresse}</span>
+              {adresse2 && <span>{adresse2}</span>}
             </div>
           </div>
           <div>

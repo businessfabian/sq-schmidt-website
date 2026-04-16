@@ -17,7 +17,8 @@ import Link from "next/link"
 
 type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "navigation" | "seo" | "extras" | "analyse"
 
-interface Leistung { _id: string; titel: string; kurzBeschreibung: string; beschreibung: string; icon: string; reihenfolge: number; aktiv: boolean }
+interface ProzessSchritt { _key?: string; titel: string; beschreibung: string }
+interface Leistung { _id: string; titel: string; kurzBeschreibung: string; beschreibung: string; icon: string; reihenfolge: number; aktiv: boolean; bildUrl?: string; leistungsumfang?: string[]; prozess?: ProzessSchritt[] }
 interface Seminar { _id: string; titel: string; kategorie: string; datum: string; uhrzeit: string; ort: string; beschreibung: string; preis: string; anmeldeLink: string; aktiv: boolean }
 interface Partner { _id: string; name: string; beschreibung: string; webseite: string; aktiv: boolean; reihenfolge: number }
 interface Zertifikat { _id: string; name: string; beschreibung: string; aktiv: boolean; reihenfolge: number }
@@ -68,7 +69,10 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   const [leistungen, setLeistungen] = useState<Leistung[]>([])
   const [editLeistung, setEditLeistung] = useState<Leistung | null>(null)
   const [newLeistung, setNewLeistung] = useState(false)
-  const [leistungForm, setLeistungForm] = useState({ titel: "", kurzBeschreibung: "", beschreibung: "", icon: "ShieldCheck", reihenfolge: 99, aktiv: true })
+  const [leistungForm, setLeistungForm] = useState<{
+    titel: string; kurzBeschreibung: string; beschreibung: string; icon: string; reihenfolge: number; aktiv: boolean
+    bildUrl?: string; leistungsumfang: string[]; prozess: ProzessSchritt[]
+  }>({ titel: "", kurzBeschreibung: "", beschreibung: "", icon: "ShieldCheck", reihenfolge: 99, aktiv: true, bildUrl: undefined, leistungsumfang: [], prozess: [] })
 
   const [seminare, setSeminare] = useState<Seminar[]>([])
   const [editSeminar, setEditSeminar] = useState<Seminar | null>(null)
@@ -301,7 +305,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                     onSearch={setSearchQuery}
                     statusFilter={statusFilter}
                     onStatusFilter={setStatusFilter}
-                    onAdd={() => { setNewLeistung(true); setLeistungForm({ titel: "", kurzBeschreibung: "", beschreibung: "", icon: "ShieldCheck", reihenfolge: leistungen.length + 1, aktiv: true }) }}
+                    onAdd={() => { setNewLeistung(true); setLeistungForm({ titel: "", kurzBeschreibung: "", beschreibung: "", icon: "ShieldCheck", reihenfolge: leistungen.length + 1, aktiv: true, bildUrl: undefined, leistungsumfang: [], prozess: [] }) }}
                     addLabel="Neue Leistung"
                   />
                   {filterItems(leistungen, searchQuery, statusFilter, l => l.titel).map((l) => (
@@ -315,7 +319,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                           className={`px-2.5 py-1 rounded-lg text-xs font-medium ${l.aktiv ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>
                           {l.aktiv ? "Aktiv" : "Inaktiv"}
                         </button>
-                        <button onClick={() => { setEditLeistung(l); setLeistungForm({ titel: l.titel, kurzBeschreibung: l.kurzBeschreibung, beschreibung: l.beschreibung, icon: l.icon, reihenfolge: l.reihenfolge, aktiv: l.aktiv }) }}
+                        <button onClick={() => { setEditLeistung(l); setLeistungForm({ titel: l.titel, kurzBeschreibung: l.kurzBeschreibung, beschreibung: l.beschreibung, icon: l.icon, reihenfolge: l.reihenfolge, aktiv: l.aktiv, bildUrl: l.bildUrl, leistungsumfang: l.leistungsumfang ?? [], prozess: l.prozess ?? [] }) }}
                           className="p-2 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-700"><Pencil className="h-4 w-4" /></button>
                         <button onClick={() => deleteItem("leistungen", l._id)} className="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10"><Trash2 className="h-4 w-4" /></button>
                       </div>
@@ -331,8 +335,32 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                   <Field label="Titel *" value={leistungForm.titel} onChange={v => setLeistungForm(p => ({...p, titel: v}))} placeholder="z.B. Schadensgutachten" />
                   <TextareaField label="Kurzbeschreibung *" value={leistungForm.kurzBeschreibung} onChange={v => setLeistungForm(p => ({...p, kurzBeschreibung: v}))} rows={2} hint="Wird in der Kachel angezeigt" />
                   <TextareaField label="Vollständige Beschreibung" value={leistungForm.beschreibung} onChange={v => setLeistungForm(p => ({...p, beschreibung: v}))} rows={5} hint="Wird auf der Detailseite angezeigt" />
+                  {editLeistung && (
+                    <AdminImageUpload
+                      documentId={editLeistung._id}
+                      type="leistung"
+                      currentImage={leistungForm.bildUrl}
+                      onUploaded={url => setLeistungForm(p => ({...p, bildUrl: url}))}
+                    />
+                  )}
+                  {!editLeistung && (
+                    <p className="text-xs text-zinc-500">Bild kann nach dem ersten Speichern hochgeladen werden.</p>
+                  )}
+                  <StringArrayField
+                    label="Leistungsumfang"
+                    hint="Wird als Häkchen-Liste auf der Detailseite angezeigt"
+                    items={leistungForm.leistungsumfang}
+                    onChange={items => setLeistungForm(p => ({...p, leistungsumfang: items}))}
+                    placeholder="z.B. Qualitätsprüfung aller Gewerke"
+                  />
+                  <ProzessArrayField
+                    label="Prozess-Schritte"
+                    hint="Werden als nummerierte Schritt-Kacheln auf der Detailseite angezeigt"
+                    items={leistungForm.prozess}
+                    onChange={items => setLeistungForm(p => ({...p, prozess: items}))}
+                  />
                   <div className="grid grid-cols-2 gap-4">
-                    <Field label="Icon" value={leistungForm.icon} onChange={v => setLeistungForm(p => ({...p, icon: v}))} placeholder="ShieldCheck" />
+                    <Field label="Icon" value={leistungForm.icon} onChange={v => setLeistungForm(p => ({...p, icon: v}))} placeholder="ShieldCheck" hint="Name aus lucide.dev/icons (z.B. ShieldCheck, Wrench, Scale)" />
                     <NumberField label="Reihenfolge" value={leistungForm.reihenfolge} onChange={v => setLeistungForm(p => ({...p, reihenfolge: v}))} />
                   </div>
                 </div>
@@ -693,6 +721,91 @@ function NumberField({ label, value, onChange }: { label: string; value: number;
       <label className="block text-sm font-medium text-zinc-300 mb-2">{label}</label>
       <input type="number" value={value} onChange={e => onChange(Number(e.target.value))}
         className="w-full bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+    </div>
+  )
+}
+
+function StringArrayField({ label, hint, items, onChange, placeholder }: {
+  label: string; hint?: string; items: string[]; onChange: (items: string[]) => void; placeholder?: string
+}) {
+  const update = (i: number, v: string) => onChange(items.map((it, idx) => idx === i ? v : it))
+  const remove = (i: number) => onChange(items.filter((_, idx) => idx !== i))
+  const add = () => onChange([...items, ""])
+  return (
+    <div>
+      <label className="block text-sm font-medium text-zinc-300 mb-2">{label}</label>
+      {hint && <p className="text-xs text-zinc-500 mb-2">{hint}</p>}
+      <div className="space-y-2">
+        {items.map((it, i) => (
+          <div key={i} className="flex gap-2">
+            <input type="text" value={it} onChange={e => update(i, e.target.value)} placeholder={placeholder}
+              className="flex-1 bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors text-sm" />
+            <button type="button" onClick={() => remove(i)} aria-label="Eintrag entfernen"
+              className="p-2.5 rounded-xl text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-colors">
+              <Trash2 className="h-4 w-4" />
+            </button>
+          </div>
+        ))}
+        <button type="button" onClick={add}
+          className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors">
+          <Plus className="h-4 w-4" /> Eintrag hinzufügen
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function ProzessArrayField({ label, hint, items, onChange }: {
+  label: string; hint?: string; items: ProzessSchritt[]; onChange: (items: ProzessSchritt[]) => void
+}) {
+  const update = (i: number, patch: Partial<ProzessSchritt>) =>
+    onChange(items.map((it, idx) => idx === i ? { ...it, ...patch } : it))
+  const remove = (i: number) => onChange(items.filter((_, idx) => idx !== i))
+  const add = () => onChange([...items, { titel: "", beschreibung: "" }])
+  const move = (i: number, dir: -1 | 1) => {
+    const target = i + dir
+    if (target < 0 || target >= items.length) return
+    const copy = [...items]
+    const tmp = copy[i]
+    copy[i] = copy[target]
+    copy[target] = tmp
+    onChange(copy)
+  }
+  return (
+    <div>
+      <label className="block text-sm font-medium text-zinc-300 mb-2">{label}</label>
+      {hint && <p className="text-xs text-zinc-500 mb-2">{hint}</p>}
+      <div className="space-y-3">
+        {items.map((it, i) => (
+          <div key={i} className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-primary">Schritt {i + 1}</span>
+              <div className="flex gap-1">
+                <button type="button" onClick={() => move(i, -1)} disabled={i === 0} aria-label="Nach oben"
+                  className="p-1.5 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                  <ChevronUp className="h-4 w-4" />
+                </button>
+                <button type="button" onClick={() => move(i, 1)} disabled={i === items.length - 1} aria-label="Nach unten"
+                  className="p-1.5 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+                <button type="button" onClick={() => remove(i)} aria-label="Schritt entfernen"
+                  className="p-1.5 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-colors">
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+            <input type="text" value={it.titel} onChange={e => update(i, { titel: e.target.value })} placeholder="Titel (z.B. Planung)"
+              className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-white placeholder-zinc-600 focus:outline-none focus:border-primary transition-colors text-sm" />
+            <textarea value={it.beschreibung} onChange={e => update(i, { beschreibung: e.target.value })} placeholder="Beschreibung (kurz)" rows={2}
+              className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-white placeholder-zinc-600 focus:outline-none focus:border-primary transition-colors text-sm resize-none" />
+          </div>
+        ))}
+        <button type="button" onClick={add}
+          className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors">
+          <Plus className="h-4 w-4" /> Schritt hinzufügen
+        </button>
+      </div>
     </div>
   )
 }

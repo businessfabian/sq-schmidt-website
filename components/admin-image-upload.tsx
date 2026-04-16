@@ -4,7 +4,7 @@ import { Upload, Loader2, CheckCircle, ImageIcon } from "lucide-react"
 
 interface Props {
   documentId: string
-  type: "partner" | "zertifikat"
+  type: "partner" | "zertifikat" | "hero" | "leistung"
   currentImage?: string
   onUploaded: (url: string) => void
 }

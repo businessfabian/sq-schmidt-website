@@ -213,10 +213,3 @@ export const certificatesData = [
   { name: "BVS", description: "Bundesverband öffentlich bestellter Sachverständiger", image: "/images/certificates/bvs.jpg" },
 ]
 
-export function getServiceBySlug(slug: string) {
-  return servicesData.find((s) => s.slug === slug)
-}
-
-export function getAllServiceSlugs() {
-  return servicesData.map((s) => s.slug)
-}

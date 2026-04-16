@@ -8,7 +8,10 @@ export async function getEinstellungen() {
 }
 export async function getLeistungen() {
   return client.fetch(`*[_type == "leistung"] | order(reihenfolge asc) {
-    _id, titel, slug, kurzBeschreibung, beschreibung, icon, aktiv, reihenfolge
+    _id, titel, slug, kurzBeschreibung, beschreibung, icon, aktiv, reihenfolge,
+    "bildUrl": bild.asset->url,
+    leistungsumfang,
+    prozess[]{ titel, beschreibung }
   }`)
 }
 export async function getPartner() {

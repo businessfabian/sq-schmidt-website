@@ -8,6 +8,7 @@ import Link from "next/link"
 import Image from "next/image"
 import * as Icons from "lucide-react"
 import type { Metadata } from "next"
+import { servicesData } from "@/lib/services-data"
 
 type ProzessSchritt = { titel?: string; beschreibung?: string }
 type SanityLeistung = {
@@ -48,10 +49,16 @@ export const revalidate = 60
 
 export async function generateStaticParams() {
   const leistungen = (await getLeistungen()) as SanityLeistung[]
-  return leistungen.map(l => {
+  const sanityslugs = leistungen.map(l => {
     const slug = typeof l.slug === "string" ? l.slug : l.slug?.current
-    return { slug: slug ?? "" }
-  }).filter(p => p.slug)
+    return slug ?? ""
+  }).filter(Boolean)
+
+  // Statische Slugs als Fallback damit die Seiten auch ohne Sanity-Daten existieren
+  const staticSlugs = servicesData.map(s => s.slug)
+
+  const allSlugs = Array.from(new Set([...sanityslugs, ...staticSlugs]))
+  return allSlugs.map(slug => ({ slug }))
 }
 
 function getIcon(iconName?: string) {
@@ -64,8 +71,24 @@ export default async function LeistungDetailPage({ params }: { params: Promise<{
   const { slug } = await params
   const [einstellungen, leistungen] = await Promise.all([getEinstellungen(), getLeistungen() as Promise<SanityLeistung[]>])
 
-  const leistung = leistungen.find(l => (typeof l.slug === "string" ? l.slug : l.slug?.current) === slug)
-  if (!leistung) notFound()
+  let leistung = leistungen.find(l => (typeof l.slug === "string" ? l.slug : l.slug?.current) === slug)
+
+  // Fallback auf statische servicesData wenn Sanity nichts liefert
+  if (!leistung) {
+    const staticService = servicesData.find(s => s.slug === slug)
+    if (!staticService) notFound()
+    leistung = {
+      _id: staticService.slug,
+      titel: staticService.title,
+      slug: staticService.slug,
+      kurzBeschreibung: staticService.shortDescription,
+      beschreibung: staticService.fullDescription,
+      icon: (staticService.icon as unknown as { displayName?: string }).displayName ?? staticService.icon.name,
+      bildUrl: staticService.image,
+      leistungsumfang: staticService.features,
+      prozess: staticService.process?.map(p => ({ titel: p.title, beschreibung: p.description })) ?? [],
+    }
+  }
 
   const Icon = getIcon(leistung.icon)
   const features = leistung.leistungsumfang?.filter(Boolean) ?? []

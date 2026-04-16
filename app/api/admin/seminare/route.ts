@@ -14,7 +14,7 @@ function getClient() {
 
 export async function GET() {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
-  const data = await getClient().fetch(`*[_type == "seminartermin"] | order(datum asc)`)
+  const data = await getClient().fetch(`*[_type == "seminartermin"] | order(datumVon asc)`)
   return NextResponse.json(data)
 }
 

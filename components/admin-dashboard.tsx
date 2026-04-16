@@ -24,7 +24,7 @@ function uid() {
 
 interface ProzessSchritt { _key?: string; titel: string; beschreibung: string }
 interface Leistung { _id: string; titel: string; kurzBeschreibung: string; beschreibung: string; icon: string; reihenfolge: number; aktiv: boolean; bildUrl?: string; leistungsumfang?: string[]; prozess?: ProzessSchritt[] }
-interface Seminar { _id: string; titel: string; kategorie: string; datum: string; uhrzeit: string; ort: string; beschreibung: string; preis: string; anmeldeLink: string; aktiv: boolean }
+interface Seminar { _id: string; titel: string; kategorie: string; datumVon: string; datumBis?: string; uhrzeit: string; ort: string; beschreibung: string; preis: string; anmeldeLink: string; aktiv: boolean }
 interface Partner { _id: string; name: string; beschreibung: string; webseite: string; aktiv: boolean; reihenfolge: number }
 interface Zertifikat { _id: string; name: string; beschreibung: string; aktiv: boolean; reihenfolge: number }
 interface NavPunkt { _key?: string; label: string; typ: string; href?: string; aktiv: boolean; reihenfolge: number; unterpunkte?: { _key?: string; label: string; href: string }[] }
@@ -88,7 +88,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   const [seminare, setSeminare] = useState<Seminar[]>([])
   const [editSeminar, setEditSeminar] = useState<Seminar | null>(null)
   const [newSeminar, setNewSeminar] = useState(false)
-  const [seminarForm, setSeminarForm] = useState({ titel: "", kategorie: "bau", datum: "", uhrzeit: "", ort: "", beschreibung: "", preis: "", anmeldeLink: "", aktiv: true })
+  const [seminarForm, setSeminarForm] = useState({ titel: "", kategorie: "bau", datumVon: "", datumBis: "", uhrzeit: "", ort: "", beschreibung: "", preis: "", anmeldeLink: "", aktiv: true })
 
   const [partner, setPartner] = useState<Partner[]>([])
   const [editPartner, setEditPartner] = useState<Partner | null>(null)
@@ -419,21 +419,28 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                     onSearch={setSearchQuery}
                     statusFilter={statusFilter}
                     onStatusFilter={setStatusFilter}
-                    onAdd={() => { setNewSeminar(true); setSeminarForm({ titel: "", kategorie: "bau", datum: "", uhrzeit: "", ort: "", beschreibung: "", preis: "", anmeldeLink: "", aktiv: true }) }}
+                    onAdd={() => { setNewSeminar(true); setSeminarForm({ titel: "", kategorie: "bau", datumVon: "", datumBis: "", uhrzeit: "", ort: "", beschreibung: "", preis: "", anmeldeLink: "", aktiv: true }) }}
                     addLabel="Neuer Termin"
                   />
                   {filterItems(seminare, searchQuery, statusFilter, s => `${s.titel} ${s.ort}`).map((s) => (
                     <div key={s._id} className="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
                       <div className="h-10 w-10 rounded-xl bg-primary/10 flex flex-col items-center justify-center flex-shrink-0 text-primary">
-                        <span className="text-xs font-bold">{s.datum ? new Date(s.datum).getDate() : "?"}</span>
-                        <span className="text-[10px]">{s.datum ? new Date(s.datum).toLocaleDateString("de-DE", { month: "short" }) : ""}</span>
+                        <span className="text-xs font-bold">{s.datumVon ? new Date(s.datumVon + "T12:00:00").getDate() : "?"}</span>
+                        <span className="text-[10px]">{s.datumVon ? new Date(s.datumVon + "T12:00:00").toLocaleDateString("de-DE", { month: "short" }) : ""}</span>
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-white font-medium text-sm">{s.titel}</p>
-                        <p className="text-zinc-500 text-xs">{s.ort}{s.preis ? ` · ${s.preis}` : ""}</p>
+                        <p className="text-zinc-500 text-xs">
+                          {s.datumVon && (s.datumBis
+                            ? `${new Date(s.datumVon + "T12:00:00").toLocaleDateString("de-DE", { day: "2-digit", month: "short" })} bis ${new Date(s.datumBis + "T12:00:00").toLocaleDateString("de-DE", { day: "2-digit", month: "short", year: "numeric" })}`
+                            : new Date(s.datumVon + "T12:00:00").toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" })
+                          )}
+                          {s.ort ? ` · ${s.ort}` : ""}
+                          {s.preis ? ` · ${s.preis}` : ""}
+                        </p>
                       </div>
                       <div className="flex gap-2">
-                        <button onClick={() => { setEditSeminar(s); setSeminarForm({ titel: s.titel, kategorie: s.kategorie, datum: s.datum, uhrzeit: s.uhrzeit, ort: s.ort, beschreibung: s.beschreibung, preis: s.preis, anmeldeLink: s.anmeldeLink, aktiv: s.aktiv }) }}
+                        <button onClick={() => { setEditSeminar(s); setSeminarForm({ titel: s.titel, kategorie: s.kategorie, datumVon: s.datumVon, datumBis: s.datumBis ?? "", uhrzeit: s.uhrzeit, ort: s.ort, beschreibung: s.beschreibung, preis: s.preis, anmeldeLink: s.anmeldeLink, aktiv: s.aktiv }) }}
                           className="p-2 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-700"><Pencil className="h-4 w-4" /></button>
                         <button onClick={() => deleteItem("seminare", s._id)} className="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10"><Trash2 className="h-4 w-4" /></button>
                       </div>
@@ -455,7 +462,10 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                         {["bau","recht","technik","sonstiges"].map(k => <option key={k} value={k}>{k.charAt(0).toUpperCase()+k.slice(1)}</option>)}
                       </select>
                     </div>
-                    <Field label="Datum" value={seminarForm.datum} onChange={v => setSeminarForm(p => ({...p, datum: v}))} type="date" />
+                    <div className="grid grid-cols-2 gap-2">
+                      <Field label="Von *" value={seminarForm.datumVon} onChange={v => setSeminarForm(p => ({...p, datumVon: v}))} type="date" />
+                      <Field label="Bis (opt.)" value={seminarForm.datumBis} onChange={v => setSeminarForm(p => ({...p, datumBis: v}))} type="date" />
+                    </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <Field label="Uhrzeit" value={seminarForm.uhrzeit} onChange={v => setSeminarForm(p => ({...p, uhrzeit: v}))} placeholder="09:00 - 17:00 Uhr" />

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { revalidatePath } from "next/cache"
 import { createClient } from "@sanity/client"
 import { isAdmin } from "@/lib/auth"
 
@@ -41,6 +42,7 @@ export async function POST(req: Request) {
   const field = fieldMap[type]
   if (field && id) {
     await client.patch(id).set({ [field]: imageRef }).commit()
+    revalidatePath("/", "layout")
   }
 
   return NextResponse.json({ url: asset.url, assetId: asset._id })

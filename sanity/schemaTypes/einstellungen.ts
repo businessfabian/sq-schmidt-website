@@ -26,6 +26,8 @@ export default defineType({
     defineField({ name: "anzahlProjekte", title: "Anzahl Projekte", type: "number", group: "allgemein" }),
 
     // Hero
+    defineField({ name: "heroBadge", title: "Hero Badge", type: "string", group: "hero",
+      description: "Kleiner Text ueber der Ueberschrift, z.B. 'Oeffentlich bestellter Sachverstaendiger - IHK Konstanz'" }),
     defineField({ name: "heroTitel", title: "Hero Titel", type: "string", group: "hero" }),
     defineField({ name: "heroBeschreibung", title: "Hero Beschreibung", type: "text", rows: 3, group: "hero" }),
     defineField({ name: "heroBild", title: "Hero Hintergrundbild", type: "image", group: "hero",
@@ -34,6 +36,8 @@ export default defineType({
     // Ueber uns
     defineField({ name: "uebermichTitel", title: "Ueber uns Titel", type: "string", group: "ueber" }),
     defineField({ name: "uebermichText", title: "Ueber uns Text", type: "text", rows: 5, group: "ueber" }),
+    defineField({ name: "uebermichBild", title: "Ueber uns Bild", type: "image", group: "ueber",
+      description: "Bild fuer den 'Ueber uns' Bereich auf der Startseite" }),
 
     // Impressum
     defineField({ name: "inhaberName", title: "Inhaber Name", type: "string", group: "impressum",

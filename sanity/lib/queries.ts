@@ -3,7 +3,8 @@ import { client } from "./client"
 export async function getEinstellungen() {
   return client.fetch(`*[_type == "einstellungen"][0]{
     ...,
-    "heroBildUrl": heroBild.asset->url
+    "heroBildUrl": heroBild.asset->url,
+    "uebermichBildUrl": uebermichBild.asset->url
   }`)
 }
 export async function getLeistungen() {

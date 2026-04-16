@@ -10,6 +10,7 @@ interface Props {
 }
 
 export function Hero({ einstellungen }: Props) {
+  const badge = einstellungen?.heroBadge ?? "Öffentlich bestellter Sachverständiger · IHK Konstanz"
   const titel = einstellungen?.heroTitel ?? "Präzision und Qualität für Ihr Bauprojekt"
   const beschreibung = einstellungen?.heroBeschreibung ?? "Öffentlich bestellter und vereidigter Sachverständiger der IHK Konstanz, gerichtsfeste Gutachten und professionelle Baubegleitung deutschlandweit."
   const adresse = einstellungen?.adresse ?? "Marktplatz 21, 78647 Trossingen"
@@ -62,7 +63,7 @@ export function Hero({ einstellungen }: Props) {
           >
             <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-primary/40 bg-primary/10 backdrop-blur-sm">
               <ShieldCheck className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Öffentlich bestellter Sachverständiger · IHK Konstanz</span>
+              <span className="text-sm font-medium text-primary">{badge}</span>
             </div>
           </div>
 

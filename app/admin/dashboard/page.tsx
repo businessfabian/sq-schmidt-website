@@ -16,7 +16,8 @@ const adminClient = createClient({
 export default async function DashboardPage() {
   const einstellungen = await adminClient.fetch(`*[_type == "einstellungen"][0]{
     ...,
-    "heroBildUrl": heroBild.asset->url
+    "heroBildUrl": heroBild.asset->url,
+    "uebermichBildUrl": uebermichBild.asset->url
   }`)
   return <AdminDashboard einstellungen={einstellungen} />
 }

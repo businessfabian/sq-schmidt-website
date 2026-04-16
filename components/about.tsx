@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { Award, Users, Building, MapPin } from "lucide-react"
 import { Reveal, AnimatedCounter } from "./animations"
 
@@ -11,6 +12,7 @@ export function About({ einstellungen }: Props) {
   const firmenname = einstellungen?.firmenname ?? "SQ Schmidt"
   const jahre = einstellungen?.jahreErfahrung ?? 25
   const projekte = einstellungen?.anzahlProjekte ?? 500
+  const uebermichBildUrl: string | undefined = einstellungen?.uebermichBildUrl
 
   const features = [
     { icon: Award, title: "TÜV & ISO zertifiziert", description: "Höchste Qualitätsstandards durch unabhängige Zertifizierungen." },
@@ -58,19 +60,33 @@ export function About({ einstellungen }: Props) {
             </div>
           </Reveal>
 
-          <div className="grid sm:grid-cols-2 gap-6">
-            {features.map((feature, i) => (
-              <Reveal key={i} delay={i * 100}>
-                <div className="flex flex-col gap-3 p-6 rounded-xl bg-card border border-border hover:-translate-y-1 hover:shadow-lg hover:border-primary/30 transition-all h-full">
-                  <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <feature.icon className="h-5 w-5 text-primary" />
+          {uebermichBildUrl ? (
+            <Reveal>
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border border-border bg-secondary">
+                <Image
+                  src={uebermichBildUrl}
+                  alt={`Über ${firmenname}`}
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+            </Reveal>
+          ) : (
+            <div className="grid sm:grid-cols-2 gap-6">
+              {features.map((feature, i) => (
+                <Reveal key={i} delay={i * 100}>
+                  <div className="flex flex-col gap-3 p-6 rounded-xl bg-card border border-border hover:-translate-y-1 hover:shadow-lg hover:border-primary/30 transition-all h-full">
+                    <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <feature.icon className="h-5 w-5 text-primary" />
+                    </div>
+                    <h3 className="font-semibold text-foreground" style={{ fontFamily: "var(--font-display)" }}>{feature.title}</h3>
+                    <p className="text-sm text-muted-foreground">{feature.description}</p>
                   </div>
-                  <h3 className="font-semibold text-foreground" style={{ fontFamily: "var(--font-display)" }}>{feature.title}</h3>
-                  <p className="text-sm text-muted-foreground">{feature.description}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+                </Reveal>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>

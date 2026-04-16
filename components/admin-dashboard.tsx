@@ -57,6 +57,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     adresse: einstellungen?.adresse ?? "",
     adresse2: einstellungen?.adresse2 ?? "",
     oeffnungszeiten: einstellungen?.oeffnungszeiten ?? "",
+    heroBadge: einstellungen?.heroBadge ?? "",
     heroTitel: einstellungen?.heroTitel ?? "",
     heroBeschreibung: einstellungen?.heroBeschreibung ?? "",
     uebermichTitel: einstellungen?.uebermichTitel ?? "",
@@ -71,6 +72,8 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     chatWidgetAktiv: einstellungen?.chatWidgetAktiv ?? false,
     tawkPropertyId: einstellungen?.tawkPropertyId ?? "",
   })
+
+  const [uebermichBildUrl, setUebermichBildUrl] = useState<string | undefined>(einstellungen?.uebermichBildUrl)
 
   const [leistungen, setLeistungen] = useState<Leistung[]>([])
   const [editLeistung, setEditLeistung] = useState<Leistung | null>(null)
@@ -279,6 +282,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
           {activeSection === "hero" && (
             <div className="grid lg:grid-cols-2 gap-8">
               <div className="space-y-6">
+                <Field label="Hero Badge" value={form.heroBadge} onChange={v => setForm(p => ({...p, heroBadge: v}))} placeholder="z.B. Öffentlich bestellter Sachverständiger · IHK Konstanz" hint="Kleiner Text über dem Hero-Titel" />
                 <TextareaField label="Hero Titel" value={form.heroTitel} onChange={v => setForm(p => ({...p, heroTitel: v}))} rows={2} hint="Großer Titel auf der Startseite" />
                 <TextareaField label="Hero Beschreibung" value={form.heroBeschreibung} onChange={v => setForm(p => ({...p, heroBeschreibung: v}))} rows={3} hint="Untertitel unter dem Hero-Titel" />
                 <div className="grid grid-cols-2 gap-4">
@@ -298,6 +302,16 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
             <div className="space-y-6">
               <Field label="Über uns Titel" value={form.uebermichTitel} onChange={v => setForm(p => ({...p, uebermichTitel: v}))} />
               <TextareaField label="Über uns Text" value={form.uebermichText} onChange={v => setForm(p => ({...p, uebermichText: v}))} rows={6} hint="Startseite und Über-uns-Seite" />
+              {einstellungen?._id ? (
+                <AdminImageUpload
+                  documentId={einstellungen._id}
+                  type="ueber"
+                  currentImage={uebermichBildUrl}
+                  onUploaded={url => setUebermichBildUrl(url)}
+                />
+              ) : (
+                <p className="text-xs text-zinc-500">Bild kann nach dem ersten Speichern der Einstellungen hochgeladen werden.</p>
+              )}
             </div>
           )}
 

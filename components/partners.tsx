@@ -68,13 +68,13 @@ export function Partners({ partner }: Props) {
               : { href: "/partner" }
 
             return (
-              <Reveal key={i} delay={i * 80}>
+              <Reveal key={i} delay={i * 80} className="h-full">
                 <Wrapper
                   {...(wrapperProps as any)}
-                  className="group flex flex-col items-center gap-4 p-6 bg-zinc-900 border border-zinc-800 rounded-2xl hover:border-primary/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 transition-all text-center"
+                  className="group h-full flex flex-col items-center gap-3 p-6 bg-zinc-900 border border-zinc-800 rounded-2xl hover:border-primary/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 transition-all text-center"
                 >
                   {/* Logo oder Buchstaben-Avatar */}
-                  <div className="relative h-14 w-full flex items-center justify-center">
+                  <div className="relative h-14 w-full flex items-center justify-center flex-shrink-0">
                     {p.logo ? (
                       <Image
                         src={p.logo}
@@ -88,20 +88,22 @@ export function Partners({ partner }: Props) {
                     )}
                   </div>
 
-                  {/* Name + Beschreibung */}
-                  <div className="min-w-0 w-full">
-                    <p className="text-sm font-semibold text-zinc-100 group-hover:text-primary transition-colors leading-snug">
+                  {/* Name + Beschreibung -- flex-1 damit alle Karten gleich hoch */}
+                  <div className="min-w-0 w-full flex-1 flex flex-col justify-center">
+                    <p className="text-sm font-semibold text-zinc-100 group-hover:text-primary transition-colors leading-snug line-clamp-2">
                       {p.name}
                     </p>
                     {p.beschreibung && (
-                      <p className="text-xs text-zinc-500 mt-1 line-clamp-2">{p.beschreibung}</p>
+                      <p className="text-xs text-zinc-500 mt-1 line-clamp-1">{p.beschreibung}</p>
                     )}
                   </div>
 
-                  {/* Link-Indikator */}
-                  {isExternal && (
-                    <ExternalLink className="h-3.5 w-3.5 text-zinc-600 opacity-0 group-hover:opacity-100 group-hover:text-primary transition-all flex-shrink-0" />
-                  )}
+                  {/* Link-Indikator -- immer reservierter Platz damit Hoehe konsistent */}
+                  <div className="h-3.5 flex items-center">
+                    {isExternal && (
+                      <ExternalLink className="h-3.5 w-3.5 text-zinc-600 opacity-0 group-hover:opacity-100 group-hover:text-primary transition-all" />
+                    )}
+                  </div>
                 </Wrapper>
               </Reveal>
             )

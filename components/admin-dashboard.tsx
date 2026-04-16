@@ -11,11 +11,11 @@ import {
   Navigation, GripVertical, Link as LinkIcon, ChevronDown,
   Users, Award, Sparkles, BarChart2, Activity, ChevronUp,
   Gauge, Smartphone, Monitor, AlertTriangle, TrendingUp, Zap,
-  Search, Filter
+  Search, Filter, GraduationCap
 } from "lucide-react"
 import Link from "next/link"
 
-type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "navigation" | "seo" | "extras" | "analyse"
+type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "fortbildungen" | "navigation" | "seo" | "extras" | "analyse"
 
 // Stable client-side id for React keys in editable arrays
 function uid() {
@@ -192,13 +192,14 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     { id: "seminare" as Section, label: "Seminartermine", icon: Calendar },
     { id: "partner" as Section, label: "Partner", icon: Users },
     { id: "zertifikate" as Section, label: "Zertifikate", icon: Award },
+    { id: "fortbildungen" as Section, label: "Fortbildungen", icon: GraduationCap },
     { id: "navigation" as Section, label: "Navigation", icon: Navigation },
     { id: "seo" as Section, label: "SEO & Meta", icon: Globe },
     { id: "extras" as Section, label: "Extras & KI", icon: Sparkles },
     { id: "analyse" as Section, label: "Website Analyse", icon: Activity },
   ]
 
-  const isFormSection = ["kontakt", "hero", "ueber", "seo", "extras"].includes(activeSection)
+  const isFormSection = ["kontakt", "hero", "ueber", "seo", "extras", "fortbildungen"].includes(activeSection)
   const isEditingItem = editLeistung || newLeistung || editSeminar || newSeminar || editPartner || newPartner || editZertifikat || newZertifikat || editNav || newNav
 
   function getSaveAction() {
@@ -552,6 +553,30 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                   <NumberField label="Reihenfolge" value={zertifikatForm.reihenfolge} onChange={v => setZertifikatForm(p => ({...p, reihenfolge: v}))} />
                 </div>
               )}
+            </div>
+          )}
+
+          {activeSection === "fortbildungen" && (
+            <div className="space-y-6">
+              <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-2xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <GraduationCap className="h-4 w-4 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-semibold text-sm">Fortbildungen</h3>
+                    <p className="text-zinc-500 text-xs">Seite ist als Coming Soon geschaltet</p>
+                  </div>
+                  <a href="/fortbildungen" target="_blank" className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all">
+                    <Eye className="h-3.5 w-3.5" /> Seite ansehen
+                  </a>
+                </div>
+                <div className="p-4 bg-zinc-950 border border-zinc-700 rounded-xl text-center">
+                  <GraduationCap className="h-10 w-10 text-zinc-600 mx-auto mb-3" />
+                  <p className="text-zinc-300 text-sm font-medium mb-1">Inhalt folgt</p>
+                  <p className="text-zinc-500 text-xs">Sobald Sie wissen was auf der Fortbildungen-Seite stehen soll, kann der Inhalt hier gepflegt werden.</p>
+                </div>
+              </div>
             </div>
           )}
 

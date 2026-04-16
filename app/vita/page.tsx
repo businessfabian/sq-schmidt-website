@@ -177,6 +177,7 @@ const kategorieColors: Record<string, string> = {
 
 export default async function VitaPage() {
   const einstellungen = await getEinstellungen()
+  const bildUrl: string = einstellungen?.uebermichBildUrl || "/images/gerhard-schmidt.jpg"
 
   return (
     <>
@@ -224,7 +225,7 @@ export default async function VitaPage() {
               <div className="relative hidden lg:block">
                 <div className="aspect-square max-w-sm rounded-2xl bg-zinc-900 overflow-hidden relative mx-auto">
                   <Image
-                    src="/images/gerhard-schmidt.jpg"
+                    src={bildUrl}
                     alt="Dipl.-Ing. Gerhard Schmidt"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"

@@ -8,15 +8,6 @@ interface Props {
   partner?: any[]
 }
 
-function PartnerInitial({ name }: { name: string }) {
-  const initial = name.trim().charAt(0).toUpperCase()
-  return (
-    <div className="h-14 w-14 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center flex-shrink-0">
-      <span className="text-xl font-bold text-primary" style={{ fontFamily: "var(--font-display)" }}>{initial}</span>
-    </div>
-  )
-}
-
 export function Partners({ partner }: Props) {
   const hasSanity = partner && partner.length > 0
 
@@ -36,30 +27,28 @@ export function Partners({ partner }: Props) {
   ).slice(0, 4)
 
   return (
-    <section id="partner" className="py-24 bg-zinc-950">
+    <section id="partner" className="py-20 bg-zinc-950 border-t border-zinc-800">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
+
+        {/* Header */}
         <Reveal>
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-16 pb-8 border-b border-zinc-800">
-            <div>
-              <span className="text-sm font-medium text-primary uppercase tracking-wider">Netzwerk</span>
-              <h2
-                className="mt-2 text-4xl sm:text-5xl font-bold tracking-tight text-white"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                Kooperationspartner
-              </h2>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-12">
+            <div className="flex items-center gap-4">
+              <div className="h-px w-8 bg-primary" />
+              <span className="text-sm font-medium text-primary uppercase tracking-wider">Kooperationspartner</span>
             </div>
             <Link
               href="/partner"
-              className="inline-flex items-center gap-2 text-sm font-medium text-zinc-400 hover:text-primary transition-colors group flex-shrink-0"
+              className="inline-flex items-center gap-2 text-xs font-medium text-zinc-500 hover:text-primary transition-colors group"
             >
               Alle Partner
-              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Partner-Leiste */}
+        <div className="divide-y divide-zinc-800/60">
           {list.map((p, i) => {
             const isExternal = !!p.webseite
             const Wrapper = isExternal ? "a" : Link
@@ -68,47 +57,58 @@ export function Partners({ partner }: Props) {
               : { href: "/partner" }
 
             return (
-              <Reveal key={i} delay={i * 80} className="h-full">
+              <Reveal key={i} delay={i * 60}>
                 <Wrapper
                   {...(wrapperProps as any)}
-                  className="group h-full flex flex-col items-center gap-3 p-6 bg-zinc-900 border border-zinc-800 rounded-2xl hover:border-primary/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 transition-all text-center"
+                  className="group flex items-center gap-6 py-5 hover:bg-zinc-900/40 -mx-4 px-4 rounded-xl transition-colors"
                 >
-                  {/* Logo oder Buchstaben-Avatar */}
-                  <div className="relative h-14 w-full flex items-center justify-center flex-shrink-0">
+                  {/* Initiale / Logo */}
+                  <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-zinc-800 group-hover:bg-primary/15 group-hover:border group-hover:border-primary/25 border border-transparent flex items-center justify-center transition-all">
                     {p.logo ? (
-                      <Image
-                        src={p.logo}
-                        alt={p.name}
-                        fill
-                        sizes="(max-width: 640px) 40vw, 20vw"
-                        className="object-contain"
-                      />
+                      <div className="relative h-6 w-6">
+                        <Image
+                          src={p.logo}
+                          alt={p.name}
+                          fill
+                          sizes="40px"
+                          className="object-contain"
+                        />
+                      </div>
                     ) : (
-                      <PartnerInitial name={p.name} />
+                      <span
+                        className="text-sm font-bold text-zinc-400 group-hover:text-primary transition-colors"
+                        style={{ fontFamily: "var(--font-display)" }}
+                      >
+                        {p.name.trim().charAt(0).toUpperCase()}
+                      </span>
                     )}
                   </div>
 
-                  {/* Name + Beschreibung -- flex-1 damit alle Karten gleich hoch */}
-                  <div className="min-w-0 w-full flex-1 flex flex-col justify-center">
-                    <p className="text-sm font-semibold text-zinc-100 group-hover:text-primary transition-colors leading-snug line-clamp-2">
+                  {/* Name + Beschreibung */}
+                  <div className="flex-1 min-w-0">
+                    <span className="text-sm font-semibold text-zinc-200 group-hover:text-white transition-colors">
                       {p.name}
-                    </p>
+                    </span>
                     {p.beschreibung && (
-                      <p className="text-xs text-zinc-500 mt-1 line-clamp-1">{p.beschreibung}</p>
+                      <span className="hidden sm:inline text-sm text-zinc-600 ml-3 truncate">
+                        {p.beschreibung}
+                      </span>
                     )}
                   </div>
 
-                  {/* Link-Indikator -- immer reservierter Platz damit Hoehe konsistent */}
-                  <div className="h-3.5 flex items-center">
-                    {isExternal && (
-                      <ExternalLink className="h-3.5 w-3.5 text-zinc-600 opacity-0 group-hover:opacity-100 group-hover:text-primary transition-all" />
-                    )}
+                  {/* Rechts: Pfeil oder External */}
+                  <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    {isExternal
+                      ? <ExternalLink className="h-4 w-4 text-primary" />
+                      : <ArrowRight className="h-4 w-4 text-primary" />
+                    }
                   </div>
                 </Wrapper>
               </Reveal>
             )
           })}
         </div>
+
       </div>
     </section>
   )

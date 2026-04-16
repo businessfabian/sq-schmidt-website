@@ -24,7 +24,7 @@ interface Props {
 const DEFAULT_NAV: NavPunkt[] = [
   { label: "Leistungen", typ: "leistungen", aktiv: true, reihenfolge: 1 },
   { label: "Unternehmen", typ: "dropdown", aktiv: true, reihenfolge: 2, unterpunkte: [
-    { label: "Ueber Uns", href: "/ueber-uns" },
+    { label: "Über Uns", href: "/ueber-uns" },
     { label: "Partner", href: "/partner" },
     { label: "Aktuelles / Baurecht IBR", href: "/aktuelles" },
     { label: "Zertifikate", href: "/zertifikate" },
@@ -143,7 +143,7 @@ export function HeaderClient({ einstellungen, leistungen = [], seminare = [], na
               <span className="text-lg font-semibold tracking-tight text-foreground" style={{ fontFamily: "var(--font-display)" }}>
                 {firmenname.split(" ")[0]}
               </span>
-              <span className="text-xs text-muted-foreground tracking-wide uppercase">Qualitaetssicherung</span>
+              <span className="text-xs text-muted-foreground tracking-wide uppercase">Qualitätssicherung</span>
             </div>
           </Link>
 

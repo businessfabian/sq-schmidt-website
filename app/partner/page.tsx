@@ -4,7 +4,7 @@ import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { getEinstellungen, getPartner } from "@/sanity/lib/queries"
 import { partnersData } from "@/lib/services-data"
-import { ExternalLink, ArrowRight, Mail } from "lucide-react"
+import { ExternalLink, ArrowUpRight } from "lucide-react"
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 import Image from "next/image"
 import Link from "next/link"
@@ -18,9 +18,15 @@ export default async function PartnerPage() {
   const [einstellungen, sanityPartner] = await Promise.all([getEinstellungen(), getPartner()])
 
   const hasSanityPartner = sanityPartner && sanityPartner.length > 0
-  const partner = hasSanityPartner
-    ? sanityPartner.filter((p: any) => p.aktiv !== false)
-    : partnersData.map((p) => ({ name: p.name, beschreibung: p.description, webseite: null, logo: null }))
+  const partner: { name: string; beschreibung: string; webseite: string | null; logo: string | null }[] =
+    hasSanityPartner
+      ? sanityPartner.filter((p: any) => p.aktiv !== false).map((p: any) => ({
+          name: p.name,
+          beschreibung: p.beschreibung ?? "",
+          webseite: p.webseite ?? null,
+          logo: p.logo ?? null,
+        }))
+      : partnersData.map((p) => ({ name: p.name, beschreibung: p.description, webseite: null, logo: null }))
 
   return (
     <>
@@ -32,103 +38,113 @@ export default async function PartnerPage() {
       />
       <Header einstellungen={einstellungen} />
 
-      <main className="min-h-screen bg-background">
+      <main className="min-h-screen bg-zinc-950">
 
-        {/* Slim Page Header */}
-        <div className="pt-32 pb-12 border-b border-border">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-              <div>
-                <span className="text-sm font-medium text-primary uppercase tracking-wider">Netzwerk</span>
-                <h1
-                  className="mt-2 text-3xl md:text-4xl font-bold text-foreground"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  Kooperationspartner
-                </h1>
-                <p className="mt-2 text-muted-foreground max-w-xl">
-                  Ausgewaehlte Experten, mit denen wir fuer Sie zusammenarbeiten.
-                </p>
-              </div>
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors flex-shrink-0"
+        {/* Page Header */}
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 pt-36 pb-16 border-b border-zinc-800">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+            <div>
+              <span className="text-sm font-medium text-primary uppercase tracking-widest">Netzwerk</span>
+              <h1
+                className="mt-3 text-5xl sm:text-6xl font-bold text-white leading-none"
+                style={{ fontFamily: "var(--font-display)" }}
               >
-                <ArrowRight className="h-4 w-4 rotate-180" />
-                Zur Startseite
-              </Link>
+                Unsere
+                <br />
+                <span className="text-primary">Partner</span>
+              </h1>
             </div>
+            <p className="text-zinc-500 max-w-xs text-sm leading-relaxed sm:text-right">
+              Ausgewaehlte Experten und Institutionen, mit denen wir gemeinsam
+              hoechste Qualitaet im Bauwesen sicherstellen.
+            </p>
           </div>
         </div>
 
-        {/* Partner-Grid */}
-        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12">
-          <div className="grid sm:grid-cols-2 gap-3">
-            {partner.map((p: any, i: number) => {
-              const hasWebsite = !!p.webseite
-              const Wrapper = hasWebsite ? "a" : "div"
-              const wrapperProps = hasWebsite
-                ? { href: p.webseite, target: "_blank", rel: "noopener noreferrer" }
-                : {}
+        {/* Partner -- grossformatige Zeilen */}
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          {partner.map((p, i) => {
+            const content = (
+              <div className="group flex items-center gap-6 lg:gap-10 py-8 lg:py-10 border-b border-zinc-800/60 transition-colors hover:bg-zinc-900/30 -mx-6 lg:-mx-8 px-6 lg:px-8">
 
-              return (
-                <Wrapper
-                  key={i}
-                  {...(wrapperProps as any)}
-                  className={`group flex items-center gap-5 p-5 rounded-2xl border border-border bg-card transition-all ${hasWebsite ? "hover:border-primary/40 hover:shadow-md cursor-pointer" : ""}`}
+                {/* Nummer */}
+                <span
+                  className="hidden sm:block text-5xl font-bold text-zinc-800 group-hover:text-zinc-700 transition-colors select-none flex-shrink-0 w-14 text-right"
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
-                  {/* Badge */}
-                  <div className="flex-shrink-0 h-14 w-14 rounded-xl bg-secondary border border-border flex items-center justify-center group-hover:bg-primary/10 group-hover:border-primary/30 transition-all">
-                    {p.logo ? (
-                      <div className="relative h-8 w-8">
-                        <Image src={p.logo} alt={p.name} fill sizes="56px" className="object-contain" />
-                      </div>
-                    ) : (
-                      <span
-                        className="text-xl font-bold text-muted-foreground group-hover:text-primary transition-colors"
-                        style={{ fontFamily: "var(--font-display)" }}
-                      >
-                        {(p.name as string).trim().charAt(0).toUpperCase()}
-                      </span>
-                    )}
-                  </div>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
 
-                  {/* Text */}
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-foreground group-hover:text-primary transition-colors truncate">
-                      {p.name}
-                    </p>
-                    {(p.beschreibung ?? p.description) && (
-                      <p className="text-sm text-muted-foreground mt-0.5 line-clamp-1">
-                        {p.beschreibung ?? p.description}
-                      </p>
-                    )}
-                  </div>
-
-                  {/* Link-Icon */}
-                  {hasWebsite && (
-                    <ExternalLink className="flex-shrink-0 h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:text-primary transition-all" />
+                {/* Logo oder Initiale */}
+                <div className="flex-shrink-0 h-12 w-12 rounded-xl bg-zinc-800/80 border border-zinc-700 flex items-center justify-center group-hover:border-primary/40 group-hover:bg-primary/10 transition-all">
+                  {p.logo ? (
+                    <div className="relative h-7 w-7">
+                      <Image src={p.logo} alt={p.name} fill sizes="48px" className="object-contain brightness-90 group-hover:brightness-100 transition-all" />
+                    </div>
+                  ) : (
+                    <span
+                      className="text-lg font-bold text-zinc-500 group-hover:text-primary transition-colors"
+                      style={{ fontFamily: "var(--font-display)" }}
+                    >
+                      {p.name.trim().charAt(0).toUpperCase()}
+                    </span>
                   )}
-                </Wrapper>
-              )
-            })}
-          </div>
+                </div>
 
-          {/* CTA -- schmal, horizontal */}
-          <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-2xl bg-secondary/60 border border-border">
+                {/* Name + Beschreibung */}
+                <div className="flex-1 min-w-0">
+                  <p
+                    className="text-xl sm:text-2xl font-bold text-zinc-100 group-hover:text-white transition-colors leading-tight"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    {p.name}
+                  </p>
+                  {p.beschreibung && (
+                    <p className="text-sm text-zinc-500 mt-1 truncate">{p.beschreibung}</p>
+                  )}
+                </div>
+
+                {/* Link */}
+                {p.webseite ? (
+                  <span className="flex-shrink-0 inline-flex items-center gap-1.5 text-xs font-medium text-zinc-600 group-hover:text-primary transition-colors">
+                    Website
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </span>
+                ) : (
+                  <span className="flex-shrink-0 w-14" />
+                )}
+              </div>
+            )
+
+            return p.webseite ? (
+              <a key={i} href={p.webseite} target="_blank" rel="noopener noreferrer">
+                {content}
+              </a>
+            ) : (
+              <div key={i}>{content}</div>
+            )
+          })}
+        </div>
+
+        {/* CTA */}
+        <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div>
-              <p className="font-semibold text-foreground">Werden Sie Partner</p>
-              <p className="text-sm text-muted-foreground mt-0.5">
-                Experte im Bauwesen? Wir freuen uns auf Ihre Anfrage.
+              <p
+                className="text-2xl font-bold text-white"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                Werden Sie Partner
               </p>
+              <p className="text-zinc-500 text-sm mt-1">Experte im Bauwesen? Wir freuen uns auf Ihre Anfrage.</p>
             </div>
-            <a
+            <Link
               href="/#kontakt"
-              className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-colors flex-shrink-0"
             >
-              <Mail className="h-4 w-4" />
               Kontakt aufnehmen
-            </a>
+              <ExternalLink className="h-4 w-4" />
+            </Link>
           </div>
         </div>
 

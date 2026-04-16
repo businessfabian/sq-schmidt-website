@@ -8,6 +8,20 @@ const nextConfig = {
       { protocol: "https", hostname: "cdn.sanity.io" },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/leistungen/baubegleitende-qualittssicherung",
+        destination: "/leistungen/baubegleitende-qualitaetssicherung",
+        permanent: true,
+      },
+      {
+        source: "/leistungen/mngelmanagement",
+        destination: "/leistungen/maengelmanagement",
+        permanent: true,
+      },
+    ]
+  },
   async headers() {
     return [
       {

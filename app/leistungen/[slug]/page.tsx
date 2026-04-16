@@ -1,11 +1,13 @@
 import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { getEinstellungen, getLeistungen } from "@/sanity/lib/queries"
+import { client } from "@/sanity/lib/client"
 import { notFound } from "next/navigation"
 import { CheckCircle2, ArrowRight, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import * as Icons from "lucide-react"
+import type { Metadata } from "next"
 
 type ProzessSchritt = { titel?: string; beschreibung?: string }
 type SanityLeistung = {
@@ -18,6 +20,28 @@ type SanityLeistung = {
   bildUrl?: string
   leistungsumfang?: string[]
   prozess?: ProzessSchritt[]
+  seoTitel?: string
+  seoBeschreibung?: string
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const leistung = await client.fetch<{ titel: string; seoTitel?: string; seoBeschreibung?: string } | null>(
+    `*[_type == "leistung" && slug.current == $slug][0]{ titel, seoTitel, seoBeschreibung }`,
+    { slug }
+  )
+
+  if (!leistung) return {}
+
+  const title = leistung.seoTitel || `${leistung.titel} Trossingen · SQ Schmidt`
+  const description = leistung.seoBeschreibung || `${leistung.titel} in Trossingen vom EU-zertifizierten Bausachverstaendigen SQ Schmidt. Gerichtsfest, unabhaengig, seit 2001.`
+
+  return {
+    title,
+    description,
+    openGraph: { title, description },
+    twitter: { card: "summary_large_image", title, description },
+  }
 }
 
 export const revalidate = 60

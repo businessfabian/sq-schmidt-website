@@ -868,7 +868,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
               <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-2xl">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="h-9 w-9 rounded-lg bg-primary/10 flex items-center justify-center"><Sparkles className="h-4 w-4 text-primary" /></div>
-                  <div><h3 className="text-white font-semibold text-sm">Chat Widget</h3><p className="text-zinc-500 text-xs">Tawk.to Live-Chat fuer Besucher</p></div>
+                  <div><h3 className="text-white font-semibold text-sm">Chat Widget</h3><p className="text-zinc-500 text-xs">Tawk.to Live-Chat für Besucher</p></div>
                   <button onClick={() => { setForm((p: any) => ({...p, chatWidgetAktiv: !p.chatWidgetAktiv})); setSaved(false) }} className={`ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${form.chatWidgetAktiv ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>{form.chatWidgetAktiv ? "Aktiv" : "Inaktiv"}</button>
                 </div>
                 <Field label="Tawk.to Property ID" value={form.tawkPropertyId ?? ""} onChange={(v: string) => { setForm((p: any) => ({...p, tawkPropertyId: v})); setSaved(false) }} placeholder="z.B. 6123abc..." hint="Aus Tawk.to Dashboard → Administration → Chat Widget kopieren" />

@@ -30,7 +30,7 @@ export function Services({ leistungen }: Props) {
                 className="text-4xl sm:text-5xl font-bold tracking-tight text-white mt-2"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                Leistungen im Ueberblick
+                Leistungen im Überblick
               </h2>
             </div>
             <Link

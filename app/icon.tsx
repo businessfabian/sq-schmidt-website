@@ -21,25 +21,25 @@ export default function Icon() {
       >
         <span
           style={{
-            fontSize: 13,
+            fontSize: 15,
             fontWeight: 800,
             color: "#ffffff",
             letterSpacing: -0.5,
             fontFamily: "sans-serif",
-            marginBottom: 2,
+            marginBottom: 3,
           }}
         >
           SQ
         </span>
-        {/* Unterstrich-Akzent bei ~82% Position */}
+        {/* Unterstrich-Akzent, dicker fuer bessere Sichtbarkeit bei 32px */}
         <div
           style={{
             position: "absolute",
-            bottom: 5,
+            bottom: 4,
             left: "50%",
             transform: "translateX(-50%)",
-            width: 14,
-            height: 2,
+            width: 18,
+            height: 3,
             background: "#FF6B00",
             borderRadius: 1,
           }}

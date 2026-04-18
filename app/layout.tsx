@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const e = await getEinstellungen()
   const title = e?.seoTitel ?? e?.firmenname ?? "SQ Schmidt Qualitätssicherung"
   const description = e?.seoBeschreibung ?? "Öffentlich bestellter und vereidigter Sachverständiger der IHK Konstanz. Gerichtsfeste Gutachten und professionelle Baubegleitung."
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sq-schmidt-website.vercel.app"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sq-sv.de"
 
   return {
     title,

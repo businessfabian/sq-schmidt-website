@@ -5,7 +5,7 @@ export async function GET(req: Request) {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
 
   const { searchParams } = new URL(req.url)
-  const siteUrl = searchParams.get("url") || process.env.NEXT_PUBLIC_SITE_URL || "https://sq-schmidt-website.vercel.app"
+  const siteUrl = searchParams.get("url") || process.env.NEXT_PUBLIC_SITE_URL || "https://www.sq-sv.de"
   const strategy = searchParams.get("strategy") || "mobile"
 
   try {

@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   revalidatePath("/", "layout")
 
   // Sitemap auto-submission an Google
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sq-schmidt-website.vercel.app"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sq-sv.de"
   fetch(`https://www.google.com/ping?sitemap=${encodeURIComponent(`${siteUrl}/sitemap.xml`)}`).catch(() => {})
 
   return NextResponse.json({ revalidated: true })

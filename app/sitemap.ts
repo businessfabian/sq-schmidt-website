@@ -2,7 +2,7 @@ import { MetadataRoute } from "next"
 import { getLeistungen, getSeminare } from "@/sanity/lib/queries"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sq-sv.de").replace(/\/$/, "")
+  const baseUrl = "https://www.sq-sv.de"
 
   const [leistungen, seminare] = await Promise.all([getLeistungen(), getSeminare()])
 

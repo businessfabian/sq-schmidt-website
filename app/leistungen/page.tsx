@@ -35,7 +35,7 @@ function slugOf(l: SanityLeistung) {
 }
 
 export default async function LeistungenPage() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sq-schmidt-website.vercel.app"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sq-sv.de"
   const [einstellungen, leistungenRaw] = await Promise.all([getEinstellungen(), getLeistungen() as Promise<SanityLeistung[]>])
   const leistungen = leistungenRaw.filter(l => l.aktiv !== false && slugOf(l))
 

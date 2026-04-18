@@ -27,7 +27,7 @@ export default async function Home() {
     config.sections.leistungen ? getLeistungen() : Promise.resolve([]),
   ])
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sq-schmidt-website.vercel.app"
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sq-sv.de"
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",

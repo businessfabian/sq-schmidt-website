@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Menu, X, ChevronDown, ShieldCheck } from "lucide-react"
 import * as Icons from "lucide-react"
+import { SqLogo } from "@/components/sq-logo"
 
 interface NavPunkt {
   label: string
@@ -137,9 +138,7 @@ export function HeaderClient({ einstellungen, leistungen = [], seminare = [], na
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-              <span className="text-lg font-bold text-primary-foreground">SQ</span>
-            </div>
+            <SqLogo size={40} />
             <div className="flex flex-col">
               <span className="text-lg font-semibold tracking-tight text-foreground" style={{ fontFamily: "var(--font-display)" }}>
                 {firmenname.split(" ")[0]}

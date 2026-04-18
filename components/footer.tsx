@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { SqLogo } from "@/components/sq-logo"
 
 interface Props {
   einstellungen?: any
@@ -17,9 +18,7 @@ export function Footer({ einstellungen }: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center gap-3 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                <span className="text-lg font-bold text-primary-foreground">SQ</span>
-              </div>
+              <SqLogo size={40} />
               <div className="flex flex-col">
                 <span className="text-lg font-semibold tracking-tight text-white">Schmidt</span>
                 <span className="text-xs text-zinc-500 tracking-wide uppercase">Qualitätssicherung</span>

@@ -25,6 +25,66 @@ type SanityLeistung = {
   seoBeschreibung?: string
 }
 
+// Regionale SEO-Fallbacks pro Slug. Sanity-Felder (seoTitel/seoBeschreibung) haben Vorrang.
+const SEO_PER_SLUG: Record<string, { title: string; description: string }> = {
+  "schadensgutachten": {
+    title: "Schadensgutachten Schwarzwald-Baar & Tuttlingen | SQ Schmidt",
+    description: "TUeV-zertifizierter Sachverstaendiger fuer Schadensgutachten in Villingen-Schwenningen, Donaueschingen, Tuttlingen, Trossingen, Rottweil. EU-zertifiziert, gerichtsfest.",
+  },
+  "baumediation": {
+    title: "Baumediation Schwarzwald-Baar & Tuttlingen | SQ Schmidt",
+    description: "Baumediation und Streitschlichtung in VS, Trossingen, Tuttlingen, Rottweil. Zertifizierter Baumediator, aussergerichtliche Einigung, vertraulich und kostenguenstig.",
+  },
+  "maengelmanagement": {
+    title: "Maengelmanagement Schwarzwald-Baar | SQ Schmidt",
+    description: "Systematische Maengeldokumentation und -verfolgung in VS, Tuttlingen, Trossingen. Digitale Erfassung, gerichtsfeste Protokolle, EU-zertifizierter Sachverstaendiger.",
+  },
+  "blower-door-tests": {
+    title: "Blower-Door-Test Schwarzwald-Baar | DIN EN 13829 | SQ Schmidt",
+    description: "Blower-Door-Test nach DIN EN 13829 in VS, Tuttlingen, Donaueschingen, Trossingen. Luftdichtheitspruefung fuer Neubau, KfW-foerderfahig, Sanierung.",
+  },
+  "blower-door-test": {
+    title: "Blower-Door-Test Schwarzwald-Baar | DIN EN 13829 | SQ Schmidt",
+    description: "Blower-Door-Test nach DIN EN 13829 in VS, Tuttlingen, Donaueschingen, Trossingen. Luftdichtheitspruefung fuer Neubau, KfW-foerderfahig, Sanierung.",
+  },
+  "baubegleitende-qualitaetssicherung": {
+    title: "Baubegleitende QS Schwarzwald-Baar | SQ Schmidt",
+    description: "Baubegleitende Qualitaetssicherung in VS, Trossingen, Tuttlingen, Rottweil. EU-zertifizierter Sachverstaendiger ueberwacht Ausfuehrungsqualitaet seit 2001.",
+  },
+  "beweissicherungsverfahren": {
+    title: "Beweissicherung Schwarzwald-Baar | SQ Schmidt",
+    description: "Gerichtsfeste Beweissicherung und Zustandsdokumentation in VS, Tuttlingen, Trossingen, Donaueschingen. IHK-zertifizierter Sachverstaendiger.",
+  },
+  "sanierungskonzepte": {
+    title: "Sanierungskonzepte Schwarzwald-Baar | SQ Schmidt",
+    description: "Fachgerechte Sanierungskonzepte in VS, Donaueschingen, Tuttlingen, Trossingen. Schimmel, Feuchte, Bauschaeden -- EU-zertifiziert, gerichtsfest.",
+  },
+  "schimmelpilzbelastungen": {
+    title: "Schimmelpilzgutachten Schwarzwald-Baar | TUeV PersCert | SQ Schmidt",
+    description: "Schimmelpilz-Sachverstaendiger TUeV PersCert Nr. 62172 in VS, Donaueschingen, Trossingen, Bad Duerrheim. Erkennung, Bewertung, Sanierungsbegleitung.",
+  },
+  "schimmelpilz": {
+    title: "Schimmelpilzgutachten Schwarzwald-Baar | TUeV PersCert | SQ Schmidt",
+    description: "Schimmelpilz-Sachverstaendiger TUeV PersCert Nr. 62172 in VS, Donaueschingen, Trossingen, Bad Duerrheim. Erkennung, Bewertung, Sanierungsbegleitung.",
+  },
+  "sigeko": {
+    title: "SiGeKo Schwarzwald-Baar & Tuttlingen | SQ Schmidt",
+    description: "Sicherheits- und Gesundheitskoordinator nach BaustellV in VS, Donaueschingen, Tuttlingen, Trossingen. Qualifiziert nach Ingenieurakademie Baden-Wuerttemberg.",
+  },
+  "baucontrolling-bauabnahmen": {
+    title: "Baucontrolling & Bauabnahmen Schwarzwald-Baar | SQ Schmidt",
+    description: "Baucontrolling und Bauabnahmen in VS, Tuttlingen, Trossingen, Rottweil. Unabhaengige Qualitaetspruefung, gerichtsfeste Dokumentation seit 2001.",
+  },
+  "baucontrolling": {
+    title: "Baucontrolling & Bauabnahmen Schwarzwald-Baar | SQ Schmidt",
+    description: "Baucontrolling und Bauabnahmen in VS, Tuttlingen, Trossingen, Rottweil. Unabhaengige Qualitaetspruefung, gerichtsfeste Dokumentation seit 2001.",
+  },
+  "projektleitung-bauleitung": {
+    title: "Bauleitung Schwarzwald-Baar & Tuttlingen | SQ Schmidt",
+    description: "Projektleitung und Bauleitung in VS, Trossingen, Tuttlingen, Rottweil. Terminplanung, Koordination aller Gewerke, gerichtsfeste Dokumentation.",
+  },
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
   const leistung = await client.fetch<{ titel: string; seoTitel?: string; seoBeschreibung?: string } | null>(
@@ -34,12 +94,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!leistung) return {}
 
-  const title = leistung.seoTitel || `${leistung.titel} Trossingen · SQ Schmidt`
-  const description = leistung.seoBeschreibung || `${leistung.titel} in Trossingen vom EU-zertifizierten Bausachverstaendigen SQ Schmidt. Gerichtsfest, unabhaengig, seit 2001.`
+  // Sanity-Felder haben Vorrang -- Code-Fallback nur wenn nicht befuellt
+  const regional = SEO_PER_SLUG[slug]
+  const title = leistung.seoTitel || regional?.title || `${leistung.titel} Schwarzwald-Baar | SQ Schmidt`
+  const description = leistung.seoBeschreibung || regional?.description || `${leistung.titel} in Villingen-Schwenningen, Tuttlingen, Trossingen vom EU-zertifizierten Bausachverstaendigen SQ Schmidt. Gerichtsfest, unabhaengig, seit 2001.`
 
   return {
     title,
     description,
+    alternates: { canonical: `/leistungen/${slug}` },
     openGraph: { title, description },
     twitter: { card: "summary_large_image", title, description },
   }

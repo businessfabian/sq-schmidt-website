@@ -240,8 +240,8 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
         />
       )}
 
-      <aside className={`w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col fixed h-full z-30 transition-transform duration-200
-        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
+      <aside className={`w-64 bg-zinc-900 border-r border-zinc-800 flex-col fixed inset-y-0 left-0 z-30
+        ${sidebarOpen ? "flex" : "hidden md:flex"}`}>
         <div className="p-6 border-b border-zinc-800">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">

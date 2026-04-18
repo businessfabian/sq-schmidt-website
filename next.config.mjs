@@ -9,10 +9,16 @@ const nextConfig = {
     ],
   },
   async redirects() {
-    // Nur lowercase-zu-lowercase Encoding-Fixes hier -- case-sensitive Redirects laufen in middleware.ts
+    // Lowercase-zu-lowercase Encoding-Fixes + Umlaut-Pfade (kein Loop-Risiko, kein caseSensitive noetig)
     return [
       { source: "/leistungen/baubegleitende-qualittssicherung", destination: "/leistungen/baubegleitende-qualitaetssicherung", permanent: true },
       { source: "/leistungen/mngelmanagement",                  destination: "/leistungen/maengelmanagement",                  permanent: true },
+      // Umlaut-Varianten: percent-encoded ü/ö/ä -- Proxy-Matcher kann kein non-ASCII
+      { source: "/unser-b%C3%BCro",                             destination: "/ueber-uns",  permanent: true },
+      { source: "/unser-b%C3%BCro/:path*",                      destination: "/ueber-uns",  permanent: true },
+      { source: "/das-leistungsspektrum-im-%C3%BCberblick",     destination: "/leistungen", permanent: true },
+      { source: "/das-leistungsspektrum-im-%C3%BCberblick/:path*", destination: "/leistungen", permanent: true },
+      { source: "/M%C3%A4ngelmanagement",                       destination: "/leistungen/maengelmanagement", permanent: true },
     ]
   },
   async headers() {

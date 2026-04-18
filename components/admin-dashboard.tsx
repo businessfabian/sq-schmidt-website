@@ -11,7 +11,7 @@ import {
   Navigation, GripVertical, Link as LinkIcon, ChevronDown,
   Users, Award, Sparkles, BarChart2, Activity, ChevronUp,
   Gauge, Smartphone, Monitor, AlertTriangle, TrendingUp, Zap,
-  Search, Filter, GraduationCap
+  Search, Filter, GraduationCap, Menu
 } from "lucide-react"
 import Link from "next/link"
 
@@ -48,6 +48,7 @@ const KNOWN_PAGES = [
 export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   const router = useRouter()
   const [activeSection, setActiveSection] = useState<Section>("kontakt")
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState("")
@@ -230,7 +231,17 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
 
   return (
     <div className="min-h-screen bg-zinc-950 flex">
-      <aside className="w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col fixed h-full">
+
+      {/* Mobile Backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-20 bg-black/60 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      <aside className={`w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col fixed h-full z-30 transition-transform duration-200
+        ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}>
         <div className="p-6 border-b border-zinc-800">
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
@@ -244,7 +255,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
         </div>
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {navItems.map((item) => (
-            <button key={item.id} onClick={() => setActiveSection(item.id)}
+            <button key={item.id} onClick={() => { setActiveSection(item.id); setSidebarOpen(false) }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${activeSection === item.id ? "bg-primary/10 text-primary border border-primary/20" : "text-zinc-400 hover:text-white hover:bg-zinc-800"}`}>
               <item.icon className="h-4 w-4 flex-shrink-0" />
               {item.label}
@@ -268,18 +279,28 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
         </div>
       </aside>
 
-      <main className="flex-1 ml-64">
-        <div className="sticky top-0 z-10 bg-zinc-950/80 backdrop-blur-sm border-b border-zinc-800 px-8 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-white font-semibold">{navItems.find(n => n.id === activeSection)?.label}</h1>
-            <p className="text-zinc-500 text-sm">Änderungen werden sofort nach dem Speichern sichtbar</p>
+      <main className="flex-1 md:ml-64">
+        <div className="sticky top-0 z-10 bg-zinc-950/80 backdrop-blur-sm border-b border-zinc-800 px-4 md:px-8 py-4 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            {/* Hamburger -- nur Mobile */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="md:hidden flex-shrink-0 h-9 w-9 flex items-center justify-center rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all"
+              aria-label="Menu oeffnen"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <div className="min-w-0">
+              <h1 className="text-white font-semibold truncate">{navItems.find(n => n.id === activeSection)?.label}</h1>
+              <p className="text-zinc-500 text-xs hidden sm:block">Änderungen werden sofort nach dem Speichern sichtbar</p>
+            </div>
           </div>
           {showSaveButton && (
             <button onClick={getSaveAction()} disabled={saving}
-              className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-50">
-              {saving ? <><Loader2 className="h-4 w-4 animate-spin" /> Speichern...</>
-                : saved ? <><CheckCircle className="h-4 w-4" /> Gespeichert!</>
-                : <><Save className="h-4 w-4" /> Speichern</>}
+              className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-50">
+              {saving ? <><Loader2 className="h-4 w-4 animate-spin" /><span className="hidden sm:inline">Speichern...</span></>
+                : saved ? <><CheckCircle className="h-4 w-4" /><span className="hidden sm:inline">Gespeichert!</span></>
+                : <><Save className="h-4 w-4" /><span className="hidden sm:inline">Speichern</span></>}
             </button>
           )}
         </div>

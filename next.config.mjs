@@ -10,33 +10,32 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // Alte defekte Slugs
-      {
-        source: "/leistungen/baubegleitende-qualittssicherung",
-        destination: "/leistungen/baubegleitende-qualitaetssicherung",
-        permanent: true,
-      },
-      {
-        source: "/leistungen/mngelmanagement",
-        destination: "/leistungen/maengelmanagement",
-        permanent: true,
-      },
-      // Grossgeschriebene URLs von alter Website (301 = Ranking bleibt erhalten)
-      { source: "/Kontakt",      destination: "/kontakt",      permanent: true },
-      { source: "/Leistungen",   destination: "/leistungen",   permanent: true },
-      { source: "/Partner",      destination: "/partner",      permanent: true },
-      { source: "/Zertifikate",  destination: "/zertifikate",  permanent: true },
-      { source: "/Vita",         destination: "/vita",         permanent: true },
-      { source: "/Seminare",     destination: "/seminare",     permanent: true },
-      { source: "/Fortbildungen",destination: "/fortbildungen",permanent: true },
-      { source: "/Aktuelles",    destination: "/aktuelles",    permanent: true },
-      { source: "/Impressum",    destination: "/impressum",    permanent: true },
-      { source: "/Datenschutz",  destination: "/datenschutz",  permanent: true },
-      { source: "/Ueber-uns",    destination: "/ueber-uns",    permanent: true },
-      { source: "/Ueber-Uns",    destination: "/ueber-uns",    permanent: true },
-      // Leistungs-Unterseiten grossgeschrieben
-      { source: "/Leistungen/:slug", destination: "/leistungen/:slug", permanent: true },
-      { source: "/Seminare/:slug",   destination: "/seminare/:slug",   permanent: true },
+      // Alte defekte Slugs (Sonderzeichen-Encoding-Fehler)
+      { source: "/leistungen/baubegleitende-qualittssicherung", destination: "/leistungen/baubegleitende-qualitaetssicherung", permanent: true },
+      { source: "/leistungen/mngelmanagement",                  destination: "/leistungen/maengelmanagement",                  permanent: true },
+
+      // Alte Top-Level-Seiten der Vorgaenger-Website → neue URLs (301 sichert Ranking)
+      { source: "/Kontakt",       destination: "/kontakt",       permanent: true },
+      { source: "/Partner",       destination: "/partner",       permanent: true },
+      { source: "/Zertifikate",   destination: "/zertifikate",   permanent: true },
+      { source: "/Vita",          destination: "/vita",          permanent: true },
+      { source: "/Fortbildungen", destination: "/fortbildungen", permanent: true },
+      { source: "/Aktuelles",     destination: "/aktuelles",     permanent: true },
+      { source: "/Impressum",     destination: "/impressum",     permanent: true },
+      { source: "/Datenschutz",   destination: "/datenschutz",   permanent: true },
+      { source: "/UeberUns",      destination: "/ueber-uns",     permanent: true },
+      { source: "/Ueber-Uns",     destination: "/ueber-uns",     permanent: true },
+      { source: "/Ueber-uns",     destination: "/ueber-uns",     permanent: true },
+
+      // Alte Leistungs-URLs → neue Leistungs-Unterseiten
+      { source: "/Bauabnahme",             destination: "/leistungen/baucontrolling-bauabnahmen",     permanent: true },
+      { source: "/BlowerDoorTest",         destination: "/leistungen/blower-door-tests",              permanent: true },
+      { source: "/Schadensgutachten",      destination: "/leistungen/schadensgutachten",              permanent: true },
+      { source: "/Maengelmanagement",      destination: "/leistungen/maengelmanagement",              permanent: true },
+      { source: "/Sanierungskonzepte",     destination: "/leistungen/sanierungskonzepte",             permanent: true },
+      { source: "/Baumediation",           destination: "/leistungen/baumediation",                   permanent: true },
+      { source: "/Baucontrolling",         destination: "/leistungen/baucontrolling-bauabnahmen",     permanent: true },
+      { source: "/QualitaetsSicherung",    destination: "/leistungen/baubegleitende-qualitaetssicherung", permanent: true },
     ]
   },
   async headers() {

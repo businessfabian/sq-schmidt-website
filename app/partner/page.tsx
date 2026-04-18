@@ -10,8 +10,9 @@ import Image from "next/image"
 import Link from "next/link"
 
 export const metadata = {
-  title: "Kooperationspartner | SQ Schmidt Qualitaetssicherung",
-  description: "Unser Netzwerk aus fuehrenden Experten und Institutionen der Baubranche.",
+  title: "Kooperationspartner | SQ Schmidt Schwarzwald-Baar",
+  description: "Netzwerk aus fuehrenden Experten und Institutionen der Baubranche im Schwarzwald-Baar-Kreis, Tuttlingen und Rottweil. Partner von SQ Schmidt Qualitaetssicherung.",
+  alternates: { canonical: "/partner" },
 }
 
 export default async function PartnerPage() {

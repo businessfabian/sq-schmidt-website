@@ -2,36 +2,49 @@ import { MetadataRoute } from "next"
 import { getLeistungen, getSeminare } from "@/sanity/lib/queries"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sq-schmidt-website.vercel.app"
+  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sq-sv.de").replace(/\/$/, "")
 
   const [leistungen, seminare] = await Promise.all([getLeistungen(), getSeminare()])
 
-  const staticPages = [
-    { url: baseUrl, lastModified: new Date(), priority: 1 },
-    { url: `${baseUrl}/leistungen`, lastModified: new Date(), priority: 0.9 },
-    { url: `${baseUrl}/ueber-uns`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/partner`, lastModified: new Date(), priority: 0.7 },
-    { url: `${baseUrl}/zertifikate`, lastModified: new Date(), priority: 0.7 },
-    { url: `${baseUrl}/vita`, lastModified: new Date(), priority: 0.7 },
-    { url: `${baseUrl}/fortbildungen`, lastModified: new Date(), priority: 0.7 },
-    { url: `${baseUrl}/aktuelles`, lastModified: new Date(), priority: 0.6 },
-    { url: `${baseUrl}/seminare`, lastModified: new Date(), priority: 0.8 },
-    { url: `${baseUrl}/kontakt`, lastModified: new Date(), priority: 0.9 },
+  const staticPages: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/`,            lastModified: new Date(), priority: 1.0,  changeFrequency: "weekly" },
+    { url: `${baseUrl}/leistungen`,  lastModified: new Date(), priority: 0.9,  changeFrequency: "monthly" },
+    { url: `${baseUrl}/kontakt`,     lastModified: new Date(), priority: 0.9,  changeFrequency: "yearly" },
+    { url: `${baseUrl}/seminare`,    lastModified: new Date(), priority: 0.8,  changeFrequency: "weekly" },
+    { url: `${baseUrl}/ueber-uns`,   lastModified: new Date(), priority: 0.8,  changeFrequency: "monthly" },
+    { url: `${baseUrl}/partner`,     lastModified: new Date(), priority: 0.7,  changeFrequency: "monthly" },
+    { url: `${baseUrl}/zertifikate`, lastModified: new Date(), priority: 0.7,  changeFrequency: "monthly" },
+    { url: `${baseUrl}/vita`,        lastModified: new Date(), priority: 0.7,  changeFrequency: "monthly" },
+    { url: `${baseUrl}/fortbildungen`, lastModified: new Date(), priority: 0.7, changeFrequency: "monthly" },
+    { url: `${baseUrl}/aktuelles`,   lastModified: new Date(), priority: 0.6,  changeFrequency: "weekly" },
+    { url: `${baseUrl}/impressum`,   lastModified: new Date(), priority: 0.2,  changeFrequency: "yearly" },
+    { url: `${baseUrl}/datenschutz`, lastModified: new Date(), priority: 0.2,  changeFrequency: "yearly" },
   ]
 
-  const leistungsPages = leistungen
+  const leistungsPages: MetadataRoute.Sitemap = leistungen
     .filter((l: any) => l.aktiv !== false)
-    .map((l: any) => ({
-      url: `${baseUrl}/leistungen/${l.slug?.current ?? l.slug}`,
-      lastModified: new Date(),
-      priority: 0.8,
-    }))
+    .map((l: any) => {
+      const slug = l.slug?.current ?? l.slug
+      return slug ? {
+        url: `${baseUrl}/leistungen/${slug}`,
+        lastModified: new Date(),
+        priority: 0.8,
+        changeFrequency: "monthly" as const,
+      } : null
+    })
+    .filter(Boolean) as MetadataRoute.Sitemap
 
-  const seminarPages = seminare.map((s: any) => ({
-    url: `${baseUrl}/seminare/${s.slug?.current}`,
-    lastModified: new Date(),
-    priority: 0.6,
-  }))
+  const seminarPages: MetadataRoute.Sitemap = seminare
+    .map((s: any) => {
+      const slug = s.slug?.current ?? s.slug
+      return slug ? {
+        url: `${baseUrl}/seminare/${slug}`,
+        lastModified: new Date(),
+        priority: 0.6,
+        changeFrequency: "weekly" as const,
+      } : null
+    })
+    .filter(Boolean) as MetadataRoute.Sitemap
 
   return [...staticPages, ...leistungsPages, ...seminarPages]
 }

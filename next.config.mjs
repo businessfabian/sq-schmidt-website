@@ -10,6 +10,7 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // Alte defekte Slugs
       {
         source: "/leistungen/baubegleitende-qualittssicherung",
         destination: "/leistungen/baubegleitende-qualitaetssicherung",
@@ -20,6 +21,22 @@ const nextConfig = {
         destination: "/leistungen/maengelmanagement",
         permanent: true,
       },
+      // Grossgeschriebene URLs von alter Website (301 = Ranking bleibt erhalten)
+      { source: "/Kontakt",      destination: "/kontakt",      permanent: true },
+      { source: "/Leistungen",   destination: "/leistungen",   permanent: true },
+      { source: "/Partner",      destination: "/partner",      permanent: true },
+      { source: "/Zertifikate",  destination: "/zertifikate",  permanent: true },
+      { source: "/Vita",         destination: "/vita",         permanent: true },
+      { source: "/Seminare",     destination: "/seminare",     permanent: true },
+      { source: "/Fortbildungen",destination: "/fortbildungen",permanent: true },
+      { source: "/Aktuelles",    destination: "/aktuelles",    permanent: true },
+      { source: "/Impressum",    destination: "/impressum",    permanent: true },
+      { source: "/Datenschutz",  destination: "/datenschutz",  permanent: true },
+      { source: "/Ueber-uns",    destination: "/ueber-uns",    permanent: true },
+      { source: "/Ueber-Uns",    destination: "/ueber-uns",    permanent: true },
+      // Leistungs-Unterseiten grossgeschrieben
+      { source: "/Leistungen/:slug", destination: "/leistungen/:slug", permanent: true },
+      { source: "/Seminare/:slug",   destination: "/seminare/:slug",   permanent: true },
     ]
   },
   async headers() {
@@ -27,7 +44,7 @@ const nextConfig = {
       {
         source: "/api/:path*",
         headers: [
-          { key: "Access-Control-Allow-Origin", value: "https://sq-schmidt-website.vercel.app" },
+          { key: "Access-Control-Allow-Origin", value: "https://www.sq-sv.de" },
           { key: "Access-Control-Allow-Methods", value: "GET, POST, PUT, DELETE, OPTIONS" },
           { key: "Access-Control-Allow-Headers", value: "Content-Type, Authorization" },
         ],

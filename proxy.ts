@@ -30,9 +30,9 @@ const REDIRECTS: Record<string, string> = {
 }
 
 const PREFIX_REDIRECTS: Array<{ from: string; to: string }> = [
-  { from: "/unser-b%C3%BCro",                         to: "/ueber-uns" },
+  { from: "/unser-büro",                              to: "/ueber-uns" },  // decoded (pathname ist immer dekodiert)
   { from: "/unser-buero",                             to: "/ueber-uns" },
-  { from: "/das-leistungsspektrum-im-%C3%BCberblick", to: "/leistungen" },
+  { from: "/das-leistungsspektrum-im-überblick",      to: "/leistungen" }, // decoded
   { from: "/das-leistungsspektrum-im-ueberblick",     to: "/leistungen" },
 ]
 
@@ -110,6 +110,8 @@ export const config = {
     "/BeweissicherungBeweisverfahren",
     "/Sanierungskonzepte",
     "/unser-buero/:path*",
+    "/unser-b%C3%BCro/:path*",
     "/das-leistungsspektrum-im-ueberblick/:path*",
+    "/das-leistungsspektrum-im-%C3%BCberblick/:path*",
   ],
 }

@@ -109,9 +109,13 @@ export const config = {
     "/Beweissicherung",
     "/BeweissicherungBeweisverfahren",
     "/Sanierungskonzepte",
+    "/unser-buero",
     "/unser-buero/:path*",
+    "/unser-b%C3%BCro",
     "/unser-b%C3%BCro/:path*",
+    "/das-leistungsspektrum-im-ueberblick",
     "/das-leistungsspektrum-im-ueberblick/:path*",
+    "/das-leistungsspektrum-im-%C3%BCberblick",
     "/das-leistungsspektrum-im-%C3%BCberblick/:path*",
   ],
 }

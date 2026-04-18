@@ -9,33 +9,43 @@ const nextConfig = {
     ],
   },
   async redirects() {
+    // Hinweis: Next.js Redirects sind standardmaessig case-insensitive.
+    // /Bauabnahme matcht also auch /bauabnahme -- kein Doppeleintrag noetig.
     return [
-      // Alte defekte Slugs (Sonderzeichen-Encoding-Fehler)
+      // --- Defekte Slugs (Encoding-Fehler alte Sanity-Eintraege) ---
       { source: "/leistungen/baubegleitende-qualittssicherung", destination: "/leistungen/baubegleitende-qualitaetssicherung", permanent: true },
       { source: "/leistungen/mngelmanagement",                  destination: "/leistungen/maengelmanagement",                  permanent: true },
 
-      // Alte Top-Level-Seiten der Vorgaenger-Website → neue URLs (301 sichert Ranking)
-      { source: "/Kontakt",       destination: "/kontakt",       permanent: true },
-      { source: "/Partner",       destination: "/partner",       permanent: true },
-      { source: "/Zertifikate",   destination: "/zertifikate",   permanent: true },
-      { source: "/Vita",          destination: "/vita",          permanent: true },
-      { source: "/Fortbildungen", destination: "/fortbildungen", permanent: true },
-      { source: "/Aktuelles",     destination: "/aktuelles",     permanent: true },
-      { source: "/Impressum",     destination: "/impressum",     permanent: true },
-      { source: "/Datenschutz",   destination: "/datenschutz",   permanent: true },
-      { source: "/UeberUns",      destination: "/ueber-uns",     permanent: true },
-      { source: "/Ueber-Uns",     destination: "/ueber-uns",     permanent: true },
-      { source: "/Ueber-uns",     destination: "/ueber-uns",     permanent: true },
+      // --- Alte Jimdo Top-Level-Seiten (CamelCase) ---
+      { source: "/UeberUns",           destination: "/ueber-uns",    permanent: true },
+      { source: "/Ueber-Uns",          destination: "/ueber-uns",    permanent: true },
+      { source: "/Kontakt",            destination: "/kontakt",       permanent: true },
+      { source: "/Partner",            destination: "/partner",       permanent: true },
+      { source: "/Zertifikate",        destination: "/zertifikate",   permanent: true },
+      { source: "/Vita",               destination: "/vita",          permanent: true },
+      { source: "/Fortbildungen",      destination: "/fortbildungen", permanent: true },
+      { source: "/Aktuelles",          destination: "/aktuelles",     permanent: true },
+      { source: "/Impressum",          destination: "/impressum",     permanent: true },
+      { source: "/Datenschutz",        destination: "/datenschutz",   permanent: true },
+      { source: "/kooperationspartner",destination: "/partner",       permanent: true },
+      { source: "/kostenangaben",      destination: "/kontakt",       permanent: true },
 
-      // Alte Leistungs-URLs → neue Leistungs-Unterseiten
-      { source: "/Bauabnahme",             destination: "/leistungen/baucontrolling-bauabnahmen",     permanent: true },
-      { source: "/BlowerDoorTest",         destination: "/leistungen/blower-door-tests",              permanent: true },
-      { source: "/Schadensgutachten",      destination: "/leistungen/schadensgutachten",              permanent: true },
-      { source: "/Maengelmanagement",      destination: "/leistungen/maengelmanagement",              permanent: true },
-      { source: "/Sanierungskonzepte",     destination: "/leistungen/sanierungskonzepte",             permanent: true },
-      { source: "/Baumediation",           destination: "/leistungen/baumediation",                   permanent: true },
-      { source: "/Baucontrolling",         destination: "/leistungen/baucontrolling-bauabnahmen",     permanent: true },
-      { source: "/QualitaetsSicherung",    destination: "/leistungen/baubegleitende-qualitaetssicherung", permanent: true },
+      // --- Alte Jimdo Leistungs-URLs → neue Leistungs-Unterseiten ---
+      { source: "/Bauabnahme",         destination: "/leistungen/baucontrolling-bauabnahmen",          permanent: true },
+      { source: "/Baucontrolling",     destination: "/leistungen/baucontrolling-bauabnahmen",          permanent: true },
+      { source: "/BlowerDoorTest",     destination: "/leistungen/blower-door-tests",                   permanent: true },
+      { source: "/Baubegleitung",      destination: "/leistungen/baubegleitende-qualitaetssicherung",  permanent: true },
+      { source: "/Baumediation",       destination: "/leistungen/baumediation",                        permanent: true },
+      { source: "/Maengelmanagement",  destination: "/leistungen/maengelmanagement",                   permanent: true },
+      { source: "/Schadensgutachten",  destination: "/leistungen/schadensgutachten",                   permanent: true },
+      { source: "/Beweissicherung",    destination: "/leistungen/beweissicherungsverfahren",           permanent: true },
+      { source: "/Sanierungskonzepte", destination: "/leistungen/sanierungskonzepte",                 permanent: true },
+
+      // --- Alte Jimdo Verzeichnisse (Catch-All, Ziel ist feste URL → kein Loop-Risiko) ---
+      { source: "/unser-b%C3%BCro/:path*",                         destination: "/ueber-uns", permanent: true },
+      { source: "/unser-buero/:path*",                             destination: "/ueber-uns", permanent: true },
+      { source: "/das-leistungsspektrum-im-%C3%BCberblick/:path*", destination: "/leistungen", permanent: true },
+      { source: "/das-leistungsspektrum-im-ueberblick/:path*",     destination: "/leistungen", permanent: true },
     ]
   },
   async headers() {

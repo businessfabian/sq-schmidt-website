@@ -87,7 +87,7 @@ export default async function PartnerPage() {
                       {p.name}
                     </p>
                     {p.beschreibung && (
-                      <p className="text-xs text-muted-foreground mt-0.5 truncate">{p.beschreibung}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{p.beschreibung}</p>
                     )}
                     {p.webseite && (
                       <p className="text-xs text-primary/60 group-hover:text-primary mt-1 transition-colors truncate">

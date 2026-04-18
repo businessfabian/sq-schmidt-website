@@ -17,8 +17,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/vita`,        lastModified: new Date(), priority: 0.7,  changeFrequency: "monthly" },
     { url: `${baseUrl}/fortbildungen`, lastModified: new Date(), priority: 0.7, changeFrequency: "monthly" },
     { url: `${baseUrl}/aktuelles`,   lastModified: new Date(), priority: 0.6,  changeFrequency: "weekly" },
-    { url: `${baseUrl}/impressum`,   lastModified: new Date(), priority: 0.2,  changeFrequency: "yearly" },
-    { url: `${baseUrl}/datenschutz`, lastModified: new Date(), priority: 0.2,  changeFrequency: "yearly" },
+    { url: `${baseUrl}/impressum`,   lastModified: new Date(), priority: 0.3,  changeFrequency: "yearly" },
+    { url: `${baseUrl}/datenschutz`, lastModified: new Date(), priority: 0.3,  changeFrequency: "yearly" },
   ]
 
   const leistungsPages: MetadataRoute.Sitemap = leistungen
@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       return slug ? {
         url: `${baseUrl}/leistungen/${slug}`,
         lastModified: new Date(),
-        priority: 0.8,
+        priority: 0.9,
         changeFrequency: "monthly" as const,
       } : null
     })

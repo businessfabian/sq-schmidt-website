@@ -232,25 +232,27 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   return (
     <div className="min-h-screen bg-zinc-950 flex">
 
-      {/* Mobile Backdrop */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 z-20 bg-black/60 md:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
-      <aside className={`w-64 bg-zinc-900 border-r border-zinc-800 flex-col fixed inset-y-0 left-0 z-30
+      <aside className={`bg-zinc-900 border-r border-zinc-800 flex-col fixed inset-y-0 left-0 z-50
+        w-full md:w-64
         ${sidebarOpen ? "flex" : "hidden md:flex"}`}>
         <div className="p-6 border-b border-zinc-800">
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
-              <Settings className="h-4 w-4 text-primary" />
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="h-9 w-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
+                <Settings className="h-4 w-4 text-primary" />
+              </div>
+              <div>
+                <p className="font-semibold text-white text-sm">Admin Dashboard</p>
+                <p className="text-zinc-500 text-xs">Powered by Meyso</p>
+              </div>
             </div>
-            <div>
-              <p className="font-semibold text-white text-sm">Admin Dashboard</p>
-              <p className="text-zinc-500 text-xs">Powered by Meyso</p>
-            </div>
+            {/* Schliessen -- nur Mobile */}
+            <button
+              onClick={() => setSidebarOpen(false)}
+              className="md:hidden h-8 w-8 flex items-center justify-center rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all"
+            >
+              <X className="h-5 w-5" />
+            </button>
           </div>
         </div>
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">

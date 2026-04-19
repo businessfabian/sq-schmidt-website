@@ -11,7 +11,7 @@ import {
   Navigation, GripVertical, Link as LinkIcon, ChevronDown,
   Users, Award, Sparkles, BarChart2, Activity, ChevronUp,
   Gauge, Smartphone, Monitor, AlertTriangle, TrendingUp, Zap,
-  Search, Filter, GraduationCap
+  Search, Filter, GraduationCap, Menu
 } from "lucide-react"
 import Link from "next/link"
 
@@ -48,6 +48,14 @@ const KNOWN_PAGES = [
 export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   const router = useRouter()
   const [activeSection, setActiveSection] = useState<Section>("kontakt")
+  const [sidebarOpen, setSidebarOpen] = useState(true)
+
+  // Auf Mobile standardmaessig geschlossen
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      setSidebarOpen(false)
+    }
+  }, [])
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState("")
@@ -229,61 +237,83 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     activeSection === "zertifikate" ? (editZertifikat !== null || newZertifikat) : showSave
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex">
-      <aside className="w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col fixed h-full">
-        <div className="p-6 border-b border-zinc-800">
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
-              <Settings className="h-4 w-4 text-primary" />
-            </div>
-            <div>
-              <p className="font-semibold text-white text-sm">Admin Dashboard</p>
-              <p className="text-zinc-500 text-xs">Powered by Meyso</p>
+    <div className="h-screen bg-zinc-950 flex overflow-hidden">
+
+      {/* Sidebar -- conditional rendering, kein CSS-Toggle */}
+      {sidebarOpen && (
+        <aside className="w-full sm:w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col flex-shrink-0 overflow-y-auto">
+          <div className="p-6 border-b border-zinc-800">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="h-9 w-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
+                  <Settings className="h-4 w-4 text-primary" />
+                </div>
+                <div>
+                  <p className="font-semibold text-white text-sm">Admin Dashboard</p>
+                  <p className="text-zinc-500 text-xs">Powered by Meyso</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setSidebarOpen(false)}
+                className="h-8 w-8 flex items-center justify-center rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
           </div>
-        </div>
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
-          {navItems.map((item) => (
-            <button key={item.id} onClick={() => setActiveSection(item.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${activeSection === item.id ? "bg-primary/10 text-primary border border-primary/20" : "text-zinc-400 hover:text-white hover:bg-zinc-800"}`}>
-              <item.icon className="h-4 w-4 flex-shrink-0" />
-              {item.label}
-              {(item as { badge?: number }).badge ? (
-                <span className="ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-primary/20 text-primary min-w-[20px] text-center">
-                  {(item as { badge?: number }).badge}
-                </span>
-              ) : activeSection === item.id ? (
-                <ChevronRight className="h-3 w-3 ml-auto" />
-              ) : null}
+          <nav className="flex-1 p-4 space-y-1">
+            {navItems.map((item) => (
+              <button key={item.id} onClick={() => { setActiveSection(item.id); if (window.innerWidth < 768) setSidebarOpen(false) }}
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all ${activeSection === item.id ? "bg-primary/10 text-primary border border-primary/20" : "text-zinc-400 hover:text-white hover:bg-zinc-800"}`}>
+                <item.icon className="h-4 w-4 flex-shrink-0" />
+                {item.label}
+                {(item as { badge?: number }).badge ? (
+                  <span className="ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-primary/20 text-primary min-w-[20px] text-center">
+                    {(item as { badge?: number }).badge}
+                  </span>
+                ) : activeSection === item.id ? (
+                  <ChevronRight className="h-3 w-3 ml-auto" />
+                ) : null}
+              </button>
+            ))}
+          </nav>
+          <div className="p-4 border-t border-zinc-800 space-y-2">
+            <Link href="/" target="_blank" className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all">
+              <Eye className="h-4 w-4" /> Website ansehen
+            </Link>
+            <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-zinc-400 hover:text-red-400 hover:bg-red-500/10 transition-all">
+              <LogOut className="h-4 w-4" /> Abmelden
             </button>
-          ))}
-        </nav>
-        <div className="p-4 border-t border-zinc-800 space-y-2">
-          <Link href="/" target="_blank" className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all">
-            <Eye className="h-4 w-4" /> Website ansehen
-          </Link>
-          <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-zinc-400 hover:text-red-400 hover:bg-red-500/10 transition-all">
-            <LogOut className="h-4 w-4" /> Abmelden
-          </button>
-        </div>
-      </aside>
+          </div>
+        </aside>
+      )}
 
-      <main className="flex-1 ml-64">
-        <div className="sticky top-0 z-10 bg-zinc-950/80 backdrop-blur-sm border-b border-zinc-800 px-8 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-white font-semibold">{navItems.find(n => n.id === activeSection)?.label}</h1>
-            <p className="text-zinc-500 text-sm">Änderungen werden sofort nach dem Speichern sichtbar</p>
+      <main className="flex-1 min-w-0 flex flex-col overflow-hidden">
+        <div className="bg-zinc-950/80 backdrop-blur-sm border-b border-zinc-800 px-4 py-4 flex items-center justify-between gap-3 flex-shrink-0">
+          <div className="flex items-center gap-3 min-w-0">
+            <button
+              onClick={() => setSidebarOpen(v => !v)}
+              className="flex-shrink-0 h-9 w-9 flex items-center justify-center rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all"
+              aria-label="Sidebar umschalten"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <div className="min-w-0">
+              <h1 className="text-white font-semibold truncate">{navItems.find(n => n.id === activeSection)?.label}</h1>
+              <p className="text-zinc-500 text-xs hidden sm:block">Änderungen werden sofort nach dem Speichern sichtbar</p>
+            </div>
           </div>
           {showSaveButton && (
             <button onClick={getSaveAction()} disabled={saving}
-              className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-50">
-              {saving ? <><Loader2 className="h-4 w-4 animate-spin" /> Speichern...</>
-                : saved ? <><CheckCircle className="h-4 w-4" /> Gespeichert!</>
-                : <><Save className="h-4 w-4" /> Speichern</>}
+              className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90 transition-all disabled:opacity-50">
+              {saving ? <><Loader2 className="h-4 w-4 animate-spin" /><span className="hidden sm:inline">Speichern...</span></>
+                : saved ? <><CheckCircle className="h-4 w-4" /><span className="hidden sm:inline">Gespeichert!</span></>
+                : <><Save className="h-4 w-4" /><span className="hidden sm:inline">Speichern</span></>}
             </button>
           )}
         </div>
 
+        <div className="flex-1 overflow-y-auto">
         <div className="p-6 lg:p-8 max-w-5xl">
           {error && <div className="mb-6 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">{error}</div>}
 
@@ -901,6 +931,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
           )}
 
           {activeSection === "analyse" && <AnalyseSection />}
+        </div>
         </div>
       </main>
     </div>

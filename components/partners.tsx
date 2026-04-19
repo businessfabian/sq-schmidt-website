@@ -86,13 +86,13 @@ export function Partners({ partner }: Props) {
 
                   {/* Name + Beschreibung */}
                   <div className="flex-1 min-w-0">
-                    <span className="text-sm font-semibold text-zinc-200 group-hover:text-white transition-colors">
+                    <p className="text-sm font-semibold text-zinc-200 group-hover:text-white transition-colors leading-snug">
                       {p.name}
-                    </span>
+                    </p>
                     {p.beschreibung && (
-                      <span className="hidden sm:inline text-sm text-zinc-600 ml-3 truncate">
+                      <p className="text-xs text-zinc-400 mt-0.5 leading-snug">
                         {p.beschreibung}
-                      </span>
+                      </p>
                     )}
                   </div>
 

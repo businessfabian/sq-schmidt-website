@@ -9,8 +9,9 @@ import Link from "next/link"
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
-  title: "Seminartermine | SQ Schmidt Qualitätssicherung",
-  description: "Aktuelle Seminartermine und Fortbildungen im Bauwesen.",
+  title: "Seminartermine Bauwesen | SQ Schmidt Schwarzwald-Baar",
+  description: "Aktuelle Seminartermine und Fortbildungen im Bauwesen -- Schimmel, Feuchte, Qualitaetssicherung. Referent: Dipl.-Ing. Gerhard Schmidt, Trossingen.",
+  alternates: { canonical: "/seminare" },
 }
 
 export default async function SeminarePage({ searchParams }: { searchParams: Promise<{ ort?: string }> }) {

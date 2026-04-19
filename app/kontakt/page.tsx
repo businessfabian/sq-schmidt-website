@@ -7,8 +7,9 @@ import { getEinstellungen } from "@/sanity/lib/queries"
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
-  title: "Kontakt | SQ Schmidt Qualitätssicherung",
-  description: "Kontaktieren Sie uns für eine unverbindliche Anfrage.",
+  title: "Kontakt | Bausachverstaendiger SQ Schmidt Trossingen",
+  description: "Bausachverstaendiger SQ Schmidt kontaktieren. Standorte Trossingen (Marktplatz 21) und Bad Duerrheim. Einzugsgebiet Schwarzwald-Baar, Tuttlingen, Rottweil.",
+  alternates: { canonical: "/kontakt" },
 }
 
 export default async function KontaktPage() {

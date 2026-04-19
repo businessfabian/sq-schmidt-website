@@ -20,8 +20,9 @@ type SanityLeistung = {
 }
 
 export const metadata = {
-  title: "Leistungen, SQ Schmidt Qualitätssicherung",
-  description: "Alle Leistungen von SQ Schmidt: Baumediation, Mängelmanagement, Baucontrolling, Schadensgutachten, Sanierungskonzepte und Seminare.",
+  title: "Leistungen | Bausachverstaendiger Schwarzwald-Baar | SQ Schmidt",
+  description: "Baubegleitende QS, Maengelmanagement, Schadensgutachten, Baumediation, Blower-Door-Test, SiGeKo und mehr -- EU-zertifiziert im Schwarzwald-Baar-Kreis, Tuttlingen, Rottweil.",
+  alternates: { canonical: "/leistungen" },
 }
 
 function getIcon(iconName?: string) {

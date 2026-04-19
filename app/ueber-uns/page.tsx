@@ -11,8 +11,9 @@ import { join } from "path"
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
-  title: "Über Uns | SQ Schmidt Qualitätssicherung",
-  description: "Seit 2001 Ihr Experte für Bauschäden, Gutachten und Qualitätssicherung im Bauwesen.",
+  title: "Ueber Uns | SQ Schmidt Qualitaetssicherung Schwarzwald-Baar",
+  description: "Dipl.-Ing. Gerhard Schmidt -- EU-zertifizierter Bausachverstaendiger, oeffentlich bestellt und vereidigt (IHK Konstanz). Seit 2001 im Schwarzwald-Baar-Kreis, Tuttlingen, Rottweil.",
+  alternates: { canonical: "/ueber-uns" },
 }
 
 const qualifikationen = [

@@ -9,8 +9,9 @@ import Image from "next/image"
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
-  title: "Vita | SQ Schmidt Qualitätssicherung",
-  description: "Beruflicher Werdegang von Dipl.-Ing. Gerhard Schmidt — über 40 Jahre Erfahrung im Bauwesen.",
+  title: "Vita | Dipl.-Ing. Gerhard Schmidt Bausachverstaendiger",
+  description: "Beruflicher Werdegang von Dipl.-Ing. Gerhard Schmidt -- ueber 40 Jahre Erfahrung im Bauwesen, seit 2001 zertifizierter Sachverstaendiger im Schwarzwald-Baar-Kreis.",
+  alternates: { canonical: "/vita" },
 }
 
 const timeline = [

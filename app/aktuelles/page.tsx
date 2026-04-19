@@ -7,8 +7,9 @@ import { ExternalLink, Scale } from "lucide-react"
 import { BreadcrumbJsonLd } from "@/components/breadcrumb-jsonld"
 
 export const metadata = {
-  title: "Aktuelles / Baurecht IBR | SQ Schmidt Qualitätssicherung",
-  description: "Aktuelle Urteile und Neuigkeiten zum Baurecht — powered by IBR-online.",
+  title: "Aktuelles Baurecht | SQ Schmidt Schwarzwald-Baar",
+  description: "Aktuelle Urteile und Neuigkeiten zum Baurecht fuer Bauprofis im Schwarzwald-Baar-Kreis -- powered by IBR-online. SQ Schmidt Qualitaetssicherung Trossingen.",
+  alternates: { canonical: "/aktuelles" },
 }
 
 export default async function AktuellesPage() {

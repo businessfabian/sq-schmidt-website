@@ -44,6 +44,7 @@ export function Footer({ einstellungen }: Props) {
             <p className="text-sm font-semibold text-zinc-200 mb-4" role="heading" aria-level={2}>Unternehmen</p>
             <ul className="flex flex-col gap-2 text-sm text-zinc-400">
               <li><a href="/ueber-uns" className="hover:text-primary transition-colors">Über Uns</a></li>
+              <li><a href="/referenzen" className="hover:text-primary transition-colors">Referenzen</a></li>
               <li><a href="/partner" className="hover:text-primary transition-colors">Partner</a></li>
               <li><a href="/zertifikate" className="hover:text-primary transition-colors">Zertifikate</a></li>
               <li><a href="/kontakt" className="hover:text-primary transition-colors">Kontakt</a></li>

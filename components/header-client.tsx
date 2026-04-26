@@ -26,6 +26,7 @@ const DEFAULT_NAV: NavPunkt[] = [
   { label: "Leistungen", typ: "leistungen", aktiv: true, reihenfolge: 1 },
   { label: "Unternehmen", typ: "dropdown", aktiv: true, reihenfolge: 2, unterpunkte: [
     { label: "Über Uns", href: "/ueber-uns" },
+    { label: "Referenzen", href: "/referenzen" },
     { label: "Partner", href: "/partner" },
     { label: "Aktuelles / Baurecht IBR", href: "/aktuelles" },
     { label: "Zertifikate", href: "/zertifikate" },

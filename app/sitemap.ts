@@ -1,10 +1,10 @@
 import { MetadataRoute } from "next"
-import { getLeistungen, getSeminare } from "@/sanity/lib/queries"
+import { getLeistungen, getSeminare, getProjekte } from "@/sanity/lib/queries"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.sq-sv.de"
 
-  const [leistungen, seminare] = await Promise.all([getLeistungen(), getSeminare()])
+  const [leistungen, seminare, projekte] = await Promise.all([getLeistungen(), getSeminare(), getProjekte()])
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/`,            lastModified: new Date(), priority: 1.0,  changeFrequency: "weekly" },
@@ -17,6 +17,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/vita`,        lastModified: new Date(), priority: 0.7,  changeFrequency: "monthly" },
     { url: `${baseUrl}/fortbildungen`, lastModified: new Date(), priority: 0.7, changeFrequency: "monthly" },
     { url: `${baseUrl}/aktuelles`,   lastModified: new Date(), priority: 0.6,  changeFrequency: "weekly" },
+    { url: `${baseUrl}/referenzen`,  lastModified: new Date(), priority: 0.8,  changeFrequency: "weekly" },
     { url: `${baseUrl}/impressum`,   lastModified: new Date(), priority: 0.3,  changeFrequency: "yearly" },
     { url: `${baseUrl}/datenschutz`, lastModified: new Date(), priority: 0.3,  changeFrequency: "yearly" },
   ]
@@ -46,5 +47,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
     .filter(Boolean) as MetadataRoute.Sitemap
 
-  return [...staticPages, ...leistungsPages, ...seminarPages]
+  const projektPages: MetadataRoute.Sitemap = (projekte as any[])
+    .map((p: any) => {
+      const slug = p.slug?.current ?? p.slug
+      return slug ? {
+        url: `${baseUrl}/referenzen/${slug}`,
+        lastModified: new Date(),
+        priority: 0.7,
+        changeFrequency: "monthly" as const,
+      } : null
+    })
+    .filter(Boolean) as MetadataRoute.Sitemap
+
+  return [...staticPages, ...leistungsPages, ...seminarPages, ...projektPages]
 }

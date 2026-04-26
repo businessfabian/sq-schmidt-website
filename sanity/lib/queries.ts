@@ -43,3 +43,10 @@ export async function getFortbildungen() {
     _id, titel, datum, veranstalter, ort, themenbereich, unterrichtseinheiten, hervorgehoben
   }`)
 }
+export async function getProjekte() {
+  return client.fetch(`*[_type == "projekt" && !(_id in path("drafts.**"))] | order(projektDatum desc) {
+    _id, titel, slug, projektDatum, kategorie, ort, kurzbeschreibung,
+    "titelbildUrl": titelbild.asset->url,
+    "titelbildAlt": titelbild.alt
+  }`)
+}

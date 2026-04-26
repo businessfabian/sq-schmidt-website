@@ -92,7 +92,7 @@ export default async function PartnerPage() {
                     )}
                     {p.webseite && (
                       <p className="text-xs text-primary/60 group-hover:text-primary mt-1 transition-colors truncate">
-                        {new URL(p.webseite).hostname.replace(/^www\./, "")}
+                        {(() => { try { const u = p.webseite!.trim(); return new URL(u.startsWith("http") ? u : `https://${u}`).hostname.replace(/^www\./, "") } catch { return p.webseite!.trim() } })()}
                       </p>
                     )}
                   </div>

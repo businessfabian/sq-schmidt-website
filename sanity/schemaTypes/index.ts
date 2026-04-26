@@ -5,5 +5,6 @@ import zertifikat from "./zertifikat"
 import seminartermin from "./seminartermin"
 import navigation from "./navigation"
 import fortbildung from "./fortbildung"
+import projekt from "./projekt"
 
-export const schemaTypes = [einstellungen, leistung, partner, zertifikat, seminartermin, navigation, fortbildung]
+export const schemaTypes = [einstellungen, leistung, partner, zertifikat, seminartermin, navigation, fortbildung, projekt]

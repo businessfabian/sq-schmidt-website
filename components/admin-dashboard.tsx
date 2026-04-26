@@ -15,7 +15,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 
-type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "fortbildungen" | "navigation" | "seo" | "extras" | "analyse"
+type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "fortbildungen" | "projekte" | "navigation" | "seo" | "extras" | "analyse"
 
 // Stable client-side id for React keys in editable arrays
 function uid() {
@@ -29,6 +29,7 @@ interface Partner { _id: string; name: string; beschreibung: string; webseite: s
 interface Zertifikat { _id: string; name: string; beschreibung: string; aktiv: boolean; reihenfolge: number }
 interface NavPunkt { _key?: string; label: string; typ: string; href?: string; aktiv: boolean; reihenfolge: number; unterpunkte?: { _key?: string; label: string; href: string }[] }
 interface FortbildungEintrag { _id: string; titel: string; datum: string; veranstalter: string; ort?: string; themenbereich?: string; unterrichtseinheiten?: number; hervorgehoben?: boolean }
+interface Projekt { _id: string; titel: string; slug?: { current?: string }; projektDatum?: string; kategorie?: string; ort?: string; kurzbeschreibung?: string; beschreibung?: string; aufgabenstellung?: string; loesung?: string; ergebnis?: string; titelbildUrl?: string; aktiv?: boolean }
 
 const KNOWN_PAGES = [
   { label: "Startseite", value: "/" },
@@ -40,6 +41,7 @@ const KNOWN_PAGES = [
   { label: "Vita", value: "/vita" },
   { label: "Seminartermine", value: "/seminare" },
   { label: "Fortbildungen", value: "/fortbildungen" },
+  { label: "Referenzen", value: "/referenzen" },
   { label: "Kontakt", value: "/kontakt" },
   { label: "Impressum", value: "/impressum" },
   { label: "Datenschutz", value: "/datenschutz" },
@@ -121,6 +123,14 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     titel: "", datum: "", veranstalter: "", ort: "", themenbereich: "", unterrichtseinheiten: "", hervorgehoben: false
   })
 
+  const [projekte, setProjekte] = useState<Projekt[]>([])
+  const [editProjekt, setEditProjekt] = useState<Projekt | null>(null)
+  const [newProjekt, setNewProjekt] = useState(false)
+  const [projektForm, setProjektForm] = useState({
+    titel: "", projektDatum: "", kategorie: "", ort: "", kurzbeschreibung: "",
+    beschreibung: "", aufgabenstellung: "", loesung: "", ergebnis: "",
+  })
+
   // Filter & Suche
   const [searchQuery, setSearchQuery] = useState("")
   const [statusFilter, setStatusFilter] = useState<"all" | "aktiv" | "inaktiv">("all")
@@ -134,6 +144,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     if (activeSection === "zertifikate") load("zertifikate")
     if (activeSection === "navigation") load("navigation")
     if (activeSection === "fortbildungen") load("fortbildungen")
+    if (activeSection === "projekte") load("projekte")
   }, [activeSection])
 
   async function load(type: string) {
@@ -145,6 +156,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     if (type === "zertifikate") setZertifikate(Array.isArray(data) ? data : [])
     if (type === "navigation") setNavPunkte(data?.punkte ?? [])
     if (type === "fortbildungen") setFortbildungenList(Array.isArray(data) ? data : [])
+    if (type === "projekte") setProjekte(Array.isArray(data) ? data : [])
   }
 
   async function saveForm() {
@@ -211,6 +223,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     { id: "partner" as Section, label: "Partner", icon: Users },
     { id: "zertifikate" as Section, label: "Zertifikate", icon: Award },
     { id: "fortbildungen" as Section, label: "Fortbildungen", icon: GraduationCap, badge: fortbildungenList.length },
+    { id: "projekte" as Section, label: "Referenzen", icon: Briefcase },
     { id: "navigation" as Section, label: "Navigation", icon: Navigation },
     { id: "seo" as Section, label: "SEO & Meta", icon: Globe },
     { id: "extras" as Section, label: "Extras & KI", icon: Sparkles },
@@ -218,7 +231,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   ]
 
   const isFormSection = ["kontakt", "hero", "ueber", "seo", "extras"].includes(activeSection)
-  const isEditingItem = editLeistung || newLeistung || editSeminar || newSeminar || editPartner || newPartner || editZertifikat || newZertifikat || editNav || newNav || editFortbildung || newFortbildung
+  const isEditingItem = editLeistung || newLeistung || editSeminar || newSeminar || editPartner || newPartner || editZertifikat || newZertifikat || editNav || newNav || editFortbildung || newFortbildung || editProjekt || newProjekt
 
   function getSaveAction() {
     if (isFormSection) return saveForm
@@ -228,13 +241,15 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     if (activeSection === "zertifikate") return () => saveItem("zertifikate", editZertifikat, zertifikatForm, setEditZertifikat, setNewZertifikat)
     if (activeSection === "navigation") return isEditingItem ? saveNavigation : saveNavOrder
     if (activeSection === "fortbildungen") return () => saveItem("fortbildungen", editFortbildung, { ...fortbildungForm, unterrichtseinheiten: fortbildungForm.unterrichtseinheiten ? Number(fortbildungForm.unterrichtseinheiten) : undefined }, setEditFortbildung, setNewFortbildung)
+    if (activeSection === "projekte") return () => saveItem("projekte", editProjekt, projektForm, setEditProjekt, setNewProjekt)
     return saveForm
   }
 
   const showSave = isFormSection || isEditingItem || activeSection === "navigation"
   // Partner/Zertifikate Speichern nur im Edit-Modus zeigen
   const showSaveButton = activeSection === "partner" ? (editPartner !== null || newPartner) :
-    activeSection === "zertifikate" ? (editZertifikat !== null || newZertifikat) : showSave
+    activeSection === "zertifikate" ? (editZertifikat !== null || newZertifikat) :
+    activeSection === "projekte" ? (editProjekt !== null || newProjekt) : showSave
 
   return (
     <div className="h-screen bg-zinc-950 flex overflow-hidden">
@@ -927,6 +942,89 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                 <p className="text-green-600 text-xs">www.ihre-domain.de</p>
                 <p className="text-zinc-400 text-xs mt-1 line-clamp-2">{form.seoBeschreibung || "Beschreibung..."}</p>
               </div>
+            </div>
+          )}
+
+          {activeSection === "projekte" && (
+            <div className="space-y-4">
+              {!editProjekt && !newProjekt ? (
+                <>
+                  <ListToolbar
+                    count={projekte.length}
+                    label="Referenzen"
+                    searchQuery={searchQuery}
+                    onSearch={setSearchQuery}
+                    statusFilter={statusFilter}
+                    onStatusFilter={setStatusFilter}
+                    onAdd={() => { setNewProjekt(true); setProjektForm({ titel: "", projektDatum: "", kategorie: "", ort: "", kurzbeschreibung: "", beschreibung: "", aufgabenstellung: "", loesung: "", ergebnis: "" }) }}
+                    addLabel="Neues Projekt"
+                  />
+                  {projekte.filter(p => !searchQuery || p.titel.toLowerCase().includes(searchQuery.toLowerCase())).map((p) => {
+                    const datumStr = p.projektDatum ? new Date(p.projektDatum).toLocaleDateString("de-DE", { year: "numeric", month: "long" }) : ""
+                    const KATEGORIEN: Record<string, string> = { schadensgutachten: "Schadensgutachten", baubegleitung: "Baubegleitung", beweissicherung: "Beweissicherung", schimmel: "Schimmel", sanierung: "Sanierung", baumediation: "Baumediation", bauleitung: "Bauleitung", sonstiges: "Sonstiges" }
+                    return (
+                      <div key={p._id} className="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white font-medium text-sm">{p.titel}</p>
+                          <p className="text-zinc-500 text-xs">{[p.ort, datumStr, p.kategorie ? KATEGORIEN[p.kategorie] : ""].filter(Boolean).join(" · ")}</p>
+                        </div>
+                        <div className="flex gap-2">
+                          <button onClick={() => { setEditProjekt(p); setProjektForm({ titel: p.titel, projektDatum: p.projektDatum ?? "", kategorie: p.kategorie ?? "", ort: p.ort ?? "", kurzbeschreibung: p.kurzbeschreibung ?? "", beschreibung: p.beschreibung ?? "", aufgabenstellung: p.aufgabenstellung ?? "", loesung: p.loesung ?? "", ergebnis: p.ergebnis ?? "" }) }}
+                            className="p-2 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-700"><Pencil className="h-4 w-4" /></button>
+                          <button onClick={() => deleteItem("projekte", p._id)} className="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10"><Trash2 className="h-4 w-4" /></button>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </>
+              ) : (
+                <div className="space-y-5">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-white font-semibold">{editProjekt ? "Projekt bearbeiten" : "Neues Projekt"}</h2>
+                    <button onClick={() => { setEditProjekt(null); setNewProjekt(false) }} className="p-2 rounded-lg text-zinc-500 hover:text-white"><X className="h-4 w-4" /></button>
+                  </div>
+                  <Field label="Titel *" value={projektForm.titel} onChange={v => setProjektForm(p => ({...p, titel: v}))} placeholder='z.B. "Schadensgutachten Mehrfamilienhaus Villingen"' />
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">Datum (Monat/Jahr) *</label>
+                      <input type="month" value={projektForm.projektDatum} onChange={e => setProjektForm(p => ({...p, projektDatum: e.target.value}))}
+                        className="w-full bg-zinc-800 border border-zinc-700 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-zinc-400 mb-1.5">Kategorie</label>
+                      <select value={projektForm.kategorie} onChange={e => setProjektForm(p => ({...p, kategorie: e.target.value}))}
+                        className="w-full bg-zinc-800 border border-zinc-700 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50">
+                        <option value="">Keine</option>
+                        <option value="schadensgutachten">Schadensgutachten</option>
+                        <option value="baubegleitung">Baubegleitung</option>
+                        <option value="beweissicherung">Beweissicherung</option>
+                        <option value="schimmel">Schimmelpilzgutachten</option>
+                        <option value="sanierung">Sanierungskonzept</option>
+                        <option value="baumediation">Baumediation</option>
+                        <option value="bauleitung">Bauleitung</option>
+                        <option value="sonstiges">Sonstiges</option>
+                      </select>
+                    </div>
+                  </div>
+                  <Field label="Ort / Region" value={projektForm.ort} onChange={v => setProjektForm(p => ({...p, ort: v}))} placeholder='z.B. "Villingen-Schwenningen"' hint="Keine vollstaendige Adresse" />
+                  <TextareaField label="Kurzbeschreibung" value={projektForm.kurzbeschreibung} onChange={v => setProjektForm(p => ({...p, kurzbeschreibung: v}))} rows={2} hint="Fuer die Uebersichtskarte, max. 200 Zeichen" />
+                  <TextareaField label="Beschreibung" value={projektForm.beschreibung} onChange={v => setProjektForm(p => ({...p, beschreibung: v}))} rows={5} />
+                  <TextareaField label="Aufgabenstellung" value={projektForm.aufgabenstellung} onChange={v => setProjektForm(p => ({...p, aufgabenstellung: v}))} rows={3} hint="Was war das Problem / der Auftrag?" />
+                  <TextareaField label="Vorgehen / Loesung" value={projektForm.loesung} onChange={v => setProjektForm(p => ({...p, loesung: v}))} rows={3} hint="Was wurde konkret gemacht?" />
+                  <TextareaField label="Ergebnis" value={projektForm.ergebnis} onChange={v => setProjektForm(p => ({...p, ergebnis: v}))} rows={3} hint="Was kam dabei raus?" />
+                  {editProjekt && (
+                    <AdminImageUpload
+                      documentId={editProjekt._id}
+                      type="projekt"
+                      currentImage={editProjekt.titelbildUrl}
+                      onUploaded={url => setEditProjekt(prev => prev ? {...prev, titelbildUrl: url} : prev)}
+                    />
+                  )}
+                  {!editProjekt && (
+                    <p className="text-xs text-zinc-500">Titelbild und Galerie koennen nach dem ersten Speichern hochgeladen werden.</p>
+                  )}
+                </div>
+              )}
             </div>
           )}
 

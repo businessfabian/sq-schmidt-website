@@ -235,7 +235,7 @@ export default async function ProjektDetailPage({ params }: { params: Promise<{ 
                     >
                       Bildergalerie
                     </h2>
-                    <ProjektGalerieLightbox galerie={projekt.galerie.filter(img => img.url)} />
+                    <ProjektGalerieLightbox galerie={projekt.galerie.filter((img): img is GalerieItem & { url: string } => !!img.url)} />
                   </div>
                 )}
 

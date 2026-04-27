@@ -34,6 +34,7 @@ export const config = {
     partner: true,
     zertifikate: true,
     navigation: true,
+    referenzen: true,
     seo: true,
   },
 
@@ -44,6 +45,6 @@ export const config = {
     newsletter: false,
     buchung: false,
     blog: false,
-    referenzen: false,
+    referenzen: true,
   },
 }

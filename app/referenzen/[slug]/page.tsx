@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, Calendar, MapPin, Tag } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import type { Metadata } from "next"
+import { ProjektGalerieLightbox } from "@/components/projekt-galerie-lightbox"
 
 type LeistungRef = { _id: string; titel: string; slug?: { current?: string } | string }
 type GalerieItem = { url?: string; alt?: string; caption?: string }
@@ -234,26 +235,7 @@ export default async function ProjektDetailPage({ params }: { params: Promise<{ 
                     >
                       Bildergalerie
                     </h2>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      {projekt.galerie.map((img, i) =>
-                        img.url ? (
-                          <div key={i} className="rounded-xl overflow-hidden border border-border">
-                            <div className="relative h-52 w-full">
-                              <Image
-                                src={img.url}
-                                alt={img.alt ?? ""}
-                                fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                className="object-cover"
-                              />
-                            </div>
-                            {img.caption && (
-                              <p className="px-3 py-2 text-xs text-muted-foreground">{img.caption}</p>
-                            )}
-                          </div>
-                        ) : null
-                      )}
-                    </div>
+                    <ProjektGalerieLightbox galerie={projekt.galerie.filter(img => img.url)} />
                   </div>
                 )}
 

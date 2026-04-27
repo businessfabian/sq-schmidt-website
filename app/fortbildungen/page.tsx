@@ -31,7 +31,7 @@ const THEMENBEREICH_LABELS: Record<string, string> = {
   "abdichtung": "Abdichtung",
   "wdvs-fassade": "WDVS & Fassade",
   "energieeffizienz": "Energieeffizienz",
-  "recht-sachverstaendigenwesen": "Recht & Sachverstaendigenwesen",
+  "recht-sachverstaendigenwesen": "Recht & Sachverständigenwesen",
 }
 
 const THEMENBEREICH_BADGE_CLASSES: Record<string, string> = {
@@ -96,8 +96,8 @@ export default async function FortbildungenPage() {
                 Fortbildung seit {GRUENDUNGSJAHR}
               </h1>
               <p className="text-zinc-400 text-lg leading-relaxed mb-12">
-                Fachkompetenz entsteht nicht einmalig, sie wird staendig erneuert. Seit {GRUENDUNGSJAHR} besucht
-                Dipl.-Ing. Gerhard Schmidt regelmaessig Fachseminare und Fortbildungen, um den hoechsten
+                Fachkompetenz entsteht nicht einmalig, sie wird ständig erneuert. Seit {GRUENDUNGSJAHR} besucht
+                Dipl.-Ing. Gerhard Schmidt regelmäßig Fachseminare und Fortbildungen, um den höchsten
                 Standard in der Begutachtung sicherzustellen.
               </p>
 

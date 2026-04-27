@@ -48,7 +48,7 @@ const THEMEN: Record<string, ThemaConfig> = {
     badgeClass: "bg-violet-500/10 text-violet-500 border-violet-500/20",
   },
   "recht-sachverstaendigenwesen": {
-    label: "Recht & Sachverstaendigenwesen",
+    label: "Recht & Sachverständigenwesen",
     icon: Scale,
     colorClass: "text-rose-500",
     badgeClass: "bg-rose-500/10 text-rose-500 border-rose-500/20",

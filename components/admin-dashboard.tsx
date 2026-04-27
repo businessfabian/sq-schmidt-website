@@ -651,7 +651,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
               { value: "abdichtung", label: "Abdichtung" },
               { value: "wdvs-fassade", label: "WDVS & Fassade" },
               { value: "energieeffizienz", label: "Energieeffizienz" },
-              { value: "recht-sachverstaendigenwesen", label: "Recht & Sachverstaendigenwesen" },
+              { value: "recht-sachverstaendigenwesen", label: "Recht & Sachverständigenwesen" },
             ]
 
             if (editFortbildung || newFortbildung) {
@@ -686,7 +686,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                   <div>
                     <label className="block text-xs text-zinc-400 mb-1">Veranstalter *</label>
                     <input value={fortbildungForm.veranstalter} onChange={e => setFortbildungForm(f => ({ ...f, veranstalter: e.target.value }))}
-                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary" placeholder="z.B. TUeV Rheinland" />
+                      className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-primary" placeholder="z.B. TÜV Rheinland" />
                   </div>
 
                   <div>
@@ -1008,11 +1008,11 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                       </select>
                     </div>
                   </div>
-                  <Field label="Ort / Region" value={projektForm.ort} onChange={v => setProjektForm(p => ({...p, ort: v}))} placeholder='z.B. "Villingen-Schwenningen"' hint="Keine vollstaendige Adresse" />
-                  <TextareaField label="Kurzbeschreibung" value={projektForm.kurzbeschreibung} onChange={v => setProjektForm(p => ({...p, kurzbeschreibung: v}))} rows={2} hint="Fuer die Uebersichtskarte, max. 200 Zeichen" />
+                  <Field label="Ort / Region" value={projektForm.ort} onChange={v => setProjektForm(p => ({...p, ort: v}))} placeholder='z.B. "Villingen-Schwenningen"' hint="Keine vollständige Adresse" />
+                  <TextareaField label="Kurzbeschreibung" value={projektForm.kurzbeschreibung} onChange={v => setProjektForm(p => ({...p, kurzbeschreibung: v}))} rows={2} hint="Für die Übersichtskarte, max. 200 Zeichen" />
                   <TextareaField label="Beschreibung" value={projektForm.beschreibung} onChange={v => setProjektForm(p => ({...p, beschreibung: v}))} rows={5} />
                   <TextareaField label="Aufgabenstellung" value={projektForm.aufgabenstellung} onChange={v => setProjektForm(p => ({...p, aufgabenstellung: v}))} rows={3} hint="Was war das Problem / der Auftrag?" />
-                  <TextareaField label="Vorgehen / Loesung" value={projektForm.loesung} onChange={v => setProjektForm(p => ({...p, loesung: v}))} rows={3} hint="Was wurde konkret gemacht?" />
+                  <TextareaField label="Vorgehen / Lösung" value={projektForm.loesung} onChange={v => setProjektForm(p => ({...p, loesung: v}))} rows={3} hint="Was wurde konkret gemacht?" />
                   <TextareaField label="Ergebnis" value={projektForm.ergebnis} onChange={v => setProjektForm(p => ({...p, ergebnis: v}))} rows={3} hint="Was kam dabei raus?" />
                   {editProjekt && (
                     <>
@@ -1408,7 +1408,7 @@ function AnalyseSection() {
         <div className="p-12 bg-zinc-900 border border-zinc-800 rounded-2xl text-center">
           <Activity className="h-12 w-12 text-zinc-700 mx-auto mb-4" />
           <h3 className="text-white font-medium mb-2">Noch keine Analyse</h3>
-          <p className="text-zinc-500 text-sm mb-6">Starten Sie eine Analyse um Performance, SEO und Barrierefreiheit Ihrer Website zu pruefen.</p>
+          <p className="text-zinc-500 text-sm mb-6">Starten Sie eine Analyse um Performance, SEO und Barrierefreiheit Ihrer Website zu prüfen.</p>
           <button onClick={runAnalyse}
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-xl font-semibold text-sm hover:bg-primary/90">
             <Activity className="h-4 w-4" /> Jetzt analysieren

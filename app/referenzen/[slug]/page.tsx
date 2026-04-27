@@ -113,7 +113,7 @@ export default async function ProjektDetailPage({ params }: { params: Promise<{ 
     ...(projekt.titelbildUrl && { image: projekt.titelbildUrl }),
     creator: {
       "@type": "ProfessionalService",
-      name: "SQ Schmidt Qualitaetssicherung",
+      name: "SQ Schmidt Qualitätssicherung",
       url: "https://www.sq-sv.de",
     },
     ...(projekt.ort && { locationCreated: { "@type": "Place", name: projekt.ort } }),
@@ -271,7 +271,7 @@ export default async function ProjektDetailPage({ params }: { params: Promise<{ 
                     Aehnliches Projekt?
                   </h3>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Sprechen Sie uns an, wir begleiten Sie von der Begutachtung bis zur Loesung.
+                    Sprechen Sie uns an, wir begleiten Sie von der Begutachtung bis zur Lösung.
                   </p>
                   <Link
                     href="/kontakt"

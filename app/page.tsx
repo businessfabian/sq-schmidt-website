@@ -32,9 +32,9 @@ export default async function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    name: einstellungen?.firmenname ?? "SQ Schmidt Qualitaetssicherung",
+    name: einstellungen?.firmenname ?? "SQ Schmidt Qualitätssicherung",
     alternateName: "SQ Schmidt",
-    description: "EU-zertifizierter Bausachverstaendiger fuer Qualitaetssicherung, Gutachten und Baumediation im Bauwesen",
+    description: "EU-zertifizierter Bausachverständiger für Qualitätssicherung, Gutachten und Baumediation im Bauwesen",
     url: siteUrl,
     telephone: "+4977269293940",
     email: einstellungen?.email ?? "sqs@sq-sv.de",
@@ -54,7 +54,7 @@ export default async function Home() {
     location: [
       {
         "@type": "Place",
-        name: "SQ Schmidt Qualitaetssicherung Trossingen",
+        name: "SQ Schmidt Qualitätssicherung Trossingen",
         address: {
           "@type": "PostalAddress",
           streetAddress: "Marktplatz 21",
@@ -65,12 +65,12 @@ export default async function Home() {
       },
       {
         "@type": "Place",
-        name: "SQ Schmidt Qualitaetssicherung Bad Duerrheim",
+        name: "SQ Schmidt Qualitätssicherung Bad Dürrheim",
         address: {
           "@type": "PostalAddress",
-          streetAddress: "Paradiesstrasse 33/3",
+          streetAddress: "Paradiesstraße 33/3",
           postalCode: "78073",
-          addressLocality: "Bad Duerrheim",
+          addressLocality: "Bad Dürrheim",
           addressCountry: "DE",
         },
       },
@@ -82,11 +82,11 @@ export default async function Home() {
       closes: "18:00",
     },
     hasCredential: [
-      "EU-Zertifizierter Sachverstaendiger IQ-Zert Aachen",
-      "TUeV Rheinland Sachverstaendiger Schimmelpilzbelastungen Nr. 62172",
+      "EU-Zertifizierter Sachverständiger IQ-Zert Aachen",
+      "TÜV Rheinland Sachverständiger Schimmelpilzbelastungen Nr. 62172",
       "DIN EN ISO/IEC 17024 Zertifikat Nr. S 465",
-      "Beratender Ingenieur Ingenieurkammer Baden-Wuerttemberg Nr. 2333",
-      "Oeffentlich bestellt und vereidigt IHK Konstanz",
+      "Beratender Ingenieur Ingenieurkammer Baden-Württemberg Nr. 2333",
+      "Öffentlich bestellt und vereidigt IHK Konstanz",
       "Dipl.-Ing. (FH) Baubetrieb",
     ],
     sameAs: [],

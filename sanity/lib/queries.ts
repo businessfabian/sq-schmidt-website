@@ -31,12 +31,6 @@ export async function getSeminare() {
 export async function getSeminarBySlug(slug: string) {
   return client.fetch(`*[_type == "seminartermin" && slug.current == $slug][0]`, { slug })
 }
-export async function getReferenzen() {
-  return client.fetch(`*[_type == "referenz" && aktiv == true] | order(reihenfolge asc) {
-    _id, titel, beschreibung, kategorie, reihenfolge,
-    "bild": bild.asset->url
-  }`)
-}
 export async function getNavigation() {
   return client.fetch(`*[_type == "navigation"][0]`)
 }

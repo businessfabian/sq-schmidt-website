@@ -15,12 +15,11 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 
-type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "referenzen" | "navigation" | "seo" | "extras" | "analyse"
+type Section = "kontakt" | "hero" | "ueber" | "leistungen" | "seminare" | "partner" | "zertifikate" | "navigation" | "seo" | "extras" | "analyse"
 
 interface Leistung { _id: string; titel: string; kurzBeschreibung: string; beschreibung: string; icon: string; reihenfolge: number; aktiv: boolean }
 interface Seminar { _id: string; titel: string; kategorie: string; datum: string; uhrzeit: string; ort: string; beschreibung: string; preis: string; anmeldeLink: string; aktiv: boolean }
 interface Partner { _id: string; name: string; beschreibung: string; webseite: string; aktiv: boolean; reihenfolge: number }
-interface Referenz { _id: string; titel: string; beschreibung: string; kategorie: string; aktiv: boolean; reihenfolge: number; bild?: string }
 interface Zertifikat { _id: string; name: string; beschreibung: string; aktiv: boolean; reihenfolge: number }
 interface NavPunkt { _key?: string; label: string; typ: string; href?: string; aktiv: boolean; reihenfolge: number; unterpunkte?: { _key?: string; label: string; href: string }[] }
 
@@ -31,7 +30,6 @@ const KNOWN_PAGES = [
   { label: "Partner", value: "/partner" },
   { label: "Aktuelles / Baurecht IBR", value: "/aktuelles" },
   { label: "Zertifikate", value: "/zertifikate" },
-  { label: "Referenzen", value: "/referenzen" },
   { label: "Vita", value: "/vita" },
   { label: "Seminartermine", value: "/seminare" },
   { label: "Kontakt", value: "/kontakt" },
@@ -85,11 +83,6 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   const [newZertifikat, setNewZertifikat] = useState(false)
   const [zertifikatForm, setZertifikatForm] = useState({ name: "", beschreibung: "", aktiv: true, reihenfolge: 99 })
 
-  const [referenzen, setReferenzen] = useState<Referenz[]>([])
-  const [editReferenz, setEditReferenz] = useState<Referenz | null>(null)
-  const [newReferenz, setNewReferenz] = useState(false)
-  const [referenzForm, setReferenzForm] = useState({ titel: "", beschreibung: "", kategorie: "", aktiv: true, reihenfolge: 99 })
-
   const [navPunkte, setNavPunkte] = useState<NavPunkt[]>([])
   const [editNav, setEditNav] = useState<NavPunkt | null>(null)
   const [editNavIndex, setEditNavIndex] = useState<number | null>(null)
@@ -107,7 +100,6 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     if (activeSection === "seminare") load("seminare")
     if (activeSection === "partner") load("partner")
     if (activeSection === "zertifikate") load("zertifikate")
-    if (activeSection === "referenzen") load("referenzen")
     if (activeSection === "navigation") load("navigation")
   }, [activeSection])
 
@@ -120,7 +112,6 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
       if (type === "seminare") setSeminare(Array.isArray(data) ? data : [])
       if (type === "partner") setPartner(Array.isArray(data) ? data : [])
       if (type === "zertifikate") setZertifikate(Array.isArray(data) ? data : [])
-      if (type === "referenzen") setReferenzen(Array.isArray(data) ? data : [])
       if (type === "navigation") setNavPunkte(data?.punkte ?? [])
     } catch {
       setError(`Fehler beim Laden von ${type}.`)
@@ -199,7 +190,6 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     { id: "seminare" as Section, label: "Seminartermine", icon: Calendar },
     { id: "partner" as Section, label: "Partner", icon: Users },
     { id: "zertifikate" as Section, label: "Zertifikate", icon: Award },
-    { id: "referenzen" as Section, label: "Referenzen", icon: Eye },
     { id: "navigation" as Section, label: "Navigation", icon: Navigation },
     { id: "seo" as Section, label: "SEO & Meta", icon: Globe },
     { id: "extras" as Section, label: "Extras & KI", icon: Sparkles },
@@ -207,7 +197,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   ]
 
   const isFormSection = ["kontakt", "hero", "ueber", "seo", "extras"].includes(activeSection)
-  const isEditingItem = editLeistung || newLeistung || editSeminar || newSeminar || editPartner || newPartner || editZertifikat || newZertifikat || editReferenz || newReferenz || editNav || newNav
+  const isEditingItem = editLeistung || newLeistung || editSeminar || newSeminar || editPartner || newPartner || editZertifikat || newZertifikat || editNav || newNav
 
   function getSaveAction() {
     if (isFormSection) return saveForm
@@ -215,7 +205,6 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
     if (activeSection === "seminare") return () => saveItem("seminare", editSeminar, seminarForm, setEditSeminar, setNewSeminar)
     if (activeSection === "partner") return () => saveItem("partner", editPartner, partnerForm, setEditPartner, setNewPartner)
     if (activeSection === "zertifikate") return () => saveItem("zertifikate", editZertifikat, zertifikatForm, setEditZertifikat, setNewZertifikat)
-    if (activeSection === "referenzen") return () => saveItem("referenzen", editReferenz, referenzForm, setEditReferenz, setNewReferenz)
     if (activeSection === "navigation") return isEditingItem ? saveNavigation : saveNavOrder
     return saveForm
   }
@@ -223,8 +212,7 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
   const showSave = isFormSection || isEditingItem || activeSection === "navigation"
   // Partner/Zertifikate Speichern nur im Edit-Modus zeigen
   const showSaveButton = activeSection === "partner" ? (editPartner !== null || newPartner) :
-    activeSection === "zertifikate" ? (editZertifikat !== null || newZertifikat) :
-    activeSection === "referenzen" ? (editReferenz !== null || newReferenz) : showSave
+    activeSection === "zertifikate" ? (editZertifikat !== null || newZertifikat) : showSave
 
   return (
     <div className="min-h-screen bg-zinc-950 flex">
@@ -524,61 +512,6 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                   <Field label="Beschreibung" value={zertifikatForm.beschreibung} onChange={v => setZertifikatForm(p => ({...p, beschreibung: v}))} placeholder="Zertifizierter Sachverständiger" />
                   {editZertifikat && <AdminImageUpload documentId={editZertifikat._id} type="zertifikat" onUploaded={(url) => console.log("Bild hochgeladen:", url)} />}
                   <NumberField label="Reihenfolge" value={zertifikatForm.reihenfolge} onChange={v => setZertifikatForm(p => ({...p, reihenfolge: v}))} />
-                </div>
-              )}
-            </div>
-          )}
-
-          {activeSection === "referenzen" && (
-            <div className="space-y-4">
-              {!editReferenz && !newReferenz ? (
-                <>
-                  <ListToolbar
-                    count={referenzen.length}
-                    label="Referenzen"
-                    searchQuery={searchQuery}
-                    onSearch={setSearchQuery}
-                    statusFilter={statusFilter}
-                    onStatusFilter={setStatusFilter}
-                    onAdd={() => { setNewReferenz(true); setReferenzForm({ titel: "", beschreibung: "", kategorie: "", aktiv: true, reihenfolge: referenzen.length + 1 }) }}
-                    addLabel="Neue Referenz"
-                  />
-                  {filterItems(referenzen, searchQuery, statusFilter, r => `${r.titel} ${r.beschreibung} ${r.kategorie}`).map((r) => (
-                    <div key={r._id} className="flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
-                      {r.bild ? (
-                        <img src={r.bild} alt={r.titel} className="h-10 w-10 rounded-xl object-cover flex-shrink-0" />
-                      ) : (
-                        <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                          <Eye className="h-5 w-5 text-primary" />
-                        </div>
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <p className="text-white font-medium text-sm">{r.titel}</p>
-                        <p className="text-zinc-500 text-xs">{r.kategorie ? `${r.kategorie} · ` : ""}{r.beschreibung?.slice(0, 60)}</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <button onClick={async () => { try { const res = await fetch("/api/admin/referenzen", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...r, aktiv: !r.aktiv }) }); if (!res.ok) throw new Error(); await load("referenzen") } catch { setError("Fehler beim Aktualisieren.") } }}
-                          className={`px-2.5 py-1 rounded-lg text-xs font-medium ${r.aktiv ? "bg-emerald-500/10 text-emerald-400" : "bg-zinc-700 text-zinc-500"}`}>
-                          {r.aktiv ? "Aktiv" : "Inaktiv"}
-                        </button>
-                        <button onClick={() => { setEditReferenz(r); setReferenzForm({ titel: r.titel, beschreibung: r.beschreibung, kategorie: r.kategorie ?? "", aktiv: r.aktiv, reihenfolge: r.reihenfolge }) }}
-                          className="p-2 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-700"><Pencil className="h-4 w-4" /></button>
-                        <button onClick={() => deleteItem("referenzen", r._id)} className="p-2 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10"><Trash2 className="h-4 w-4" /></button>
-                      </div>
-                    </div>
-                  ))}
-                </>
-              ) : (
-                <div className="space-y-5">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-white font-semibold">{editReferenz ? "Bearbeiten" : "Neue Referenz"}</h2>
-                    <button onClick={() => { setEditReferenz(null); setNewReferenz(false) }} className="p-2 rounded-lg text-zinc-500 hover:text-white"><X className="h-4 w-4" /></button>
-                  </div>
-                  <Field label="Titel *" value={referenzForm.titel} onChange={v => setReferenzForm(p => ({...p, titel: v}))} placeholder="z.B. Neubau Einfamilienhaus Trossingen" />
-                  <Field label="Beschreibung" value={referenzForm.beschreibung} onChange={v => setReferenzForm(p => ({...p, beschreibung: v}))} placeholder="Baubegleitende Qualitätssicherung..." multiline />
-                  <Field label="Kategorie" value={referenzForm.kategorie} onChange={v => setReferenzForm(p => ({...p, kategorie: v}))} placeholder="z.B. Neubau, Sanierung, Gutachten" />
-                  {editReferenz && <AdminImageUpload documentId={editReferenz._id} type="referenz" currentImage={editReferenz.bild} onUploaded={() => load("referenzen")} />}
-                  <NumberField label="Reihenfolge" value={referenzForm.reihenfolge} onChange={v => setReferenzForm(p => ({...p, reihenfolge: v}))} />
                 </div>
               )}
             </div>

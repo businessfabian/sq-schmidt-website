@@ -1,6 +1,7 @@
 "use client"
 import { HeroImageUpload } from "./hero-image-upload"
 import { AdminImageUpload } from "./admin-image-upload"
+import { ProjektGalerieUpload } from "./projekt-galerie-upload"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import {
@@ -29,7 +30,8 @@ interface Partner { _id: string; name: string; beschreibung: string; webseite: s
 interface Zertifikat { _id: string; name: string; beschreibung: string; aktiv: boolean; reihenfolge: number }
 interface NavPunkt { _key?: string; label: string; typ: string; href?: string; aktiv: boolean; reihenfolge: number; unterpunkte?: { _key?: string; label: string; href: string }[] }
 interface FortbildungEintrag { _id: string; titel: string; datum: string; veranstalter: string; ort?: string; themenbereich?: string; unterrichtseinheiten?: number; hervorgehoben?: boolean }
-interface Projekt { _id: string; titel: string; slug?: { current?: string }; projektDatum?: string; kategorie?: string; ort?: string; kurzbeschreibung?: string; beschreibung?: string; aufgabenstellung?: string; loesung?: string; ergebnis?: string; titelbildUrl?: string; aktiv?: boolean }
+interface GalerieItem { _key: string; url: string; alt?: string; caption?: string }
+interface Projekt { _id: string; titel: string; slug?: { current?: string }; projektDatum?: string; kategorie?: string; ort?: string; kurzbeschreibung?: string; beschreibung?: string; aufgabenstellung?: string; loesung?: string; ergebnis?: string; titelbildUrl?: string; galerie?: GalerieItem[]; aktiv?: boolean }
 
 const KNOWN_PAGES = [
   { label: "Startseite", value: "/" },
@@ -1013,15 +1015,22 @@ export function AdminDashboard({ einstellungen }: { einstellungen?: any }) {
                   <TextareaField label="Vorgehen / Loesung" value={projektForm.loesung} onChange={v => setProjektForm(p => ({...p, loesung: v}))} rows={3} hint="Was wurde konkret gemacht?" />
                   <TextareaField label="Ergebnis" value={projektForm.ergebnis} onChange={v => setProjektForm(p => ({...p, ergebnis: v}))} rows={3} hint="Was kam dabei raus?" />
                   {editProjekt && (
-                    <AdminImageUpload
-                      documentId={editProjekt._id}
-                      type="projekt"
-                      currentImage={editProjekt.titelbildUrl}
-                      onUploaded={url => setEditProjekt(prev => prev ? {...prev, titelbildUrl: url} : prev)}
-                    />
+                    <>
+                      <AdminImageUpload
+                        documentId={editProjekt._id}
+                        type="projekt"
+                        currentImage={editProjekt.titelbildUrl}
+                        onUploaded={url => setEditProjekt(prev => prev ? {...prev, titelbildUrl: url} : prev)}
+                      />
+                      <ProjektGalerieUpload
+                        projektId={editProjekt._id}
+                        galerie={editProjekt.galerie ?? []}
+                        onUpdate={galerie => setEditProjekt(prev => prev ? {...prev, galerie} : prev)}
+                      />
+                    </>
                   )}
                   {!editProjekt && (
-                    <p className="text-xs text-zinc-500">Titelbild und Galerie koennen nach dem ersten Speichern hochgeladen werden.</p>
+                    <p className="text-xs text-zinc-500">Titelbild und Galerie können nach dem ersten Speichern hochgeladen werden.</p>
                   )}
                 </div>
               )}

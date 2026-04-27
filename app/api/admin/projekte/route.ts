@@ -37,7 +37,9 @@ export async function GET() {
   if (!await isAdmin()) return NextResponse.json({ error: "Nicht autorisiert" }, { status: 401 })
   const data = await getClient().fetch(`*[_type == "projekt"] | order(projektDatum desc) {
     _id, titel, slug, projektDatum, kategorie, ort, kurzbeschreibung,
-    "titelbildUrl": titelbild.asset->url
+    beschreibung, aufgabenstellung, loesung, ergebnis,
+    "titelbildUrl": titelbild.asset->url,
+    galerie[] { _key, "url": asset->url, alt, caption }
   }`)
   return NextResponse.json(data)
 }

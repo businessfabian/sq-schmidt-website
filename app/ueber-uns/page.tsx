@@ -3,7 +3,7 @@ export const revalidate = 60
 import { Header } from "@/components/header-wrapper"
 import { Footer } from "@/components/footer"
 import { getEinstellungen } from "@/sanity/lib/queries"
-import { ShieldCheck, Award, Users, Building2, CheckCircle2, ArrowRight, User } from "lucide-react"
+import { Award, Users, Building2, CheckCircle2, ArrowRight, User } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { existsSync } from "fs"
@@ -17,7 +17,6 @@ export const metadata = {
 }
 
 const qualifikationen = [
-  { icon: ShieldCheck, titel: "Öffentlich bestellt & vereidigt", beschreibung: "IHK Konstanz — Sachverständiger für Schäden an Gebäuden" },
   { icon: Award, titel: "TÜV-zertifiziert", beschreibung: "Schäden an Gebäuden · Feuchte- und Schimmelpilzbelastungen (TÜV PersCert)" },
   { icon: Award, titel: "IQ-ZERT zertifiziert", beschreibung: "EU-zertifizierter Sachverständiger nach DIN EN ISO/IEC 17024" },
   { icon: Building2, titel: "Beratender Ingenieur", beschreibung: "Ingenieurkammer Baden-Württemberg · Nr. 2333" },

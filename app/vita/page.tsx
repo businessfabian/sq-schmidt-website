@@ -235,7 +235,7 @@ export default async function VitaPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 to-transparent" />
                   <div className="absolute bottom-6 left-6 right-6">
                     <p className="text-white font-bold" style={{ fontFamily: "var(--font-display)" }}>Dipl.-Ing. Gerhard Schmidt</p>
-                    <p className="text-zinc-400 text-sm">Sachverständiger · IHK Konstanz</p>
+                    <p className="text-zinc-400 text-sm">Inhaber & Sachverständiger</p>
                   </div>
                 </div>
               </div>
